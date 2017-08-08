@@ -13,7 +13,7 @@
 % \fi
 %
 % \iffalse
-%<pgfgantt>\ProvidesPackage{pgfgantt}[2011/03/01 v1.0 Draw Gantt diagrams with TikZ]
+%<pgfgantt>\ProvidesPackage{pgfgantt}[2011/04/18 v1.1 Draw Gantt diagrams with TikZ]
 %<pgfgantt>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %
 %<*driver>
@@ -52,9 +52,9 @@
 		escapeend=\end{rmfamily},
 		emph={
 			anchor, bar, bulge, canvas, font, group, height, hgrid,
-			in, include, incomplete, label, last, left, link, line, list, mid, milestone,
-			options, peak, peaks, progress, right, rule, shift, style, text, title,
-			today, top, vgrid, width, xshift, yshift,
+			in, include, incomplete, label, last, left, link, line, lines, list, mid, milestone,
+			modifier, options, peak, peaks, progress, right, rule, shift, slot, style,
+			text, time, title, today, tolerance, top, vgrid, width, xshift, yshift,
 			b-b, b-m, m-b, m-m, s-s, s-f, f-s, f-f
 		},
 		emphstyle=\color{OliveGreen},
@@ -226,7 +226,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{891}
+% \CheckSum{908}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -247,13 +247,13 @@
 %
 % \GetFileInfo{pgfgantt.sty}
 %
-% \DoNotIndex{\@empty,\@tempa,\@tempb,\addtocounter,\begin,\begingroup,\bfseries,\clip,\csname,\def,\draw,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\ifcase,\ifx,\itshape,\let,\newcommand,\newcounter,\newenvironment,\newif,\node,\normalsize,\path,\pgfkeys,\pgfkeysdef,\pgfkeysdefnargs,\pgfmathparse,\pgfmathresult,\pgfmathsetmacro,\pgfqkeys,\relax,\RequirePackage,\scriptsize,\setcounter,\small,\stepcounter,\usetikzlibrary,\value}
+% \DoNotIndex{\@empty,\@tempa,\@tempb,\addtocounter,\begin,\begingroup,\bfseries,\clip,\csname,\def,\draw,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\gdef,\global,\ifcase,\ifx,\itshape,\let,\newcommand,\newcounter,\newenvironment,\newif,\node,\normalsize,\path,\pgfkeys,\pgfkeysdef,\pgfkeysdefnargs,\pgfmathparse,\pgfmathresult,\pgfmathsetmacro,\pgfqkeys,\relax,\RequirePackage,\scriptsize,\setcounter,\small,\stepcounter,\usetikzlibrary,\value}
 %
 % 
 % \title{Drawing Gantt Charts in \LaTeX\\with \TikZ}
 % \subtitle{The \texttt{pgfgantt} package\footnote{This document describes version \fileversion, dated \filedate.}}
 % \author{Wolfgang Skala\thanks{Division of Structural Biology, Department of Molecular Biology, University of Salzburg, Austria; \texttt{Wolfgang.Skala@stud.sbg.ac.at}}}
-% \date{March 1st, 2011}
+% \date{April 18th, 2011}
 % \maketitle
 % \changes{v1.0}{2011/03/01}{Initial release}
 %
@@ -268,7 +268,10 @@
 %
 % The \pack{pgfgantt} package allows you to draw Gantt charts in \LaTeX. Thus, you can describe simple project schedules without having to include images produced by external programs. Similar to Martin Kumm's \pack{gantt} package\footnote{\url{http://www.martin-kumm.de/tex_gantt_package.php}} (which inspired \pack{pgfgantt}'s fundamental aspects), \pack{pgfgantt} bases upon the \TikZ\ frontend of \textsc{pgf}\footnote{\url{http://ctan.org/tex-archive/graphics/pgf/}}. Besides, it provides a comprehensive (and portable) alternative to \pack{pst-gantt}\footnote{\url{http://ctan.org/tex-archive/graphics/pstricks/contrib/pst-gantt/}}.
 %
-% \pack{pgfgantt} requires a current \textsc{pgf} installation. To load the package, simply put
+% \changes{v1.1}{2011/04/18}{The introduction now clarifies what I mean by ``a current \textsc{pgf} installation''.}
+% \pack{pgfgantt} requires a \textit{current} \textsc{pgf} installation. \textbf{Note that the version number must at least be 2.10, dated October 25th, 2010.} If you get a lot of errors and \LaTeX\ complains that |\pgfkeysdefnargs| is undefined, your \textsc{pgf} installation is most liekly too old.
+% 
+% To load the package, simply put
 % \begin{texcode}
 % \usepackage{pgfgantt}
 % \end{texcode}
@@ -390,6 +393,31 @@
 % 		\gantttitle{Title 2}{6} \\
 % 		\ganttbar{}{1}{3} \\
 % 		\ganttbar{}{4}{6}
+% 	\end{ganttchart}
+% \end{tikzpicture}
+% \end{center}
+% \end{key}
+%
+% \begin{key}{vgrid lines list}{=\meta{pgffor list}}{\texttt{2,3,...,\string\value\string{gtt@width\string}}}
+% If the chart contains many time slots, drawing vertical grid lines between all of them will lead to a confusing appearance. In such a case, you can change the |vgrid lines list| key in order to draw every second grid line, for example.\changes{v1.1}{2011/04/18}{The \texttt{vgrid lines list} key now determines the number of vertical grid lines drawn.}
+% \par\bigskip\noindent
+% \begin{texcode}
+% \begin{tikzpicture}[x=.5cm, y=1cm]
+% 	\begin{ganttchart}%
+% 			[vgrid, vgrid lines list={3,5,...,\value{gtt@width}}]{12}
+% 		\gantttitlelist{1,...,12}{1} \\
+% 		\ganttbar{}{1}{4} \\
+% 		\ganttbar{}{5}{11}
+% 	\end{ganttchart}
+% \end{tikzpicture}
+% \end{texcode}
+% \begin{center}
+% \begin{tikzpicture}[x=.5cm, y=1cm]
+% 	\begin{ganttchart}%
+% 			[vgrid, vgrid lines list={3,5,...,\value{gtt@width}}]{12}
+% 		\gantttitlelist{1,...,12}{1} \\
+% 		\ganttbar{}{1}{4} \\
+% 		\ganttbar{}{5}{11}
 % 	\end{ganttchart}
 % \end{tikzpicture}
 % \end{center}
@@ -976,7 +1004,7 @@
 % \begin{texcode}
 % \ganttbar`\oarg{options}\marg{label}\marg{start time slot}\marg{end time slot}'
 % \end{texcode}
-% The \DescribeMacro{\ganttbar}|\ganttbar| macro draws a bar from the \meta{start time slot} to the \meta{end time slot} and adds a \meta{label} at the left of the chart. Note that a bar will touch the left border of the \meta{start time slot} (and not the right, as it would if the \meta{start time slot} were strictly interpreted as an $x$-coordinate).
+% The \DescribeMacro{\ganttbar}|\ganttbar| macro draws a bar from the \meta{start time slot} to the \meta{end time slot} and adds a \meta{label} at the left of the chart.
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{tikzpicture}[x=.5cm, y=1cm]
@@ -998,6 +1026,31 @@
 % 	\end{ganttchart}
 % \end{tikzpicture}
 % \end{center}
+%
+% \begin{key}{time slot modifier}{=\meta{factor}}{\texttt{-1}}
+% Note that a bar usually touches the left border of the \meta{start time slot} and not the right, as it would if the \meta{start time slot} were strictly interpreted as an $x$-coordinate. However, you may prefer to work with ``real'' $x$-coordinates instead of time slots. In this case, just set the |time slot modifier| key to zero. This will essentially eliminate the semi-intelligent behavior of \pack{pgfgantt} with respect to the conversion of $x$-coordinates. This feature may prove useful if you decide to use real numbers for some time slots. \changes{v1.1}{2011/04/18}{The \texttt{time slot modifier} key has been added. If set to zero, all $x$-coordinates are interpreted as given, without regarding them as time slots.}
+% \par\bigskip\noindent
+% \begin{texcode}
+% \begin{tikzpicture}[x=.5cm, y=1cm]
+% 	\begin{ganttchart}[vgrid, hgrid, time slot modifier=0]{12}
+% 		\gantttitle{Title}{12} \\
+% 		\ganttbar{Task 1}{0}{3} \\
+% 		\ganttbar{Task 2}{3}{10} \\
+% 		\ganttbar{Final task}{10}{12}
+% 	\end{ganttchart}
+% \end{tikzpicture}
+% \end{texcode}
+% \begin{center}
+% \begin{tikzpicture}[x=.5cm, y=1cm]
+% 	\begin{ganttchart}[vgrid, hgrid, time slot modifier=0]{12}
+% 		\gantttitle{Title}{12} \\
+% 		\ganttbar{Task 1}{0}{3} \\
+% 		\ganttbar{Task 2}{3}{10} \\
+% 		\ganttbar{Final task}{10}{12}
+% 	\end{ganttchart}
+% \end{tikzpicture}
+% \end{center}
+% \end{key}
 %
 % \begin{key}{bar}{=\meta{style}}{\texttt{fill=white}}
 % Determines the appearance of the bar.
@@ -1632,12 +1685,14 @@
 % \end{center}
 % As you can see from this graph, arrow-like links consist of three segments (two horizontal, one vertical) if their start and end time slots are sufficiently separated. Otherwise, they comprise five segments (three horizontal, two vertical).
 %
-% Two keys further modify the appearance of arrow-like links:
+% Three keys further modify the appearance of arrow-like links:
 %
 % \begin{key}{link mid}{=\meta{factor}}{\texttt{0.5}}
 % The |link mid| key changes the position of the single vertical segment (in three-part links) or of the middle horizontal segment (in five-part links). By default, these segments are horizontally centered between the left and the right vertical segment, or vertically centered between the upper and the lower horizontal segment, respectively.\par\bigskip
 % \keyline{link bulge}{=\meta{factor}}{\texttt{0.4}}
-% In five-part links, the upper and lower vertical segments are shifted along the $x$-axis by $+$|link bulge| and $-$|link bulge|, respectively.
+% In five-part links, the upper and lower vertical segments are shifted along the $x$-axis by $+$|link bulge| and $-$|link bulge|, respectively.\par\bigskip
+% \keyline{link tolerance}{=\meta{factor}}{\texttt{0.6}}
+% This key governs whether \pack{pgfgantt} draws a five- or a three-part link. If the true $x$-coordinates of the link start and end differ by at least |link tolerance| (this is the case for the second link in the example below), the package draws a five-part link.\changes{v1.1}{2011/04/18}{\texttt{link tolerance} now decides whether a five- or a three-part link is drawn.}
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{tikzpicture}[x=.5cm, y=1cm]
@@ -2032,16 +2087,18 @@
 %
 % \subsection{Global Counters and Booleans}
 %
-% We define a number of global counters: |gtt@width| equals the number of time slots. |gtt@currentline| holds the current line; it starts from 0 and decreases. |gtt@lastline| is the line of the last element drawn (used by |\ganttlinkedbar|). |gtt@lastslot| is the $x$-coordinate of the right border of the last drawn element. |gtt@lasttitleline| equals the line of the title element drawn last, and |gtt@lasttitleslot| corresponds to the $x$-coordinate of its right border.
+% We define a number of global counters: |gtt@width| equals the number of time slots. |gtt@currentline| holds the current line; it starts from 0 and decreases. |gtt@lastline| is the line of the last element drawn (used by |\ganttlinkedbar|). |gtt@lasttitleline| equals the line of the title element drawn last. Furthermore, |gtt@lasttitleslot| corresponds to the $x$-coordinate of its right border.
+%
+% The |\gtt@lastslot| macro contains the $x$-coordinate of the right border of the last drawn element. We use a macro instead of a counter in order to allow fractional coordinates.\changes{v1.1}{2011/04/18}{The \texttt{gtt@lastslot} counter is now a macro. Thereby, fractional coordinates are possible.}
 %
 % The boolean |\ifgtt@intitle| is true at the start of a |ganttchart| environment and set to false as soon as the first non-title element is encountered.
 %    \begin{macrocode}
 \newcounter{gtt@width}
 \newcounter{gtt@currentline}
 \newcounter{gtt@lastline}
-\newcounter{gtt@lastslot}
 \newcounter{gtt@lasttitleline}
 \newcounter{gtt@lasttitleslot}
+\def\gtt@lastslot{0}
 \newif\ifgtt@intitle
 
 %    \end{macrocode}
@@ -2126,9 +2183,8 @@
 %    \end{macrocode}
 % \end{option}
 % \end{option}
-% \begin{option}{vgrid}
-% \begin{option}{vgrid style}
-% Analogously, we declare |vgrid| and |vgridstyle|.
+% \begin{option}{vgrid}\begin{option}{vgrid style}\begin{option}{vgrid lines list}
+% Analogously, we declare |vgrid| and |vgridstyle|. |vgrid lines list| specifies a |\foreach| list that gives the vertical grid lines to be drawn.
 %    \begin{macrocode}
 \@gtt@stylekeydef{vgrid style}
 \newif\ifgtt@vgrid
@@ -2148,10 +2204,12 @@
   \fi%
 }
 \pgfkeys{/pgfgantt/vgrid/.default=dotted}
+\pgfkeysdef{/pgfgantt/vgrid lines list}{%
+  \def\gtt@vgridlineslist{#1}%
+}
 
 %    \end{macrocode}
-% \end{option}
-% \end{option}
+% \end{option}\end{option}\end{option}
 % \begin{option}{canvas}\begin{option}{today}\begin{option}{today rule}\begin{option}{today label}\begin{option}{hgrid shift}\begin{option}{last line height}
 % Here is a set of keys related to the canvas \dots
 %    \begin{macrocode}
@@ -2186,6 +2244,12 @@
 \newif\ifgtt@includetitle
 \pgfkeys{/pgfgantt/include title in canvas/.is if=gtt@includetitle}
 
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{time slot modifier}
+% The |time slot modifier| option controls the semi-intelligent behaviour of the package regarding the conversion of title slots to $x$-coordinates. A value of |0| essentially means ``interpret all end time slots as $x$-coordinates''.
+%    \begin{macrocode}
+\@gtt@keydef{time slot modifier}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{bar}\begin{option}{bar label font}\begin{option}{bar label anchor}\begin{option}{bar left shift}\begin{option}{bar right shift}\begin{option}{bar top shift} \begin{option}{bar height}
@@ -2283,7 +2347,7 @@
 
 %    \end{macrocode}
 % \end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
-% \begin{option}{link}\begin{option}{link label font}\begin{option}{link label anchor}\begin{option}{link label}\begin{option}{link mid}\begin{option}{link bulge}
+% \begin{option}{link}\begin{option}{link label font}\begin{option}{link label anchor}\begin{option}{link label}\begin{option}{link mid}\begin{option}{link bulge}\begin{option}{link tolerance}
 % Next, we declare the keys that modify links.
 %    \begin{macrocode}
 \@gtt@stylekeydef{link}
@@ -2294,8 +2358,9 @@
 }
 \@gtt@keydef{link mid}
 \@gtt@keydef{link bulge}
+\@gtt@keydef{link tolerance}
 %    \end{macrocode}
-% \end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
+% \end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
 % \begin{option}{b-b}\begin{option}{b-m}\begin{option}{m-b}\begin{option}{m-m}\begin{option}{s-s}\begin{option}{s-f}\begin{option}{f-s}\begin{option}{f-f}
 % The definitions of the eight link types follow.
 %    \begin{macrocode}
@@ -2316,6 +2381,7 @@
   canvas={fill=white},
   hgrid style=dotted,
   vgrid style=dotted,
+  vgrid lines list={2,3,...,\value{gtt@width}},
   today=none,
   today rule={dashed, line width=1pt},
   today label=TODAY,
@@ -2330,6 +2396,7 @@
   title height=.6,
   title list options={var=\x, evaluate=\x},
   include title in canvas,
+  time slot modifier=-1,
   bar={fill=white},
   bar label font=\normalsize,
   bar label anchor={anchor=east},
@@ -2363,6 +2430,7 @@
   b-b,
   link mid=.5,
   link bulge=.4,
+  link tolerance=0.6,
 }
 
 %    \end{macrocode}
@@ -2399,11 +2467,11 @@
       (\value{gtt@width}, \y@lower);%
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}\end{intmacro}\end{intmacro}
-% A |\foreach| loop iterates over all time slots and adds vertical grid lines between them, considering |hgrid shift| for the upper $y$-coordinate.
+% A |\foreach| loop iterates over all time slots given by the |vgrid lines list| key and adds vertical grid lines between them, considering |hgrid shift| for the upper $y$-coordinate.
 %    \begin{macrocode}
     \ifgtt@vgrid%
       \foreach \t [evaluate=\t using \t-1]
-          in {2,3,...,\value{gtt@width}} {%
+          in \gtt@vgridlineslist {%
         \draw[/pgfgantt/vgrid style@style]
           (\t, \value{gtt@lasttitleline}-\@gtt@get{hgrid shift}) --
           (\t, \y@lower);%
@@ -2515,7 +2583,7 @@
 \newcommand\ganttbar[4][]{%
   \begingroup%
   \ganttset{#1}%
-  \def\x@left{#3-1+\@gtt@get{bar left shift}}%
+  \def\x@left{#3+\@gtt@get{time slot modifier}+\@gtt@get{bar left shift}}%
   \def\x@right{#4+\@gtt@get{bar right shift}}%
   \def\y@upper{\value{gtt@currentline}-\@gtt@get{bar top shift}}%
   \def\y@lower{\value{gtt@currentline}-\@gtt@get{bar top shift}%
@@ -2572,7 +2640,7 @@
 %    \end{macrocode}
 % Since the first bar clearly appears after the last line containing a title element, we set the boolean |\ifgtt@intitle| to false.
 %    \begin{macrocode}
-  \setcounter{gtt@lastslot}{#4}%
+  \gdef\gtt@lastslot{#4}%
   \setcounter{gtt@lastline}{\value{gtt@currentline}}%
   \global\gtt@intitlefalse%
   \endgroup%
@@ -2586,7 +2654,7 @@
 \newcommand\ganttlinkedbar[4][]{%
   \begingroup%
   \ganttset{#1}%
-  \ganttlink{\value{gtt@lastslot}}{-\value{gtt@lastline}-1}%
+  \ganttlink{\gtt@lastslot}{-\value{gtt@lastline}-1}%
     {#3}{-\value{gtt@currentline}-1}%
   \ganttbar{#2}{#3}{#4}%
   \endgroup%
@@ -2608,7 +2676,9 @@
 % Link type |0| (arrow-like): The first and last coordinate of the link should touch the preceding or following element at the center of its right or left border, respectively. Therefore, we have to correct these coordinates if the link starts or ends at a milestone.
 %    \begin{macrocode}
     \def\x@left{#2+\@gtt@get{bar right shift}}%
-    \def\x@right{#4-1+\@gtt@get{bar left shift}}%
+    \def\x@right{%
+      #4+\@gtt@get{time slot modifier}+\@gtt@get{bar left shift}%
+    }%
     \def\y@upper{-#3+1-\@gtt@get{bar top shift}/2-\@gtt@get{bar height}/2}%
     \def\y@lower{-#5+1-\@gtt@get{bar top shift}/2-\@gtt@get{bar height}/2}%
     \def\@tempa{m}
@@ -2630,9 +2700,11 @@
     \pgfmathparse{#3==#5}%
     \ifcase\pgfmathresult%
 %    \end{macrocode}
-% Once again, two possibilities arise: Either the elements to be connected are at least separated by one time slot, in which case we draw a three-part arrow. Alternatively, the elements lie in adjacent time slots or even overlap, in which case we draw a five-part arrow.
+% Once again, two possibilities arise: Either the elements to be connected are at least separated by |link tolerance| time slots, in which case we draw a three-part arrow. Alternatively, the elements lie in adjacent time slots or even overlap, in which case we draw a five-part arrow.
 %    \begin{macrocode}
-      \pgfmathparse{(#4-1)>#2}%
+      \pgfmathparse{%
+        (#4+\@gtt@get{time slot modifier}-#2)>=\@gtt@get{link tolerance}%
+      }%
       \ifcase\pgfmathresult%
         \draw[/pgfgantt/link@style]
           (\x@left, \y@upper) --
@@ -2656,7 +2728,7 @@
 % For elements that lie in the same row, we only draw an arrow if they are separated by at least one time slot.
 %    \begin{macrocode}
     \else%
-      \pgfmathparse{(#4-1)==#2}%
+      \pgfmathparse{(#4+\@gtt@get{time slot modifier})==#2}%
       \ifcase\pgfmathresult%
         \draw[/pgfgantt/link@style]
           (\x@left, \y@upper) -- (\x@right, \y@lower);%
@@ -2672,7 +2744,9 @@
     \else
       \def\@tempa{s}
       \ifx\gtt@link@starttype\@tempa
-        \def\x@left{#2-1+\@gtt@get{bar right shift}}%
+        \def\x@left{%
+          #2+\@gtt@get{time slot modifier}+\@gtt@get{bar right shift}%
+        }%
       \fi%
     \fi%
     \def\@tempa{f}%
@@ -2681,7 +2755,9 @@
     \else
       \def\@tempa{s}
       \ifx\gtt@link@endtype\@tempa
-        \def\x@right{#4-1+\@gtt@get{bar left shift}}%
+        \def\x@right{%
+          #4+\@gtt@get{time slot modifier}+\@gtt@get{bar left shift}%
+        }%
       \fi%
     \fi%
     \def\y@upper{-#3+1-\@gtt@get{bar height}}%
@@ -2715,7 +2791,9 @@
 \newcommand\ganttgroup[4][]{%
   \begingroup%
   \ganttset{#1}%
-  \def\x@left{#3-1+\@gtt@get{group left shift}}%
+  \def\x@left{%
+    #3+\@gtt@get{time slot modifier}+\@gtt@get{group left shift}%
+  }%
   \def\x@right{#4+\@gtt@get{group right shift}}%
   \def\y@upper{\value{gtt@currentline}-\@gtt@get{group top shift}}%
   \def\y@lower{\value{gtt@currentline}-\@gtt@get{group top shift}%
@@ -2838,7 +2916,7 @@
     (\x@mid+\@gtt@get{milestone width}/2, \y@mid) --
     (\x@mid, \y@mid+\@gtt@get{milestone height}/2) --
     cycle;%
-  \setcounter{gtt@lastslot}{#3}%
+  \gdef\gtt@lastslot{#3}%
   \setcounter{gtt@lastline}{\value{gtt@currentline}}%
   \global\gtt@intitlefalse%
   \endgroup%
@@ -2852,7 +2930,7 @@
 \newcommand\ganttlinkedmilestone[3][]{%
   \begingroup%
   \ganttset{b-m,#1}%
-  \ganttlink{\value{gtt@lastslot}}{-\value{gtt@lastline}-1}%
+  \ganttlink{\gtt@lastslot}{-\value{gtt@lastline}-1}%
     {#3}{-\value{gtt@currentline}-1}%
   \ganttmilestone{#2}{#3}%
   \endgroup%
