@@ -1,14 +1,14 @@
-The pgfgantt package v3.0
+The pgfgantt package v4.0
 ------------------------------------------------------------------------------
 This package is released under the LaTeX Project Public License v1.3c or later
 (see http://www.latex-project.org/lppl.txt).
 
 
-The pgfgantt package provides the ganttchart environment, which draws
-a Gantt chart within a TikZ picture. The user may add various elements
-to the chart, namely titles, bars, milestones, groups and different links
-between these elements. Furthermore, the appearance of the chart elements
-is highly customizable, owing to a number of keys.
+The pgfgantt package provides the ganttchart environment, which
+draws a Gantt chart within a TikZ picture. The user may add various
+elements to the chart, for example, titles, bars, groups, milestones and different
+links between these elements. The appearance of the chart elements
+is highly customizable, and even new chart elements may be defined.
 
 The package makes use of pgf/TikZ (http://tug.ctan.org/pkg/pgf).
 
@@ -16,4 +16,4 @@ Installation: Run pgfgantt.ins through LaTeX and follow the instructions.
 
 --
 Wolfgang Skala
-January 25th, 2012
+1st June 2013
