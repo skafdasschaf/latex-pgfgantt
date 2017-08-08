@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2011 by Wolfgang Skala
+% Copyright (C) 2012 by Wolfgang Skala
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -13,7 +13,7 @@
 % \fi
 %
 % \iffalse
-%<pgfgantt>\ProvidesPackage{pgfgantt}[2011/11/10 v2.1 Draw Gantt diagrams with TikZ]
+%<pgfgantt>\ProvidesPackage{pgfgantt}[2012/01/25 v3.0 Draw Gantt diagrams with TikZ]
 %<pgfgantt>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %
 %<*driver>
@@ -45,18 +45,21 @@
 		moretexcs={
 			gantttitle,gantttitlelist,ganttbar,ganttlink,
 			ganttlinkedbar,ganttmilestone,ganttlinkedmilestone,ganttgroup,
-			ganttset,ganttnewline,textcolor,foreach,
+			ganttset,ganttnewline,textcolor,foreach,draw,
 			pgfcalendarweekdayshortname,usetikzlibrary,
-			color,rotatebox,definecolor,sfdefault,mddefault,bfdefault,fcolorbox
+			color,rotatebox,definecolor,sfdefault,mddefault,bfdefault,fcolorbox,
+			newganttlinktype,newganttlinktypealias,setganttlinklabel,
+			ganttsetstartanchor,ganttsetendanchor,xLeft,xRight,yUpper,yLower,
+			ganttlinklabel,ganttvalueof
 		},
 		escapeinside=`',
 		escapebegin=\begin{rmfamily},
 		escapeend=\end{rmfamily},
 		emph={
-			anchor, bar, bulge, canvas, chart, font, group, height, hgrid,
-			in, include, incomplete, inline, label, left, link, list, mid, milestone,
-			modifier, name, options, peak, peaks, progress, right, rule, shift, slot, style,
-			text, time, title, today, tolerance, top, type, unit, vgrid, width, x, xshift, y, yshift
+			anchor,bar,bulge,canvas,chart,font,group,height,hgrid,
+			in,include,incomplete,inline,label,left,link,list,mid,milestone,
+			modifier,name,options,peak,peaks,progress,right,rule,shape,shift,slot,style,
+			text,time,title,today,tolerance,top,type,unit,vgrid,width,x,xshift,y,yshift
 		},
 		emphstyle=\color{OliveGreen},
 	}
@@ -175,6 +178,7 @@
   \ignorespaces}
 \let\endoption\endmacro
 \let\endintmacro\endmacro
+\renewenvironment{theglossary}{\glossary@prologue\GlossaryParms\let\item\@idxitem\ignorespaces}{}
 \makeatother
 
 \AtBeginDocument{\lstMakeShortInline|}
@@ -209,22 +213,27 @@
 	pdfhighlight=/N%
 ]{hyperref}%
 
-\newcommand\keyline[3]{\noindent\DescribeOpt{#1}\texttt{\color{OliveGreen}/pgfgantt/#1}#2\hfill#3\par\noindent\ignorespaces}
-\newenvironment{key}[3]{%
+\newcommand\keyline[4][=]{%
+  \noindent\DescribeOpt{#2}\texttt{\textcolor{OliveGreen!50}{/pgfgantt/}\textcolor{OliveGreen}{#2}\space#1}#3%
+  \hfill\texttt{#4}\par\noindent\ignorespaces%
+}
+\newenvironment{key}[4][=]{%
 	\bigskip%
-	\keyline{#1}{#2}{#3}%
+	\keyline[#1]{#2}{#3}{#4}%
 }{}
 \def\TikZ{Ti\textit{k}Z}
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 
 \usepackage{pgfgantt}
 \usepackage{pgfcalendar}
-\usetikzlibrary{positioning,shadows,shadings}
+\usetikzlibrary{positioning,shadows,shadings,decorations.pathmorphing}
 
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
-\IndexPrologue{\section{Index}Numbers written in bold refer to the page where the corresponding entry is described; numbers in italic refer to the code line of the definition; numbers in roman refer to the code lines where the entry is used.}
-\GlossaryPrologue{\section{Change History}}
+\IndexPrologue{\section{Index}\markboth{Index}{Index}Numbers written in bold refer to the page where the corresponding entry is described; numbers in italic refer to the code line of the definition; numbers in roman refer to the code lines where the entry is used.}
+\GlossaryPrologue{\section{Change History}\markboth{Change history}{Change history}}
+
 
 \setkomafont{title}{\rmfamily\bfseries}
 \addtokomafont{sectioning}{\rmfamily}
@@ -237,7 +246,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{1163}
+% \CheckSum{1390}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -258,7 +267,7 @@
 %
 % \GetFileInfo{pgfgantt.sty}
 %
-% \DoNotIndex{\@empty,\@ifstar,\@ifundefined,\@tempa,\@tempb,\addtocounter,\anchor,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\gdef,\global,\i,\ifcase,\ifnum,\ifx,\itshape,\let,\newcommand,\newcounter,\newenvironment,\newif,\node,\normalcolor,\normalsize,\path,\pgf@x,\pgf@y,\pgfdeclareshape,\pgfkeys,\pgfkeysdef,\pgfkeysdefnargs,\pgfmathparse,\pgfmathresult,\pgfmathsetcounter,\pgfmathsetmacro,\pgfpoint,\pgfpointanchor,\pgfqkeys,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\stepcounter,\strut,\t,\the,\usetikzlibrary,\value,\x,\xdef}
+% \DoNotIndex{\@empty,\@ifstar,\@ifundefined,\@nameuse,\@tempa,\@tempb,\addtocounter,\advance,\anchor,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\i,\ifcase,\ifnum,\ifx,\itshape,\let,\newcommand,\newcounter,\newenvironment,\newif,\node,\normalcolor,\normalsize,\PackageWarning,\path,\pgf@x,\pgf@y,\pgf@xa,\pgf@xb,\pgf@ya,\pgf@yb,\pgfdeclareshape,\pgfkeys,\pgfkeyssetvalue,\pgfkeysvalueof,\pgfmathparse,\pgfmathresult,\pgfmathsetcounter,\pgfmathsetmacro,\pgfpoint,\pgfpointanchor,\pgfqkeys,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\stepcounter,\strut,\t,\the,\usetikzlibrary,\value,\x,\xdef}
 %
 % 
 % \title{Drawing Gantt Charts in \LaTeX\\with \TikZ}
@@ -279,8 +288,8 @@
 %
 % The \pack{pgfgantt} package allows you to draw Gantt charts in \LaTeX. Thus, you can describe simple project schedules without having to include images produced by external programs. Similar to Martin Kumm's \pack{gantt} package\footnote{\url{http://www.martin-kumm.de/tex_gantt_package.php}} (which inspired \pack{pgfgantt}'s fundamental aspects), \pack{pgfgantt} bases upon the \TikZ\ frontend of \textsc{pgf}\footnote{\url{http://ctan.org/tex-archive/graphics/pgf/}}. Besides, it provides a comprehensive (and portable) alternative to \pack{pst-gantt}\footnote{\url{http://ctan.org/tex-archive/graphics/pstricks/contrib/pst-gantt/}}.
 %
-% \changes{v1.1}{2011/04/18}{The introduction now clarifies what I mean by ``a current \textsc{pgf} installation''.}
-% \pack{pgfgantt} requires a \textit{current} \textsc{pgf} installation. \textbf{\color{red}Note that the version number must at least be 2.10, dated October 25th, 2010.} If you get a lot of errors and \LaTeX\ complains that |\pgfkeysdefnargs| is undefined, your \textsc{pgf} installation is most likely too old. Furthermore, \textbf{\color{red}\pack{pgfgantt} 2.0 and above is not fully downwards compatible. In particular, the syntax of \texttt{\string\ganttlink} has changed.}
+% \changes{v1.1}{2011/04/18}{The introduction clarifies what I mean by ``a current \textsc{pgf} installation''.}
+% \pack{pgfgantt} requires a \textit{current} \textsc{pgf} installation. \textbf{\color{red}Note that the version number must at least be 2.10, dated October 25th, 2010.} Furthermore, \textbf{\color{red}\pack{pgfgantt} 3.0 and above is not fully downwards compatible. In particular, the syntax of \texttt{\string\ganttlink} has changed.}
 %
 % \paragraph{Acknowledgements} I would like to thank Petr Po\v s\'ik (Czech Technical University in Prague), Rapha\"el Clifford (University of Bristol) and Holger Karl (Universität Paderborn) for their ideas concerning new features.
 %
@@ -348,16 +357,16 @@
 % \end{ganttchart}
 % \end{texcode}
 % The environment has one optional and one mandatory argument. The former specifies the \meta{options} for the chart, the latter indicates the \meta{number of time slots}.\par
-% \changes{v2.1}{2011/11/10}{The \texttt{ganttchart} environment may now be used outside a \texttt{tikzpicture}.}
+% \changes{v2.1}{2011/11/10}{The \texttt{ganttchart} environment may be used outside a \texttt{tikzpicture}.}
 % Although you will often put a |ganttchart| into a |tikzpicture| environment, you may actually use the environment on its own. \pack{pgfgantt} checks whether the chart is surrounded by a |tikzpicture| and adds this environment if necessary.
 % 
-% \begin{key}{canvas}{=\meta{style}}{initial value: \texttt{fill=white}}
-% The |canvas| key changes the appearance of the canvas. \meta{style} is a list of \TikZ\ keys such as |fill|, |draw| or |dashed|. By default, the canvas is a white rectangle with a black frame.
+% \begin{key}[./style=]{canvas}{\meta{style}}{fill=white}
+% The |canvas| key changes the appearance of the canvas. \meta{style} is a list of \TikZ\ keys such as |fill|, |draw| or |dashed|. By default, the canvas is a white rectangle with a black frame.\changes{v3.0}{2012/01/25}{All style keys (\texttt{canvas}, \texttt{bar} etc.) only support the common \TikZ\ style key syntax.}
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{tikzpicture} % optional
 % 	\begin{ganttchart}%
-% 			[canvas={fill=yellow!25, draw=blue, dashed, very thick}]{6}
+% 			[canvas/.style={fill=yellow!25, draw=blue, dashed, very thick}]{6}
 % 		\gantttitle{Title}{6} \\
 % 		\ganttbar{}{1}{2} \\
 % 		\ganttbar{}{3}{6}
@@ -365,23 +374,23 @@
 % \end{tikzpicture} % optional
 % \end{texcode}
 % \begin{center}
-% \begin{tikzpicture} % optional
+% \begin{tikzpicture}
 % 	\begin{ganttchart}%
-% 			[canvas={fill=yellow!25, draw=blue, dashed, very thick}]{6}
+% 			[canvas/.style={fill=yellow!25, draw=blue, dashed, very thick}]{6}
 % 		\gantttitle{Title}{6} \\
 % 		\ganttbar{}{1}{2} \\
 % 		\ganttbar{}{3}{6}
 % 	\end{ganttchart}
-% \end{tikzpicture} % optional
+% \end{tikzpicture}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{x unit}{=\meta{dimension}}{\texttt{.5cm}}
-% \keyline{y unit title}{=\meta{dimension}}{\texttt{1cm}}
-% \keyline{y unit chart}{=\meta{dimension}}{\texttt{1cm}}
+% \begin{key}{x unit}{\meta{dimension}}{.5cm}
+% \keyline{y unit title}{\meta{dimension}}{1cm}
+% \keyline{y unit chart}{\meta{dimension}}{1cm}
 % These keys specify the width of a time slot and the height of title or chart lines, respectively. Typically, the $x/y$-dimension ratio approximates $1:2$, and the line height is equal over the whole chart. Other dimensions are well possible, but you might have to change several spacing-related keys in order to obtain a pleasing chart.
 % \changes{v2.0}{2011/10/10}{Completely rewrote the calculation of coordinates.}
-% \changes{v2.0}{2011/10/10}{The \texttt{x unit}, \texttt{y unit title} and \texttt{y unit chart} keys now specify the width of time slots and the height of title or chart lines, respectively. Thus, one can draw titles whose height differs from the rest of the chart. Furthermore, the $x$- and $y$-dimensions of the chart are independent of the dimensions of the surrounding \texttt{tikzpicture}.}
+% \changes{v2.0}{2011/10/10}{The \texttt{x unit}, \texttt{y unit title} and \texttt{y unit chart} keys specify the width of time slots and the height of title or chart lines, respectively. Thus, one can draw titles whose height differs from the rest of the chart. Furthermore, the $x$- and $y$-dimensions of the chart are independent of the dimensions of the surrounding \texttt{tikzpicture}.}
 %
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -402,9 +411,9 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{hgrid}{\texttt{[}=\texttt{false}/\texttt{true}/\meta{style list}\texttt{]}}{\texttt{false}}
-% \keyline{hgrid style}{=\meta{style}}{\texttt{dotted}}
-% \keyline{vgrid}{\texttt{[}=\texttt{false}/\texttt{true}/\meta{style list}\texttt{]}}{\texttt{false}}
+% \begin{key}[]{hgrid}{\texttt{[=false/true/}\meta{style list}\texttt{]}}{false}
+% \keyline[/.style=]{hgrid style}{\meta{style}}{dotted}
+% \keyline[]{vgrid}{\texttt{[=false/true/}\meta{style list}\texttt{]}}{false}
 % |hgrid| draws a horizontal grid which starts immediately below the last title element. The key can be specified in four different ways: Firstly, |hgrid=false| eliminates the horizontal grid. You may omit this declaration, since it is the default. Secondly, both |hgrid| and |hgrid=true| activate the horizontal grid, which is then drawn in the default style |dotted|. Finally, |hgrid=|\meta{style list} draws the horizontal grid in the given \meta{style list} (see below).
 %
 % |hgrid style| changes the style of single horizontal grid lines that are drawn with |\ganttnewline[grid]| (see section~\ref{ssc:newline}). The |vgrid| key governs the vertical grid; otherwise, use it exactly like |hgrid|.
@@ -487,7 +496,7 @@
 %
 %
 % In a chart with many time slots, drawing vertical grid lines between all of them will lead to a confusing appearance. In such a case, you can pass an appropriate \meta{style list} to |vgrid| in order to draw every second grid line, for example.
-% \changes{v1.1}{2011/04/18}{The \texttt{vgrid lines list} key now determines the number of vertical grid lines drawn.}
+% \changes{v1.1}{2011/04/18}{The \texttt{vgrid lines list} key determines the number of vertical grid lines drawn.}
 % \changes{v2.0}{2011/10/10}{Removed the \texttt{vgrid lines list} key, as its behaviour can be simulated by an appropriate \meta{style list} for \texttt{vgrid}.}
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -510,9 +519,9 @@
 %
 % \changes{v2.0}{2011/10/10}{Removed the \texttt{hgrid shift} and \texttt{last line height} keys.}
 % 
-% \begin{key}{today}{=\meta{time slot}}{\texttt{none}}
-% \keyline{today rule}{=\meta{style}}{\texttt{dashed, line width=1pt}}
-% \keyline{today label}{=\meta{text}}{\texttt{TODAY}}
+% \begin{key}{today}{\meta{time slot}}{none}
+% \keyline[/.style=]{today rule}{\meta{style}}{dashed, line width=1pt}
+% \keyline{today label}{\meta{text}}{TODAY}
 % Sometimes, you may wish to indicate the current day, month or the like on a Gantt chart. In order to do so, pass an integer value to the |today| key, which draws a vertical rule at the corresponding \meta{time slot}. This rule appears in the \meta{style} denoted by |today rule|, while |today label| contains the \meta{text} below the rule.
 % \par\bigskip\noindent
 % \begin{minipage}[t]{.44\textwidth}
@@ -531,7 +540,8 @@
 % 		[vgrid, today=3,
 % 		today label=\textcolor{blue}%
 % 			{Current Week},
-% 		today rule={blue, ultra thick}]{6}
+% 		today rule/.style=%
+% 			{blue, ultra thick}]{6}
 % 	\gantttitle{Title}{6} \\
 % 	\ganttbar{}{1}{3} \\
 % 	\ganttbar{}{4}{6}
@@ -551,7 +561,8 @@
 % 		[vgrid, today=3,
 % 		today label=\textcolor{blue}%
 % 			{Current Week},
-% 		today rule={blue, ultra thick}]{6}
+% 		today rule/.style=%
+% 			{blue, ultra thick}]{6}
 % 	\gantttitle{Title}{6} \\
 % 	\ganttbar{}{1}{3} \\
 % 	\ganttbar{}{4}{6}
@@ -585,10 +596,9 @@
 % \end{center}
 %
 % Even if you prefer a canvas without a horizontal grid, you may nevertheless want to separate certain lines by a grid rule. For this purpose, specify the optional argument |[grid]| for |\ganttnewline| (or |\\|), which draws a grid rule in |hgrid style| between the current and the new line. Alternatively, directly give the desired style as optional argument.
-% \changes{v2.0}{2011/10/10}{The optional argument of \texttt{\protect\string\ganttnewline} now also takes a style.}
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[hgrid style=red]{12}
+% \begin{ganttchart}[hgrid style/.style=red]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{}{1}{3} \ganttnewline[thick, blue]
 % 	\ganttbar{}{4}{5} \\
@@ -597,7 +607,7 @@
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[hgrid style=red]{12}
+% \begin{ganttchart}[hgrid style/.style=red]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{}{1}{3} \ganttnewline[thick, blue]
 % 	\ganttbar{}{4}{5} \\
@@ -659,7 +669,7 @@
 % \gantttitle{1}{1} \gantttitle{2}{1} `\dots' \gantttitle{12}{1} \\
 % 	\end{texcode}
 % 	\item In order to draw seven title elements containing the names of the weekdays (e.\,g., ``Mon'' to ``Sun''), we have to change the |title list options| key:\par
-% 	\begin{key}{title list options}{=\meta{pgffor options}}{\texttt{var=\string\x, evaluate=\string\x}}
+% 	\begin{key}{title list options}{\meta{pgffor options}}{var=\string\x, evaluate=\string\x}
 % 	This key changes the \meta{pgffor options} of the |\foreach| command called by |\gantttitlelist|. Again, the \TikZ\ manual is the definitive reference on possible \meta{pgffor options}. There is just one thing to keep in mind: The macro that yields the labels to be printed by |\gantttitlelist| must be called |\x|.
 % 	\end{key}\par
 % 	The following example shows how you can implement a title line enumerating the days of the week:
@@ -688,7 +698,7 @@
 % \end{center}
 % \end{enumerate}
 %
-% \begin{key}{title}{=\meta{style}}{\texttt{fill=white}}
+% \begin{key}[/.style=]{title}{\meta{style}}{fill=white}
 % Sets the appearance of a title element.
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -696,25 +706,27 @@
 % \usetikzlibrary{shadings}
 %   `$\cdots$'
 % \begin{ganttchart}%
-% 		[vgrid, canvas={draw=none},
-% 		title={fill=blue!20, rounded corners=2mm, drop shadow}]{7}
+% 		[vgrid, canvas/.style={draw=none},
+% 		title/.style={fill=blue!20, rounded corners=2mm, drop shadow}]{7}
 % 	\gantttitle{First week}{7} \\
-% 	\gantttitlelist[title={draw=none, inner color=red}]{1,...,7}{1} \\
+% 	\gantttitlelist[title/.style={draw=none, inner color=red}]{1,...,7}{1} \\
 % 	\ganttbar{}{1}{2}
 % 	\ganttbar{}{4}{7}
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, canvas={draw=none},title={fill=blue!20, rounded corners=2mm, drop shadow}]{7}
+% \begin{ganttchart}%
+% 		[vgrid, canvas/.style={draw=none},
+% 		title/.style={fill=blue!20, rounded corners=2mm, drop shadow}]{7}
 % 	\gantttitle{First week}{7} \\
-% 	\gantttitlelist[title={draw=none, inner color=red}]{1,...,7}{1} \\
+% 	\gantttitlelist[title/.style={draw=none, inner color=red}]{1,...,7}{1} \\
 % 	\ganttbar{}{1}{2}
 % 	\ganttbar{}{4}{7}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{title label font}{=\meta{font commands}}{\texttt{\string\small}}
+% \begin{key}{title label font}{\meta{font commands}}{\string\small}
 % Selects the font of the text inside a title element. In most cases, you can include font format commands directly in the first mandatory argument of |\gantttitle|. However, you \textit{must} use the |title label font| key if you intend to change the font size. Otherwise, the vertical alignment of the title label will be incorrect with the standard anchor.
 % \par\bigskip\noindent
 % \begin{minipage}[t]{.49\textwidth}
@@ -770,8 +782,8 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{title label anchor}{=\meta{anchor}}{\texttt{anchor=mid}}
-% By default, title labels are vertically centered at half their x-height. This yields a good alignment for labels whose letters have equal amounts of ascenders and descenders (e.\,g., lowercase numbers). However, when the letters contain mostly ascenders (e.\,g., uppercase numbers), the label position will appear too high. In this case, you should change the anchor:
+% \begin{key}[/.style=]{title label anchor}{\meta{anchor}}{anchor=mid}
+% By default, title labels are vertically centered at half their $x$-height. This yields a good alignment for labels whose letters have equal amounts of ascenders and descenders (e.\,g., lowercase numbers). However, when the letters contain mostly ascenders (e.\,g., uppercase numbers), the label position will appear too high. In this case, you should change the anchor:
 % \par\bigskip\noindent
 % \begin{minipage}[t]{.44\textwidth}
 % \begin{texcode}
@@ -794,8 +806,8 @@
 % \begin{ganttchart}%
 % 		[vgrid, hgrid,
 % 		title label font={\LARGE},
-% 		title label anchor={below=-1.5ex}%
-% 		]{6}
+% 		title label anchor/.style=%
+% 			{below=-1.5ex}]{6}
 % 	\gantttitle{2011}{6} \\
 % 	\ganttbar{}{1}{2}
 % 	\ganttbar{}{4}{6}
@@ -815,8 +827,8 @@
 % \begin{ganttchart}%
 % 		[vgrid, hgrid,
 % 		title label font={\LARGE},
-% 		title label anchor={below=-1.5ex}%
-% 		]{6}
+% 		title label anchor/.style=%
+% 			{below=-1.5ex}]{6}
 % 	\gantttitle{2011}{6} \\
 % 	\ganttbar{}{1}{2}
 % 	\ganttbar{}{4}{6}
@@ -824,10 +836,10 @@
 % \end{center}
 % \end{key}
 % 
-% \begin{key}{title left shift}{=\meta{factor}}{\texttt{0}}
-% \keyline{title right shift}{=\meta{factor}}{\texttt{0}}
-% \keyline{title top shift}{=\meta{factor}}{\texttt{0}}
-% \keyline{title height}{=\meta{factor}}{\texttt{0.6}}
+% \begin{key}{title left shift}{\meta{factor}}{0}
+% \keyline{title right shift}{\meta{factor}}{0}
+% \keyline{title top shift}{\meta{factor}}{0}
+% \keyline{title height}{\meta{factor}}{0.6}
 % The first three keys shift the coordinates of a title element's borders (or rather of its corners), while |title height| changes its height. By default, the left upper corner of a title element coincides with the origin of the start time slot; its right lower corner touches the right border of the end time slot $0.6$ units below the upper line border:
 %
 % \begin{center}
@@ -850,7 +862,7 @@
 % The figure below shows a Gantt chart with two lines and one (large) time slot and indicates the distances modified by these keys.
 % \begin{center}
 % \begin{tikzpicture}[x=7cm, y=2cm]
-% 	\begin{ganttchart}[x unit=7cm, y unit title=2cm, title={line width=1.5pt,fill=yellow!10},title left shift=.2,title right shift=-.3,title top shift=.25, title height=.5]{1}
+% 	\begin{ganttchart}[x unit=7cm, y unit title=2cm, title/.style={line width=1.5pt,fill=yellow!10},title left shift=.2,title right shift=-.3,title top shift=.25, title height=.5]{1}
 % 		\gantttitle{}{1} \\
 % 	\end{ganttchart}
 % 	\small
@@ -874,7 +886,7 @@
 % For example, you might devise a layout where the title element does not touch the borders of the start and end time slot.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, title={fill=teal, draw=none},
+% \begin{ganttchart}[vgrid, title/.style={fill=teal, draw=none},
 % 		title label font=\color{white}\bfseries,
 % 		title left shift=.1, title right shift=-.1,
 % 		title top shift=.05, title height=.75]{7}
@@ -884,7 +896,7 @@
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, title={fill=teal, draw=none},
+% \begin{ganttchart}[vgrid, title/.style={fill=teal, draw=none},
 % 		title label font=\color{white}\bfseries,
 % 		title left shift=.1, title right shift=-.1,
 % 		title top shift=.05, title height=.75]{7}
@@ -895,13 +907,13 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{include title in canvas}{=\texttt{false}/\texttt{true}}{\texttt{true}}
+% \begin{key}{include title in canvas}{\meta{boolean}}{true}
 % The canvas normally comprises all lines of the chart. However, you may wish that your title elements only consist of text lacking any frame or background. In this case, the canvas probably should exclude all lines containing title elements, which you achieve by |include title in canvas=false|.
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}%
 % 		[hgrid={*1{draw=red, thick}}, vgrid,
-% 		title={draw=none, fill=none}, include title in canvas=false]{7}
+% 		title/.style={draw=none, fill=none}, include title in canvas=false]{7}
 % 	\gantttitlelist{1,...,7}{1} \\
 % 	\ganttbar{}{1}{3} \\
 % 	\ganttbar{}{4}{7}
@@ -910,7 +922,7 @@
 % \begin{center}
 % \begin{ganttchart}%
 % 		[hgrid={*1{draw=red, thick}}, vgrid,
-% 		title={draw=none, fill=none}, include title in canvas=false]{7}
+% 		title/.style={draw=none, fill=none}, include title in canvas=false]{7}
 % 	\gantttitlelist{1,...,7}{1} \\
 % 	\ganttbar{}{1}{3} \\
 % 	\ganttbar{}{4}{7}
@@ -920,6 +932,7 @@
 %
 %
 % \subsection{Bars}
+% \label{ssc:bars}
 %
 % On a Gantt chart, a \textit{bar} indicates the duration of a task or one of its parts.
 % \begin{texcode}
@@ -944,7 +957,7 @@
 % \end{ganttchart}
 % \end{center}
 %
-% \begin{key}{time slot modifier}{=\meta{factor}}{\texttt{-1}}
+% \begin{key}{time slot modifier}{\meta{factor}}{-1}
 % Note that a bar usually touches the left border of the \meta{start time slot} and not the right, as it would if the \meta{start time slot} were strictly interpreted as an $x$-coordinate. However, you may prefer to work with ``real'' $x$-coordinates instead of time slots. In this case, just set the |time slot modifier| key to zero. This will essentially eliminate the semi-intelligent behavior of \pack{pgfgantt} with respect to the conversion of $x$-coordinates. This feature may prove useful if you decide to use real numbers for some time slots. \changes{v1.1}{2011/04/18}{The \texttt{time slot modifier} key has been added. If set to zero, all $x$-coordinates are interpreted as given, without regarding them as time slots.}
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -965,30 +978,30 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{bar}{=\meta{style}}{\texttt{fill=white}}
+% \begin{key}[/.style=]{bar}{\meta{style}}{fill=white}
 % Determines the appearance of the bar.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, hgrid, bar={fill=red!50}]{12}
+% \begin{ganttchart}[vgrid, hgrid, bar/.style={fill=red!50}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{1}{3} \\
-% 	\ganttbar[bar={fill=yellow, dashed}]{Task 2}{4}{10} \\
-% 	\ganttbar[bar={fill=green, draw=none}]{Final task}{11}{12}
+% 	\ganttbar[bar/.style={fill=yellow, dashed}]{Task 2}{4}{10} \\
+% 	\ganttbar[bar/.style={fill=green, draw=none}]{Final task}{11}{12}
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, hgrid, bar={fill=red!50}]{12}
+% \begin{ganttchart}[vgrid, hgrid, bar/.style={fill=red!50}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{1}{3} \\
-% 	\ganttbar[bar={fill=yellow, dashed}]{Task 2}{4}{10} \\
-% 	\ganttbar[bar={fill=green, draw=none}]{Final task}{11}{12}
+% 	\ganttbar[bar/.style={fill=yellow, dashed}]{Task 2}{4}{10} \\
+% 	\ganttbar[bar/.style={fill=green, draw=none}]{Final task}{11}{12}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{bar label text}{=\meta{text}}{\texttt{\string\strut\#1}}
-% \keyline{bar label font}{=\meta{font commands}}{\texttt{\string\normalsize}}
-% \keyline{bar label anchor}{=\meta{anchor}}{\texttt{anchor=east}}
+% \begin{key}{bar label text}{\meta{text}}{\string\strut\#1}
+% \keyline{bar label font}{\meta{font commands}}{\string\normalsize}
+% \keyline[./style=]{bar label anchor}{\meta{anchor}}{anchor=east}
 % The |bar label text| key configures the label \meta{text} next to each bar. This key should contain a single parameter token (|#1|), which is replaced by the first mandatory argument of |\ganttbar|. The |\strut| in the standard value ensures equal vertical spacing of the labels. |bar label font| selects the font for the bar label, |bar label anchor| determines its anchor. The last control sequence in \meta{font commands} may take a single argument (like |\textit|). \changes{v1.1}{2011/04/18}{\texttt{bar label text} configures the text of a bar label.}
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -996,7 +1009,7 @@
 % 		[vgrid, hgrid, bar label font=\Large,
 % 		bar label text={--#1$\rightarrow$}]{12}
 % 	\gantttitle{Title}{12} \\
-% 	\ganttbar[bar label anchor={left=1cm}]{Task 1}{1}{3} \\
+% 	\ganttbar[bar label anchor/.style={left=1cm}]{Task 1}{1}{3} \\
 % 	\ganttbar[bar label font=\color{orange}]{Task 2}{4}{10} \\
 % 	\ganttbar[bar label font=\MakeUppercase]{Final task}{11}{12}
 % \end{ganttchart}
@@ -1006,24 +1019,27 @@
 % 		[vgrid, hgrid, bar label font=\Large,
 % 		bar label text={--#1$\rightarrow$}]{12}
 % 	\gantttitle{Title}{12} \\
-% 	\ganttbar[bar label anchor={left=1cm}]{Task 1}{1}{3} \\
+% 	\ganttbar[bar label anchor/.style={left=1cm}]{Task 1}{1}{3} \\
 % 	\ganttbar[bar label font=\color{orange}]{Task 2}{4}{10} \\
 % 	\ganttbar[bar label font=\MakeUppercase]{Final task}{11}{12}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{inline}{=\texttt{false}/\texttt{true}}{\texttt{false}}
-% \keyline{bar label inline anchor}{=\meta{anchor}}{\texttt{anchor=north}}
-% If two or more chart elements appear in a single line, their labels will overlap at the left border of the chart. Thus, you can place the label adjacent to a bar by setting the boolean key |inline| to |true|. This key instructs the package to draw the label at the center of the chart element and use the anchor given by |bar label inline anchor| instead of |bar label anchor|.
+% \begin{key}{inline}{\meta{boolean}}{false}
+% \keyline[/.style=]{bar label inline anchor}{\meta{anchor}}{anchor=north}
+% \keyline{bar label shape anchor}{\meta{anchor}}{center}
+% If two or more chart elements appear in a single line, their labels will overlap at the left border of the chart. Thus, you can place the label adjacent to a bar by setting the boolean key |inline| to |true|. This key instructs the package to draw the label at the |bar label shape anchor| of the chart element and use the anchor given by |bar label inline anchor|.
 % \changes{v2.1}{2011/11/10}{The \texttt{inline} key moves labels close to their respective chart elements.}
-% \changes{v2.1}{2011/11/10}{Added three keys (\texttt{bar label inline anchor}, \texttt{group label inline anchor} and \texttt{milestone label inline anchor}) for placing inline labels.}
+% \changes{v2.1}{2011/11/10}{Added three keys (\texttt{bar/group/milestone label inline anchor}) for placing inline labels.}
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[vgrid, hgrid, inline]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{1}{3}
-% 	\ganttbar[bar label inline anchor={above}]{Task 2}{5}{10} \\
+% 	\ganttbar[bar label inline anchor/.style=above]{Task 2}{5}{10} \\
+% 	\ganttbar[bar label shape anchor=left,%
+% 		bar label inline anchor/.style=right]{Task 3}{2}{7}
 % 	\ganttbar[inline=false]{Final task}{11}{12}
 % \end{ganttchart}
 % \end{texcode}
@@ -1031,16 +1047,32 @@
 % \begin{ganttchart}[vgrid, hgrid, inline]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{1}{3}
-% 	\ganttbar[bar label inline anchor={above}]{Task 2}{5}{10} \\
+% 	\ganttbar[bar label inline anchor/.style=above]{Task 2}{5}{10} \\
+% 	\ganttbar[bar label shape anchor=left,%
+% 		bar label inline anchor/.style=right]{Task 3}{2}{7}
 % 	\ganttbar[inline=false]{Final task}{11}{12}
+% \end{ganttchart}
+% \end{center}
+% Valid \meta{anchor}s for |bar label shape anchor| are \texttt{center}, \texttt{lower left}, \texttt{left}, \texttt{upper left}, \texttt{lower right}, \texttt{right} and \texttt{upper right}.
+% \begin{center}
+% \begin{ganttchart}[vgrid, hgrid, x unit=1cm, y unit chart=3cm]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar{Task 1}{4}{9}
+% 	\fill [red!0!blue] (elem0.lower left) circle [radius=1.5pt] node [below left] {\texttt{lower left}};
+% 	\fill [red!20!blue] (elem0.left) circle [radius=1.5pt] node [left] {\texttt{left}};
+% 	\fill [red!40!blue] (elem0.upper left) circle [radius=1.5pt] node [above left] {\texttt{upper left}};
+% 	\fill [red!60!blue] (elem0.upper right) circle [radius=1.5pt] node [above right] {\texttt{upper right}};
+% 	\fill [red!80!blue] (elem0.right) circle [radius=1.5pt] node [right] {\texttt{right}};
+% 	\fill [red!100!blue] (elem0.lower right) circle [radius=1.5pt] node [below right] {\texttt{lower right}};
+% 	\fill [black] (elem0.center) circle [radius=1.5pt] node [above] {\texttt{center}};
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{bar left shift}{=\meta{factor}}{\texttt{0}}
-% \keyline{bar right shift}{=\meta{factor}}{\texttt{0}}
-% \keyline{bar top shift}{=\meta{factor}}{\texttt{0.3}}
-% \keyline{bar height}{=\meta{factor}}{\texttt{0.4}}
+% \begin{key}{bar left shift}{\meta{factor}}{0}
+% \keyline{bar right shift}{\meta{factor}}{0}
+% \keyline{bar top shift}{\meta{factor}}{0.3}
+% \keyline{bar height}{\meta{factor}}{0.4}
 % The first three keys shift the coordinates of a bar's borders (or rather of its corners), while |bar height| changes its height. By default, the left upper corner of a bar is 0.3 units below the origin of the start time slot; its right lower corner touches the right border of the end time slot $0.4$ units below the upper line border:
 %
 % \begin{center}
@@ -1065,7 +1097,7 @@
 % \begin{center}
 % \begin{tikzpicture}[x=8cm, y=2cm]
 % 	\begin{ganttchart}[x unit=8cm,y unit chart=2cm,bar left shift=.2,bar right shift=-.3,bar top shift=.25, bar height=.5]{1}
-% 		\ganttbar[bar={line width=1.5pt,fill=yellow!10}]{}{1}{1} \\
+% 		\ganttbar[bar/.style={line width=1.5pt,fill=yellow!10}]{}{1}{1} \\
 % 	\end{ganttchart}
 % 	\small
 % 	\draw[densely dashed] (0,-1) -- (1,-1);
@@ -1088,7 +1120,7 @@
 % For example, you might devise a layout with small, rounded bars that do not touch the borders of their start and end time slots.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, bar={fill=red, rounded corners=3pt},
+% \begin{ganttchart}[vgrid, bar/.style={fill=red, rounded corners=3pt},
 % 		bar left shift=.15, bar right shift=-.15,
 % 		bar top shift=.4, bar height=.2]{7}
 % 	\gantttitle{Title}{7} \\
@@ -1097,7 +1129,7 @@
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, bar={fill=red, rounded corners=3pt},
+% \begin{ganttchart}[vgrid, bar/.style={fill=red, rounded corners=3pt},
 % 		bar left shift=.15, bar right shift=-.15,
 % 		bar top shift=.4, bar height=.2]{7}
 % 	\gantttitle{Title}{7} \\
@@ -1110,11 +1142,11 @@
 %
 % \subsection{Groups}
 %
-% \textit{Groups} subsume several subtasks (represented by bars) into a single task.
+% \textit{Groups} combine several subtasks (represented by bars) into a single task.
 % \begin{texcode}
 % \ganttgroup`\oarg{options}\marg{label}\marg{start time slot}\marg{end time slot}'
 % \end{texcode}
-% The \DescribeMacro{\ganttgroup}|\ganttgroup| macro draws a group from the \meta{start time slot} to the \meta{end time slot} and adds a \meta{label} at the left of the chart. Note that a group will start at the left border of the \meta{start time slot} (and not at the right, as it would if the \meta{start time slot} were strictly interpreted as an $x$-coordinate).
+% The \DescribeMacro{\ganttgroup}|\ganttgroup| macro draws a group from the \meta{start time slot} to the \meta{end time slot} and adds a \meta{label} at the left of the chart. Note that a group will start at the left border of the \meta{start time slot} (and not at the right, as it would if the \meta{start time slot} were strictly interpreted as an $x$-coordinate). However, setting |time slot modifier| to zero changes this behavior (see section~\ref{ssc:bars}).
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[vgrid, hgrid]{12}
@@ -1133,11 +1165,13 @@
 % \end{ganttchart}
 % \end{center}
 %
-% \begin{key}{group}{=\meta{style}}{\texttt{fill=black}}
+% \begin{key}[/.style=]{group}{\meta{style}}{fill=black}
 % Changes the appearance of a group.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, hgrid, group={draw=black, fill=green!50}]{12}
+% \begin{ganttchart}
+% 		[vgrid, hgrid,
+% 		group/.style={draw=black, fill=green!50}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttgroup{Group}{1}{10} \\
 % 	\ganttbar{Subtasks}{1}{3}
@@ -1145,7 +1179,9 @@
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, hgrid, group={draw=black, fill=green!50}]{12}
+% \begin{ganttchart}
+% 		[vgrid, hgrid,
+% 		group/.style={draw=black, fill=green!50}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttgroup{Group}{1}{10} \\
 % 	\ganttbar{Subtasks}{1}{3}
@@ -1154,22 +1190,27 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{group label text}{=\meta{text}}{\texttt{\string\strut\#1}}
-% \keyline{group label font}{=\meta{font commands}}{\texttt{\string\normalsize\string\bfseries}}
-% \keyline{group label anchor}{=\meta{anchor}}{\texttt{anchor=east}}
-% \keyline{group label inline anchor}{=\meta{anchor}}{\texttt{anchor=north}}
-% The |group label text| key configures the label \meta{text} next to each group. This key should contain a single parameter token (|#1|), which is replaced by the first mandatory argument of |\ganttgroup|. The |\strut| in the standard value ensures equal vertical spacing of the labels. |group label font| selects the font of the group label, |group label anchor| determines its anchor. The last control sequence in \meta{font commands} may take a single argument (like |\textit|). The |inline| key moves the label to the center of the group, using the anchor given by |group label inline anchor|. \changes{v1.1}{2011/04/18}{\texttt{group label text} configures the text of a group label.}
+% \begin{key}{group label text}{\meta{text}}{\string\strut\#1}
+% \keyline{group label font}{\meta{font commands}}{\string\normalsize\string\bfseries}
+% \keyline[/.style=]{group label anchor}{\meta{anchor}}{anchor=east}
+% \keyline[/.style=]{group label inline anchor}{\meta{anchor}}{anchor=north}
+% \keyline{group label shape anchor}{\meta{anchor}}{center}
+% The |group label text| key configures the label \meta{text} next to each group. This key should contain a single parameter token (|#1|), which is replaced by the first mandatory argument of |\ganttgroup|. The |\strut| in the standard value ensures equal vertical spacing of the labels. |group label font| selects the font of the group label, |group label anchor| determines its anchor. The last control sequence in \meta{font commands} may take a single argument (like |\textit|).\par
+% The |inline| key moves the label to the |group label shape anchor| of the group, using the anchor given by |group label inline anchor|. For the former key, you may use the same values as for |bar label shape anchor| (see section~\ref{ssc:bars}).\changes{v1.1}{2011/04/18}{\texttt{group label text} configures the text of a group label.}\changes{v3.0}{2012/01/25}{The \texttt{bar/group/milestone label shape anchor} keys allow for a fine-tuned placement of chart element labels.}
+
+
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}%
 % 		[vgrid, hgrid,
 % 		group label font={\fcolorbox{brown}{brown!10}},
-% 		group label anchor={left=1cm},
+% 		group label anchor/.style={left=1cm},
 % 		group label text={+#1+}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttgroup{Group}{1}{10} \\
 % 	\ganttbar{Subtask 1}{1}{3}
-% 	\ganttgroup[inline]{Subgroup}{5}{10} \\
+% 	\ganttgroup[inline, group label inline anchor/.style=above left,%
+% 		group label shape anchor=right]{Subgroup}{5}{10} \\
 % 	\ganttbar{More Subtasks}{5}{7}
 % 	\ganttbar{}{9}{10}
 % \end{ganttchart}
@@ -1178,22 +1219,23 @@
 % \begin{ganttchart}%
 % 		[vgrid, hgrid,
 % 		group label font={\fcolorbox{brown}{brown!10}},
-% 		group label anchor={left=1cm},
+% 		group label anchor/.style={left=1cm},
 % 		group label text={+#1+}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttgroup{Group}{1}{10} \\
 % 	\ganttbar{Subtask 1}{1}{3}
-% 	\ganttgroup[inline]{Subgroup}{5}{10} \\
+% 	\ganttgroup[inline, group label inline anchor/.style=above left,%
+% 		group label shape anchor=right]{Subgroup}{5}{10} \\
 % 	\ganttbar{More Subtasks}{5}{7}
 % 	\ganttbar{}{9}{10}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{group left shift}{=\meta{factor}}{\texttt{-0.1}}
-% \keyline{group right shift}{=\meta{factor}}{\texttt{0.1}}
-% \keyline{group top shift}{=\meta{factor}}{\texttt{0.4}}
-% \keyline{group height}{=\meta{factor}}{\texttt{0.2}}
+% \begin{key}{group left shift}{\meta{factor}}{-0.1}
+% \keyline{group right shift}{\meta{factor}}{0.1}
+% \keyline{group top shift}{\meta{factor}}{0.4}
+% \keyline{group height}{\meta{factor}}{0.2}
 % The first three keys shift the coordinates of a group's borders (or rather of its corners), while |group height| changes its height. By default, the left upper corner of a group is 0.1 units left of and 0.4 units below the start time slot origin; its right lower corner (not counting the peak) lies 0.1 units right of and 0.3 units below the right border of the end time slot:
 %
 % \begin{center}
@@ -1219,7 +1261,7 @@
 % \begin{center}
 % \begin{tikzpicture}[x=7cm, y=2cm]
 % 	\begin{ganttchart}[x unit=7cm,y unit chart=2cm,group left shift=.2,group right shift=-.3,group top shift=.25, group height=.3,group peaks={.05}{.1}{.2}]{1}
-% 		\ganttgroup[group={draw=black,line width=1.5pt,fill=yellow!10}]{}{1}{1} \\
+% 		\ganttgroup[group/.style={draw=black,line width=1.5pt,fill=yellow!10}]{}{1}{1} \\
 % 	\end{ganttchart}
 % 	\small
 % 	\draw[densely dashed] (0,-1) -- (1,-1);
@@ -1241,9 +1283,9 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{group left peak}{=\marg{tip x}\marg{groove x}\marg{tip y}}{}
-% \keyline{group right peak}{=\marg{tip x}\marg{groove x}\marg{tip y}}{}
-% \keyline{group peaks}{=\marg{tip x}\marg{groove x}\marg{tip y}}{\texttt{0.2 0.4 0.1}}
+% \begin{key}{group left peak}{\marg{tip x}\marg{groove x}\marg{tip y}}{}
+% \keyline{group right peak}{\marg{tip x}\marg{groove x}\marg{tip y}}{}
+% \keyline{group peaks}{\marg{tip x}\marg{groove x}\marg{tip y}}{0.2 0.4 0.1}
 % These keys govern the appearance of the peaks at both ends of a group. By default, the tip of each peak lies 0.2 units inward from a group's bottom corner and 0.1 units beneath, while the groove lies 0.4 units inward. While |group left peak| applies only to the left peak and |group right peak| affects only the right peak, |group peaks| sets the dimensions for both peaks simultaneously. You always have to specify three arguments for these keys. However, if you leave one of them blank, the corresponding space parameter retains its current value.
 %
 % The figure below exemplifies the space parameters as they apply to the left peak.
@@ -1299,61 +1341,69 @@
 %
 % \textit{Progress bars} and \textit{progress groups} illustrate the extent to which a (sub-)task has been completed. In order to draw a progress element, you simply specify the |progress| key in the optional argument to the respective standard macro.
 % 
-% \begin{key}{progress}{=\texttt{none}/\meta{number}}{\texttt{none}}
-% \keyline{bar incomplete}{=\meta{style}}{}
-% \keyline{group incomplete}{=\meta{style}}{}
-% \keyline{incomplete}{=\meta{style}}{\texttt{fill=black!25}}
+% \begin{key}{progress}{\texttt{none}/\meta{number}}{none}
+% \keyline[/.style=]{bar incomplete}{\meta{style}}{}
+% \keyline[/.style=]{group incomplete}{\meta{style}}{}
+% \keyline[/.style=]{incomplete}{\meta{style}}{fill=black!25}
 % The |progress| key specifies that a task (represented by a bar) or a group thereof is \meta{number} percent complete. Starting from the left, \meta{number} percent of the element's area appear in the basic style (i.\,e., |bar| or |group|), while the |bar incomplete| and |group incomplete| keys, respectively, determine the appearance of the remainder. For convenience, the |incomplete| key simultaneously sets the incomplete style for bars and groups.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, hgrid, bar={fill=green}]{12}
+% \begin{ganttchart}%
+% 		[vgrid, hgrid, bar/.style={fill=green},%
+% 		incomplete/.style={fill=red}]{12}
 % 	\gantttitle{Title}{12} \\
-% 	\ganttgroup[progress=45]{Group 1}{1}{10} \\
+% 	\ganttgroup[progress=45]{Group 1}{1}{12} \\
 % 	\ganttbar[progress=100]{Subtask 1}{1}{3} \\
-% 	\ganttbar[progress=10, bar incomplete={fill=red}]{Subtask 2}{4}{10}
+% 	\ganttbar[progress=37, bar incomplete/.style={fill=yellow}]%
+% 		{Subtask 2}{4}{8} \\
+% 	\ganttbar[progress=10]{Subtask 3}{9}{12}
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, hgrid, bar={fill=green}]{12}
+% \begin{ganttchart}%
+% 		[vgrid, hgrid, bar/.style={fill=green},%
+% 		incomplete/.style={fill=red}]{12}
 % 	\gantttitle{Title}{12} \\
-% 	\ganttgroup[progress=45]{Group 1}{1}{10} \\
+% 	\ganttgroup[progress=45]{Group 1}{1}{12} \\
 % 	\ganttbar[progress=100]{Subtask 1}{1}{3} \\
-% 	\ganttbar[progress=10, bar incomplete={fill=red}]{Subtask 2}{4}{10}
+% 	\ganttbar[progress=37, bar incomplete/.style={fill=yellow}]%
+% 		{Subtask 2}{4}{8} \\
+% 	\ganttbar[progress=10]{Subtask 3}{9}{12}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 % 
-% \begin{key}{progress label text}{=\meta{text}}{\texttt{\#1\string\% complete}}
-% \keyline{progress label font}{=\meta{font commands}}{\texttt{\string\scriptsize}}
-% \keyline{progress label anchor}{=\meta{anchor}}{\texttt{anchor=west}}
+% \begin{key}{progress label text}{\meta{text}}{\#1\string\% complete}
+% \keyline{progress label font}{\meta{font commands}}{\string\scriptsize}
+% \keyline[/.style=]{progress label anchor}{\meta{anchor}}{anchor=west}
 % The |progress label text| key sets the \meta{text} that appears beside each progress element in order to indicate its completeness. This key may contain a single parameter token (|#1|), which is replaced by the value of |progress|. The label is typeset in the |progress label font|. In addition, |progress label anchor| governs its placement. By changing the default value, you may prevent the label from overlapping with other elements of your chart.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, hgrid, bar={fill=green}]{12}
+% \begin{ganttchart}[vgrid, hgrid, bar/.style={fill=green}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttgroup%
-% 			[progress=45, progress label anchor={below=3pt}]%
+% 			[progress=45, progress label anchor/.style={below=3pt}]%
 % 		{Group 1}{1}{10} \\
 % 	\ganttbar%
 % 			[progress=100, progress label font=\color{green!25!black}\textsf]%
 % 		{Subtask 1}{1}{3} \\
 % 	\ganttbar%
-% 			[progress=10, incomplete={fill=red},
+% 			[progress=10, incomplete/.style={fill=red},
 % 			progress label text={$\displaystyle\frac{#1}{100}$}]%
 % 		{Subtask 2}{4}{10}
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, hgrid, bar={fill=green}]{12}
+% \begin{ganttchart}[vgrid, hgrid, bar/.style={fill=green}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttgroup%
-% 			[progress=45, progress label anchor={below=3pt}]%
+% 			[progress=45, progress label anchor/.style={below=3pt}]%
 % 		{Group 1}{1}{10} \\
 % 	\ganttbar%
 % 			[progress=100, progress label font=\color{green!25!black}\textsf]%
 % 		{Subtask 1}{1}{3} \\
 % 	\ganttbar%
-% 			[progress=10, incomplete={fill=red},
+% 			[progress=10, incomplete/.style={fill=red},
 % 			progress label text={$\displaystyle\frac{#1}{100}$}]%
 % 		{Subtask 2}{4}{10}
 % \end{ganttchart}
@@ -1387,13 +1437,13 @@
 % \end{center}
 % Note that the milestone is usually centered on the vertical grid line between its \meta{time slot} and the following one.
 %
-% \begin{key}{milestone}{=\meta{style}}{\texttt{fill=black}}
+% \begin{key}[/.style=]{milestone}{\meta{style}}{fill=black}
 % Determines the appearance of the milestone.
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}%
 % 		[vgrid, hgrid,
-% 		milestone={fill=orange, draw=black, rounded corners=3pt}]{7}
+% 		milestone/.style={fill=orange, draw=black, rounded corners=3pt}]{7}
 % 	\gantttitle{Title}{7} \\
 % 	\ganttbar{Task 1}{1}{5} \\
 % 	\ganttmilestone{Milestone}{5}
@@ -1402,7 +1452,7 @@
 % \begin{center}
 % \begin{ganttchart}%
 % 		[vgrid, hgrid,
-% 		milestone={fill=orange, draw=black, rounded corners=3pt}]{7}
+% 		milestone/.style={fill=orange, draw=black, rounded corners=3pt}]{7}
 % 	\gantttitle{Title}{7} \\
 % 	\ganttbar{Task 1}{1}{5} \\
 % 	\ganttmilestone{Milestone}{5}
@@ -1410,42 +1460,44 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{milestone label text}{=\meta{text}}{\texttt{\string\strut\#1}}
-% \keyline{milestone label font}{=\meta{font commands}}{\texttt{\string\normalsize\string\itshape}}
-% \keyline{milestone label anchor}{=\meta{anchor}}{\texttt{anchor=east}}
-% \keyline{milestone label inline anchor}{=\meta{anchor}}{\texttt{anchor=north}}
-% The |milestone label text| key configures the label \meta{text} next to each milestone. This key should contain a single parameter token (|#1|), which is replaced by the first mandatory argument of |\ganttmilestone|. The |\strut| in the standard value ensures equal vertical spacing of the labels. |milestone label font| sets the font of the milestone label, while |milestone label anchor| determines its placement. The last macro in \meta{font commands} may take a single argument, as we show in the following (somewhat silly) example. The |inline| key moves the label to the center of the group, using the anchor given by |milestone label inline anchor|. \changes{v1.1}{2011/04/18}{\texttt{milestone label text} configures the text of a milestone label.}
+% \begin{key}{milestone label text}{\meta{text}}{\string\strut\#1}
+% \keyline{milestone label font}{\meta{font commands}}{\string\normalsize\string\itshape}
+% \keyline[/.style=]{milestone label anchor}{\meta{anchor}}{anchor=east}
+% \keyline[/.style=]{milestone label inline anchor}{\meta{anchor}}{anchor=south}
+% \keyline{milestone label shape anchor}{\meta{anchor}}{center}
+% The |milestone label text| key configures the label \meta{text} next to each milestone. This key should contain a single parameter token (|#1|), which is replaced by the first mandatory argument of |\ganttmilestone|. The |\strut| in the standard value ensures equal vertical spacing of the labels. |milestone label font| sets the font of the milestone label, while |milestone label anchor| determines its placement. The last macro in \meta{font commands} may take a single argument, as we show in the following (somewhat silly) example.\par
+% The |inline| key moves the label to the |milestone label shape anchor| of the milestone, using the \meta{anchor} given by |milestone label inline anchor|. For the former key, you may use the same values as for |bar label shape anchor| (see section~\ref{ssc:bars}). \changes{v1.1}{2011/04/18}{\texttt{milestone label text} configures the text of a milestone label.}
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[vgrid, hgrid]{10}
-% 	\gantttitle{Title}{7} \\
+% 	\gantttitle{Title}{10} \\
 % 	\ganttbar{Task 1}{1}{5} \\
 % 	\ganttmilestone%
 % 		[milestone label font=\color{magenta}\rotatebox{30},
 % 		milestone label text={#1 !!!}]{Milestone}{5}
 % 	\ganttmilestone[inline]{2nd}{7}
 % 	\ganttmilestone%
-% 		[inline, milestone label inline anchor={below}]{3rd}{9}
+% 		[inline, milestone label inline anchor/.style=below]{3rd}{9}
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
 % \begin{ganttchart}[vgrid, hgrid]{10}
-% 	\gantttitle{Title}{7} \\
+% 	\gantttitle{Title}{10} \\
 % 	\ganttbar{Task 1}{1}{5} \\
 % 	\ganttmilestone%
 % 		[milestone label font=\color{magenta}\rotatebox{30},
 % 		milestone label text={#1 !!!}]{Milestone}{5}
 % 	\ganttmilestone[inline]{2nd}{7}
 % 	\ganttmilestone%
-% 		[inline, milestone label inline anchor={below}]{3rd}{9}
+% 		[inline, milestone label inline anchor/.style=below]{3rd}{9}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
 %
-% \begin{key}{milestone width}{=\meta{factor}}{\texttt{0.8}}
-% \keyline{milestone height}{=\meta{factor}}{\texttt{0.4}}
-% \keyline{milestone xshift}{=\meta{factor}}{\texttt{0}}
-% \keyline{milestone yshift}{=\meta{factor}}{\texttt{0.5}}
+% \begin{key}{milestone width}{\meta{factor}}{0.8}
+% \keyline{milestone height}{\meta{factor}}{0.4}
+% \keyline{milestone xshift}{\meta{factor}}{0}
+% \keyline{milestone yshift}{\meta{factor}}{0.5}
 % These keys set the width and height of a milestone and shift the coordinates of its center. By default, a milestone is 0.8 units wide and 0.4 units high. Since the ideal $x$-vector/$y$-vector ratio is $1:2$, the milestone appears square with these settings. Its center lies on the right border and 0.5 units below the top border of its time slot.
 %
 % \begin{center}
@@ -1464,7 +1516,7 @@
 % \begin{center}
 % \begin{tikzpicture}[x=4cm, y=2cm]
 % 	\begin{ganttchart}[x unit=4cm,y unit chart=2cm,milestone width=0.4, milestone height=0.7, milestone xshift=-.2, milestone yshift=.5]{2}
-% 		\ganttmilestone[milestone={draw=black,line width=1.5pt,fill=yellow!10}]{}{1} \\
+% 		\ganttmilestone[milestone/.style={draw=black,line width=1.5pt,fill=yellow!10}]{}{1} \\
 % 	\end{ganttchart}
 % 	\small
 % 	\draw[densely dashed] (0,-1) -- (2,-1);
@@ -1494,14 +1546,14 @@
 %
 %
 % \subsection{Links}
+% \label{ssc:links}
 %
-% \changes{v2.0}{2011/10/10}{The syntax of \texttt{\protect\string\ganttlink} was completely changed. The command now takes one optional and \textit{two} mandatory arguments. The latter specify the name of the chart elements to be linked. Consequently, the keys \texttt{b-b}, \texttt{b-m}, \texttt{m-b} and \texttt{m-m} were removed. The keys \texttt{s-s}, \texttt{s-f}, \texttt{f-s} and \texttt{f-f} are now values for the \texttt{link type} key.}
 % So far, we have drawn charts whose elements were quite independent of each other. However, relations or \textit{links} between these elements frequently appear on real Gantt charts. For example, a task may only start if a previous one has been completed, or finishing a task may constitute a milestone.
 % \begin{texcode}
 % \ganttlink`\oarg{options}\marg{start element name}\marg{end element name}'
 % \end{texcode}
 % 
-% \begin{key}{name}{=\meta{name}}{\texttt{}}
+% \begin{key}{name}{\meta{name}}{\textrm{(empty)}}
 % The \DescribeMacro{\ganttlink}|\ganttlink| macro connects two elements, which are specified by their \meta{name}s. By default, chart elements are named automatically: The first one receives the name |elem0|, the second one is called |elem1| and so on. However, the |name| key allows you to assign a name to each chart element.
 % \par\bigskip\noindent
 % \begin{minipage}[t]{.44\textwidth}
@@ -1549,11 +1601,13 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{link}{=\meta{style}}{\texttt{-latex, rounded corners=1pt}}
+% \begin{key}[/.style=]{link}{\meta{style}}{-latex, rounded corners=1pt}
 % Sets the appearance of the link.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, hgrid, link={[-to, line width=1pt, blue}]{7}
+% \begin{ganttchart}%
+% 		[vgrid, hgrid,
+% 		link/.style={[-to, line width=1pt, blue}]{7}
 % 	\gantttitle{Title}{7} \\
 % 	\ganttbar{Task 1}{1}{4} \\
 % 	\ganttbar{Task 2}{5}{7}
@@ -1561,7 +1615,9 @@
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, hgrid, link={[-to, line width=1pt, blue}]{7}
+% \begin{ganttchart}%
+% 		[vgrid, hgrid,
+% 		link/.style={[-to, line width=1pt, blue}]{7}
 % 	\gantttitle{Title}{7} \\
 % 	\ganttbar{Task 1}{1}{4} \\
 % 	\ganttbar{Task 2}{5}{7}
@@ -1570,16 +1626,16 @@
 % \end{center}
 % \end{key}
 %
-% \begin{key}{link type}{=\meta{type}}{\texttt{arrow}}
-% Link types fall into two categories:
+% \begin{key}{link type}{\meta{type}}{auto}
+% Link types fall into several categories:\changes{v3.0}{2012/01/25}{Completely rewrote the code for links (again). Definition of new link types is now possible (via \cs{newganttlinktype} and \cs{newganttlinktypealias}).}
 % \begin{enumerate}\parskip0pt
-% 	\item \textit{Arrow-like links} are the default. As you can see from the examples above, they consist of three segments (two horizontal, one vertical) if their start and end time slots are sufficiently separated. Otherwise, they comprise five segments (three horizontal, two vertical). Three keys further modify the appearance of arrow-like links:
+% 	\item \textit{Automatic links} are arrow-like. As you can see from the examples above, they consist of three segments (two horizontal, one vertical) if their start and end time slots are sufficiently separated. Otherwise, they comprise five segments (three horizontal, two vertical). Three keys further modify the appearance of automatic links:
 %
-% \begin{key}{link mid}{=\meta{factor}}{\texttt{0.5}}
+% \begin{key}{link mid}{\meta{factor}}{0.5}
 % The |link mid| key changes the position of the single vertical segment (in three-part links) or of the middle horizontal segment (in five-part links). By default, these segments are horizontally centered between the left and the right vertical segment, or vertically centered between the upper and the lower horizontal segment, respectively.\par\bigskip
-% \keyline{link bulge}{=\meta{factor}}{\texttt{0.4}}
+% \keyline{link bulge}{\meta{factor}}{0.4}
 % In five-part links, the upper and lower vertical segments are shifted along the $x$-axis by $+$|link bulge| and $-$|link bulge|, respectively.\par\bigskip
-% \keyline{link tolerance}{=\meta{factor}}{\texttt{0.6}}
+% \keyline{link tolerance}{\meta{factor}}{0.6}
 % This key governs whether \pack{pgfgantt} draws a five- or a three-part link. If the true $x$-coordinates of the link start and end differ by at least |link tolerance| (this is the case for the second link in the example below), the package draws a five-part link.\changes{v1.1}{2011/04/18}{\texttt{link tolerance} decides whether a five- or a three-part link is drawn.}
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -1607,7 +1663,7 @@
 % 	\item \textit{Straight links} are only meant for connecting two bars in order to establish start-to-finish relations (|s-f|), start-to-start relations (|s-s|) etc. Their \meta{type} identifiers commemorate the syntax for specifying arrow tips in \TikZ: Each identifier is composed of two letters separated by a hyphen.
 % \par\bigskip\noindent
 % \begin{texcode}
-% \begin{ganttchart}[vgrid, hgrid, link={-latex, red}]{12}
+% \begin{ganttchart}[vgrid, hgrid, link/.style={-latex, red}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
 % 	\ganttbar{Task 2}{2}{5} \\
@@ -1619,7 +1675,7 @@
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
-% \begin{ganttchart}[vgrid, hgrid, link={-latex, red}]{12}
+% \begin{ganttchart}[vgrid, hgrid, link/.style={-latex, red}]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
 % 	\ganttbar{Task 2}{2}{5} \\
@@ -1631,17 +1687,237 @@
 % \end{ganttchart}
 % \end{center}
 %
-% \begin{key}{link label}{=\marg{link type key}\marg{label text}}{(miscellaneous)}
-% \keyline{link label font}{=\meta{font}}{\texttt{\string\scriptsize\string\itshape\string\normalcolor}}
-% \keyline{link label anchor}{=\meta{anchor}}{\texttt{anchor=west}}
-% Since straight links all look the same, a label indicates the respective relationship. You can redefine these labels with the |link label| key, which changes the \meta{label text} for a \meta{link type key}.
+% 	\item \textit{Custom links} allow you to define completely new link types. Strictly speaking, automatic and straight links are predefined custom links whose code supports the keys mentioned above (section~\ref{ssc:ImplLinks} presents the \TikZ\ code of these links).\par
+% For instance, \pack{pgfgantt} provides one additional link type, |dr| (short for ``down-right''). This type is convenient for connecting inline-labeled bars if the label of the start bar protrudes from its right border.
+% \par\bigskip\noindent
+% \begin{texcode}
+% \begin{ganttchart}%
+% 		[vgrid, hgrid, inline,
+% 		link/.style={->, ultra thick}]{15}
+% 	\gantttitle{Title}{15} \\
+% 	\ganttbar{A really long label}{1}{3}
+% 	\ganttbar{Another really long label}{10}{12} \\
+% 	\ganttbar{Task 3}{4}{6}
+% 	\ganttbar{Task 4}{13}{15}
+% 	\ganttlink[link/.append style=red]{elem0}{elem2}
+% 	\ganttlink[link/.append style=green, link type=dr]{elem1}{elem3}
+% \end{ganttchart}
+% \end{texcode}
+% \begin{center}
+% \begin{ganttchart}%
+% 		[vgrid, hgrid, inline,
+% 		link/.style={->, ultra thick}]{15}
+% 	\gantttitle{Title}{15} \\
+% 	\ganttbar{A really long label}{1}{3}
+% 	\ganttbar{Another really long label}{10}{12} \\
+% 	\ganttbar{Task 3}{4}{6}
+% 	\ganttbar{Task 4}{13}{15}
+% 	\ganttlink[link/.append style=red]{elem0}{elem2}
+% 	\ganttlink[link/.append style=green, link type=dr]{elem1}{elem3}
+% \end{ganttchart}
+% \end{center}
+%
+% The central macro for creating link types is
+% \begin{texcode}
+% \newganttlinktype`\marg{type}\marg{TikZ code}'
+% \end{texcode}
+% \DescribeMacro{\newganttlinktype}It defines a new link \meta{type} which is drawn by the given \meta{TikZ code}. When you write this code, you do not have to know the final absolute coordinates of each link type instance. On the contrary, several commands that are only available in the second argument of |\newganttlinktype| help you to design generic link types:
+% \begin{itemize}
+% 	\item First, you have to choose the border points of the chart elements the link will connect. For this purpose, \DescribeMacro{\ganttsetstartanchor}|\ganttsetstartanchor{|\meta{anchor}|}| and \DescribeMacro{\ganttsetendanchor}|\ganttsetendanchor{|\meta{anchor}|}| select an \meta{anchor} of the start and end element, respectively. Valid \meta{anchor}s are \texttt{lower left}, \texttt{left} etc. (see section~\ref{ssc:bars}) and the special anchors \texttt{on left}, \texttt{on top}, \texttt{on right} and \texttt{on bottom}. You may specify a value between 0 and 1 for each of the latter four anchors (the default value is |0.5|). This fraction indicates a position between the left and right (for \texttt{on top} and \texttt{on bottom}) or upper and lower border (for \texttt{on left} and \texttt{on right}), similarly to the |/tikz/pos| key.\changes{v3.0}{2012/01/25}{New auxiliary macros for \cs{newganttlinkstyle}: \cs{xLeft}, \cs{xRight}, \cs{yUpper}, \cs{yLower}, \cs{ganttsetstartanchor}, \cs{ganttsetendanchor} and \cs{ganttlinklabel}.}
+% \begin{center}\makeatletter
+% \begin{ganttchart}[vgrid, hgrid, x unit=.9cm, y unit chart=3.2cm]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar[inline]{Task 1}{4}{9}
+% 	\def\@gtt@linkanchorfraction{0.1}
+% 		\fill [red!0!blue] (elem0.on bottom) circle [radius=1.5pt] node [below left] {\texttt{on bottom=0.1}};
+% 	\def\@gtt@linkanchorfraction{0.4}
+% 		\fill [red!20!blue] (elem0.on bottom) circle [radius=1.5pt] node [below] {\texttt{on bottom=0.4}};
+% 	\def\@gtt@linkanchorfraction{0.85}
+% 		\fill [red!40!blue] (elem0.on bottom) circle [radius=1.5pt] node [below right] {\texttt{on bottom=0.85}};
+% 	\def\@gtt@linkanchorfraction{0.15}
+% 		\fill [red!60!blue] (elem0.on right) circle [radius=1.5pt] node [above right] {\texttt{on right=0.15}};
+% 	\def\@gtt@linkanchorfraction{0.5}
+% 		\fill [red!80!blue] (elem0.on right) circle [radius=1.5pt] node [right] {\texttt{on right=0.5}};
+% 	\def\@gtt@linkanchorfraction{0.7}
+% 		\fill [red!100!blue] (elem0.on right) circle [radius=1.5pt] node [below right] {\texttt{on right=0.7}};
+% \end{ganttchart}
+% \end{center}
+% \pack{pgfgantt} sets the default anchors to |\ganttsetstartanchor{right}| and |\ganttsetendanchor{left}|, so you even may omit these two commands.
+% 	\item The two macro pairs |\xLeft|/|\yUpper| and |\xRight|/|\yLower| provide the $x$- and $y$-coordinates of the link start and end points, respectively.
+% \begin{center}\makeatletter
+% \begin{ganttchart}[vgrid, hgrid, x unit=.9cm, y unit chart=2cm, link/.style={draw=black!30, ultra thick, ->, rounded corners=5pt}]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar[inline]{Task 1}{2}{4} \\
+% 	\ganttbar[inline]{Task 2}{7}{9}
+% 	\ganttlink{elem0}{elem1}
+% 	\fill [red!10!blue] (elem0.right) circle [radius=1.5pt] node [above right] {(\texttt{\string\xLeft}, \texttt{\string\yUpper})};
+% 	\fill [red!90!blue] (elem1.left) circle [radius=1.5pt] node [below left] {(\texttt{\string\xRight}, \texttt{\string\yLower})};
+% \end{ganttchart}
+% \end{center}
+% 	\item \DescribeMacro{\ganttlinklabel}|\ganttlinklabel| contains the label that you may assign to each link type via |\setganttlinklabel| or the |link label| key (see below).
+% 	\item You can access any values stored in the package's \meta{key}s with the macro \DescribeMacro{\ganttvalueof}|\ganttvalueof{|\meta{key}|}|.
+% 	\item Remember that you can use the style |/pgfgantt/link| to ensure a uniform appearance of all your link types.
+% \end{itemize}
+% \end{enumerate}
+% \end{key}
+% \begin{texcode}
+% \newganttlinktypealias`\marg{new type}\marg{existing type}'
+% \end{texcode}
+% \DescribeMacro{\newganttlinktypealias}|\newganttlinktypealias| lets a \meta{new type} equal an \meta{existing type}, also copying any label that has been set for the \meta{existing type}.
+% \par\bigskip
+% \begin{texcode}
+% \setganttlinklabel`\marg{type}\marg{label}'
+% \end{texcode}
+% \DescribeMacro{\setganttlinklabel}|\setganttlinklabel| sets a \meta{label} for the given link \meta{type}. In the following example, note how |sta-to-sta| and |s-s| share a common label, while we change the label of |fin-to-fin|.
+% \par\bigskip\noindent
+% \begin{texcode}
+% \newganttlinktypealias{sta-to-sta}{s-s}
+% \newganttlinktypealias{fin-to-fin}{f-f}
+% \setganttlinklabel{fin-to-fin}{f2f}
 % 
-% The |link label font| key specifies the font for the label, |link label anchor| determines its placement (by default, the label appears to the right of the straight link's center).
+% \begin{ganttchart}[vgrid, hgrid]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar{Task 1}{2}{3} \\
+% 	\ganttbar{Task 2}{2}{8} \\
+% 	\ganttbar{Task 3}{6}{8}
+% 	\ganttlink[link type=sta-to-sta]{elem0}{elem1}
+% 	\ganttlink[link type=fin-to-fin]{elem1}{elem2}
+% \end{ganttchart}
+% \end{texcode}
+% \begin{center}
+% \newganttlinktypealias{sta-to-sta}{s-s}
+% \newganttlinktypealias{fin-to-fin}{f-f}
+% \setganttlinklabel{fin-to-fin}{f2f}
+% 
+% \begin{ganttchart}[vgrid, hgrid]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar{Task 1}{2}{3} \\
+% 	\ganttbar{Task 2}{2}{8} \\
+% 	\ganttbar{Task 3}{6}{8}
+% 	\ganttlink[link type=sta-to-sta]{elem0}{elem1}
+% 	\ganttlink[link type=fin-to-fin]{elem1}{elem2}
+% \end{ganttchart}
+% \end{center}
+% \par\bigskip Let's put it all together and devise two new link types. Firstly, |zigzag| connects the lower right corner of the start element and the upper left corner of the end element with a thick, cyan line decorated by a zigzag pattern.
+% \par\bigskip\noindent
+% \begin{texcode}
+% \usetikzlibrary{decorations.pathmorphing}
+% 
+% \newganttlinktype{zigzag}{%
+% 	\ganttsetstartanchor{on right=1}%
+% 	\ganttsetendanchor{on left=0}%
+% 	\draw [decoration=zigzag, decorate, thick, cyan]
+% 		(\xLeft, \yUpper) --
+% 		(\xRight, \yLower);%
+% }
+% 
+% \begin{ganttchart}[vgrid, hgrid]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar{Task 1}{2}{3} \\
+% 	\ganttbar{Task 2}{7}{12}
+% 	\ganttlink[link type=zigzag]{elem0}{elem1}
+% \end{ganttchart}
+% \end{texcode}
+% \begin{center}
+% \newganttlinktype{zigzag}{%
+% 	\ganttsetstartanchor{on right=1}%
+% 	\ganttsetendanchor{on left=0}%
+% 	\draw [decoration=zigzag, decorate, thick, cyan]
+% 		(\xLeft, \yUpper) --
+% 		(\xRight, \yLower);%
+% }
+% \begin{ganttchart}[vgrid, hgrid]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar{Task 1}{2}{3} \\
+% 	\ganttbar{Task 2}{7}{12}
+% 	\ganttlink[link type=zigzag]{elem0}{elem1}
+% \end{ganttchart}
+% \end{center}
+% Secondly, |drur| (short for down-right-up-right) draws a labelled arrow in the default style |link|. The link starts at the bottom of the first element and connects to the left border of the second one. In addition, the known keys |link mid| and |link bulge| decide where the line going up is positioned and how far the first line going right is below the start coordinate, respectively.
+% \par\bigskip\noindent
+% \begin{texcode}
+% \newganttlinktype{drur}{%
+% 	\ganttsetstartanchor{on bottom=0.75}%
+% 	\ganttsetendanchor{left}%
+% 	\draw [/pgfgantt/link]
+% 		% first segment (down)
+% 		(\xLeft, \yUpper) --
+% 		% second segment (right)
+% 		(\xLeft, \yUpper -
+% 			\ganttvalueof{link bulge} * \ganttvalueof{y unit chart}) --
+% 		% link label
+% 		node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel}
+% 		% third segment (up)
+% 		($(\xLeft,
+% 			\yUpper -
+% 				\ganttvalueof{link bulge} * \ganttvalueof{y unit chart})!%
+% 			\ganttvalueof{link mid}!%
+% 			(\xRight,
+% 			\yUpper -
+% 				\ganttvalueof{link bulge} * \ganttvalueof{y unit chart})$) --
+% 		% last segment (right again)
+% 		($(\xLeft, \yLower)!%
+% 			\ganttvalueof{link mid}!%
+% 			(\xRight, \yLower)$) --
+% 		(\xRight, \yLower);%
+% }
+% \setganttlinklabel{drur}{a fancy link}
+% 
+% \begin{ganttchart}%
+% 		[vgrid, hgrid,
+% 		link/.style={thick, ->, green!50!black, rounded corners=2mm},
+% 		link label anchor/.style=below,
+% 		link mid=.7, link bulge=.6]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar[inline]{Task 1}{2}{4}
+% 	\ganttbar[inline]{Task 2}{8}{11} \\
+% 	\ganttlink[link type=drur]{elem0}{elem1}
+% \end{ganttchart}
+% \end{texcode}
+% \begin{center}
+% \newganttlinktype{drur}{%
+% 	\ganttsetstartanchor{on bottom=0.75}%
+% 	\ganttsetendanchor{left}%
+% 	\draw [/pgfgantt/link]
+% 		(\xLeft, \yUpper) --
+% 		(\xLeft, \yUpper -
+% 			\ganttvalueof{link bulge} * \ganttvalueof{y unit chart}) --
+% 		node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel}
+% 		($(\xLeft,
+% 			\yUpper -
+% 				\ganttvalueof{link bulge} * \ganttvalueof{y unit chart})!%
+% 			\ganttvalueof{link mid}!%
+% 			(\xRight,
+% 			\yUpper -
+% 				\ganttvalueof{link bulge} * \ganttvalueof{y unit chart})$) --
+% 		($(\xLeft, \yLower)!%
+% 			\ganttvalueof{link mid}!%
+% 			(\xRight, \yLower)$) --
+% 		(\xRight, \yLower);%
+% }
+% \setganttlinklabel{drur}{a fancy link}
+% 
+% \begin{ganttchart}%
+% 		[vgrid, hgrid,
+% 		link/.style={thick, ->, green!50!black, rounded corners=2mm},
+% 		link label anchor/.style=below,
+% 		link mid=.7, link bulge=.6]{12}
+% 	\gantttitle{Title}{12} \\
+% 	\ganttbar[inline]{Task 1}{2}{4}
+% 	\ganttbar[inline]{Task 2}{8}{11} \\
+% 	\ganttlink[link type=drur]{elem0}{elem1}
+% \end{ganttchart}
+% \end{center}
+% (Please do not include the comments following the |\draw| command if you copy the code above -- they might confuse \TikZ\ and generate tons of errors.)
+% 
+% \begin{key}{link label}{\meta{label}}{\textrm{(empty)}}
+% \keyline{link label font}{\meta{font}}{\string\scriptsize\string\itshape\string\normalcolor}
+% \keyline[/.style=]{link label anchor}{\meta{anchor}}{anchor=west}
+% The |link label| key locally overrides any label specified by |\setganttlinklabel|. |link label font| sets the \meta{font} for the label, |link label anchor| determines its placement (by default, the label appears to the right of the straight link's center).
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[vgrid, hgrid,
-% 		link label font=\small\color{purple}\textbf,
-% 		link label={f-s}{f$\to$s}]{12}
+% 		link label font=\small\color{purple}\textbf]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
 % 	\ganttbar{Task 2}{2}{5} \\
@@ -1649,17 +1925,16 @@
 % 	\ganttbar{Task 4}{8}{11} \\
 % 	\ganttbar{Task 5}{4}{7}
 % 	\ganttlink[link type=s-s]{elem0}{elem1}
-% 	\ganttlink[link type=f-s]{elem1}{elem2}
-% 	\ganttlink[link type=f-f, link label anchor={anchor=east}]%
+% 	\ganttlink[link type=f-s, link label={f$\to$s}]{elem1}{elem2}
+% 	\ganttlink[link type=f-f, link label anchor/.style={anchor=east}]%
 % 		{elem2}{elem3}
-% 	\ganttlink[link type=s-f, link label anchor={anchor=base}]%
+% 	\ganttlink[link type=s-f, link label anchor/.style={anchor=base}]%
 % 		{elem3}{elem4}
 % \end{ganttchart}
 % \end{texcode}
 % \begin{center}
 % \begin{ganttchart}[vgrid, hgrid,
-% 		link label font=\small\color{purple}\textbf,
-% 		link label={f-s}{f$\to$s}]{12}
+% 		link label font=\small\color{purple}\textbf]{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
 % 	\ganttbar{Task 2}{2}{5} \\
@@ -1667,15 +1942,13 @@
 % 	\ganttbar{Task 4}{8}{11} \\
 % 	\ganttbar{Task 5}{4}{7}
 % 	\ganttlink[link type=s-s]{elem0}{elem1}
-% 	\ganttlink[link type=f-s]{elem1}{elem2}
-% 	\ganttlink[link type=f-f, link label anchor={anchor=east}]%
+% 	\ganttlink[link type=f-s, link label={f$\to$s}]{elem1}{elem2}
+% 	\ganttlink[link type=f-f, link label anchor/.style={anchor=east}]%
 % 		{elem2}{elem3}
-% 	\ganttlink[link type=s-f, link label anchor={anchor=base}]%
+% 	\ganttlink[link type=s-f, link label anchor/.style={anchor=base}]%
 % 		{elem3}{elem4}
 % \end{ganttchart}
 % \end{center}
-% \end{key}
-% \end{enumerate}
 % \end{key}
 %
 %
@@ -1743,29 +2016,29 @@
 % 		[y unit title=0.4cm,
 % 		y unit chart=0.5cm,
 % 		vgrid,
-% 		title={draw=none, fill=RoyalBlue!50!black},
+% 		title/.style={draw=none, fill=RoyalBlue!50!black},
 % 		title label font=\sffamily\bfseries\color{white},
-% 		title label anchor={below=-1.6ex},
+% 		title label anchor/.style={below=-1.6ex},
 % 		title left shift=.05,
 % 		title right shift=-.05,
 % 		title height=1,
-% 		bar={draw=none, fill=OliveGreen!75},
+% 		bar/.style={draw=none, fill=OliveGreen!75},
 % 		bar height=.6,
 % 		bar label font=\normalsize\color{black!50},
 % 		group right shift=0,
 % 		group top shift=.6,
 % 		group height=.3,
 % 		group peaks={}{}{.2},
-% 		incomplete={fill=Maroon}]{16}
+% 		incomplete/.style={fill=Maroon}]{16}
 % 	\gantttitle{2010}{4}
 % 	\gantttitle{2011}{12} \\
 % 	\ganttbar%
 % 			[progress=100, progress label font=\small\color{OliveGreen!75},
-% 			progress label anchor={right=4pt},
+% 			progress label anchor/.style={right=4pt},
 % 			bar label font=\normalsize\color{OliveGreen},
 % 			name=pp]%
 % 		{Preliminary Project}{1}{4} \\
-% 	\ganttset{progress label text={}, link={black, -to}}
+% 	\ganttset{progress label text={}, link/.style={black, -to}}
 % 	\ganttgroup{Objective 1}{5}{16} \\
 % 	\ganttbar[progress=4, name=T1A]{Task A}{5}{10} \\
 % 	\ganttlinkedbar[progress=0]{Task B}{11}{16} \\
@@ -1774,7 +2047,7 @@
 % 	\ganttlinkedbar[progress=0]{Task B}{14}{16} \\
 % 	\ganttgroup{Objective 3}{9}{12} \\
 % 	\ganttbar[progress=0]{Task A}{9}{12}
-% 	\ganttset{link={OliveGreen}}
+% 	\ganttset{link/.style={OliveGreen}}
 % 	\ganttlink[link mid=.4]{pp}{T1A}
 % 	\ganttlink[link mid=.159]{pp}{T2A}
 % \end{ganttchart}
@@ -1785,29 +2058,29 @@
 % 		[y unit title=0.4cm,
 % 		y unit chart=0.5cm,
 % 		vgrid,
-% 		title={draw=none, fill=RoyalBlue!50!black},
+% 		title/.style={draw=none, fill=RoyalBlue!50!black},
 % 		title label font=\sffamily\bfseries\color{white},
-% 		title label anchor={below=-1.6ex},
+% 		title label anchor/.style={below=-1.6ex},
 % 		title left shift=.05,
 % 		title right shift=-.05,
 % 		title height=1,
-% 		bar={draw=none, fill=OliveGreen!75},
+% 		bar/.style={draw=none, fill=OliveGreen!75},
 % 		bar height=.6,
 % 		bar label font=\normalsize\color{black!50},
 % 		group right shift=0,
 % 		group top shift=.6,
 % 		group height=.3,
 % 		group peaks={}{}{.2},
-% 		incomplete={fill=Maroon}]{16}
+% 		incomplete/.style={fill=Maroon}]{16}
 % 	\gantttitle{2010}{4}
 % 	\gantttitle{2011}{12} \\
 % 	\ganttbar%
 % 			[progress=100, progress label font=\small\color{OliveGreen!75},
-% 			progress label anchor={right=4pt},
+% 			progress label anchor/.style={right=4pt},
 % 			bar label font=\normalsize\color{OliveGreen},
 % 			name=pp]%
 % 		{Preliminary Project}{1}{4} \\
-% 	\ganttset{progress label text={}, link={black, -to}}
+% 	\ganttset{progress label text={}, link/.style={black, -to}}
 % 	\ganttgroup{Objective 1}{5}{16} \\
 % 	\ganttbar[progress=4, name=T1A]{Task A}{5}{10} \\
 % 	\ganttlinkedbar[progress=0]{Task B}{11}{16} \\
@@ -1816,7 +2089,7 @@
 % 	\ganttlinkedbar[progress=0]{Task B}{14}{16} \\
 % 	\ganttgroup{Objective 3}{9}{12} \\
 % 	\ganttbar[progress=0]{Task A}{9}{12}
-% 	\ganttset{link={OliveGreen}}
+% 	\ganttset{link/.style={OliveGreen}}
 % 	\ganttlink[link mid=.4]{pp}{T1A}
 % 	\ganttlink[link mid=.159]{pp}{T2A}
 % \end{ganttchart}
@@ -1834,33 +2107,33 @@
 % \renewcommand\bfdefault{bc}
 % \sffamily
 % \begin{ganttchart}%
-% 		[canvas={fill=none, draw=black!5, line width=.75pt},
-% 		hgrid style={draw=black!5, line width=.75pt},
+% 		[canvas/.style={fill=none, draw=black!5, line width=.75pt},
+% 		hgrid style/.style={draw=black!5, line width=.75pt},
 % 		vgrid={*1{draw=black!5, line width=.75pt}},
 % 		today=7.1,
-% 		today rule={draw=black!64,
+% 		today rule/.style={draw=black!64,
 % 			dash pattern=on 3.5pt off 4.5pt, line width=1.5pt},
 % 		today label={\small\bfseries TODAY},
-% 		title={draw=none, fill=none},
+% 		title/.style={draw=none, fill=none},
 % 		title label font=\bfseries\footnotesize,
-% 		title label anchor={below=7pt},
+% 		title label anchor/.style={below=7pt},
 % 		include title in canvas=false,
 % 		bar label font=\mdseries\small\color{black!70},
-% 		bar label anchor={left=2cm},
-% 		bar={draw=none, fill=black!63},
-% 		bar incomplete={fill=barblue},
+% 		bar label anchor/.style={left=2cm},
+% 		bar/.style={draw=none, fill=black!63},
+% 		bar incomplete/.style={fill=barblue},
 % 		progress label font=\mdseries\footnotesize\color{black!70},
-% 		group incomplete={fill=groupblue},
+% 		group incomplete/.style={fill=groupblue},
 % 		group left shift=0,
 % 		group right shift=0,
 % 		group height=.5,
 % 		group peaks={0}{}{},
-% 		group label anchor={left=.6cm},
-% 		link={-latex, line width=1.5pt, linkred},
+% 		group label anchor/.style={left=.6cm},
+% 		link/.style={-latex, line width=1.5pt, linkred},
 % 		link label font=\scriptsize\bfseries\color{linkred}\MakeUppercase,
-% 		link label anchor={below left=-2pt and 0pt}
+% 		link label anchor/.style={below left=-2pt and 0pt}
 % 		]{13}
-% 	\gantttitle[title label anchor={below left=7pt and -3pt}]%
+% 	\gantttitle[title label anchor/.style={below left=7pt and -3pt}]%
 % 		{WEEKS:\quad1}{1}
 % 	\gantttitlelist{2,...,13}{1} \\
 % 	\ganttgroup[progress=57, progress label font=\bfseries\small]%
@@ -1880,7 +2153,7 @@
 % 	\ganttbar[progress=0]{\textbf{WBS 2.3} Activity G}{9}{10}
 % 	\ganttlink[link type=s-s]{WBS1A}{WBS1B}
 % 	\ganttlink[link type=f-s]{WBS1B}{WBS1C}
-% 	\ganttlink[link type=f-f, link label anchor={left}]{WBS1C}{WBS1D}
+% 	\ganttlink[link type=f-f, link label anchor/.style={left}]{WBS1C}{WBS1D}
 % \end{ganttchart}
 % \end{texcode}
 % 
@@ -1893,33 +2166,33 @@
 % \renewcommand\bfdefault{bc}
 % \sffamily
 % \begin{ganttchart}%
-% 		[canvas={fill=none, draw=black!5, line width=.75pt},
-% 		hgrid style={draw=black!5, line width=.75pt},
+% 		[canvas/.style={fill=none, draw=black!5, line width=.75pt},
+% 		hgrid style/.style={draw=black!5, line width=.75pt},
 % 		vgrid={*1{draw=black!5, line width=.75pt}},
 % 		today=7.1,
-% 		today rule={draw=black!64,
+% 		today rule/.style={draw=black!64,
 % 			dash pattern=on 3.5pt off 4.5pt, line width=1.5pt},
 % 		today label={\small\bfseries TODAY},
-% 		title={draw=none, fill=none},
+% 		title/.style={draw=none, fill=none},
 % 		title label font=\bfseries\footnotesize,
-% 		title label anchor={below=7pt},
+% 		title label anchor/.style={below=7pt},
 % 		include title in canvas=false,
 % 		bar label font=\mdseries\small\color{black!70},
-% 		bar label anchor={left=2cm},
-% 		bar={draw=none, fill=black!63},
-% 		bar incomplete={fill=barblue},
+% 		bar label anchor/.style={left=2cm},
+% 		bar/.style={draw=none, fill=black!63},
+% 		bar incomplete/.style={fill=barblue},
 % 		progress label font=\mdseries\footnotesize\color{black!70},
-% 		group incomplete={fill=groupblue},
+% 		group incomplete/.style={fill=groupblue},
 % 		group left shift=0,
 % 		group right shift=0,
 % 		group height=.5,
 % 		group peaks={0}{}{},
-% 		group label anchor={left=.6cm},
-% 		link={-latex, line width=1.5pt, linkred},
+% 		group label anchor/.style={left=.6cm},
+% 		link/.style={-latex, line width=1.5pt, linkred},
 % 		link label font=\scriptsize\bfseries\color{linkred}\MakeUppercase,
-% 		link label anchor={below left=-2pt and 0pt}
+% 		link label anchor/.style={below left=-2pt and 0pt}
 % 		]{13}
-% 	\gantttitle[title label anchor={below left=7pt and -3pt}]%
+% 	\gantttitle[title label anchor/.style={below left=7pt and -3pt}]%
 % 		{WEEKS:\quad1}{1}
 % 	\gantttitlelist{2,...,13}{1} \\
 % 	\ganttgroup[progress=57, progress label font=\bfseries\small]%
@@ -1939,7 +2212,7 @@
 % 	\ganttbar[progress=0]{\textbf{WBS 2.3} Activity G}{9}{10}
 % 	\ganttlink[link type=s-s]{WBS1A}{WBS1B}
 % 	\ganttlink[link type=f-s]{WBS1B}{WBS1C}
-% 	\ganttlink[link type=f-f, link label anchor={left}]{WBS1C}{WBS1D}
+% 	\ganttlink[link type=f-f, link label anchor/.style={left}]{WBS1C}{WBS1D}
 % \end{ganttchart}
 % \end{center}
 %
@@ -1997,69 +2270,55 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{intmacro}{\@gtt@keydef}
-% The following four auxiliary macros save us some code when we devise keys later on. Firstly, |\@gtt@keydef|\marg{key} declares the key |/pgfgantt/|\meta{key}, which saves its value in the macro |gtt@|\meta{key}.
+% The following three auxiliary macros save us some code when we devise keys later on. Firstly, |\@gtt@keydef|\marg{key}\marg{initial value} declares the key |/pgfgantt/|\meta{key} and stores its \meta{initial value}.\changes{v3.0}{2012/01/25}{\cs{@gtt@keydef} and \cs{@gtt@stylekeydef} have been rewritten to support \texttt{pgfkey}'s abilities to store key values.}
 %    \begin{macrocode}
-\def\@gtt@keydef#1{%
-  \pgfkeysdef{/pgfgantt/#1}{%
-    \expandafter\def\csname gtt@#1\endcsname{##1}%
-  }%
+\def\@gtt@keydef#1#2{%
+  \pgfkeyssetvalue{/pgfgantt/#1}{#2}%
 }
 %    \end{macrocode}
 % \end{intmacro}
-% \begin{intmacro}{\@gtt@get}
-% Secondly, |\@gtt@get|\marg{key} retrieves the value stored by a \meta{key}.
+% \begin{macro}{\ganttvalueof}
+% Secondly, |\ganttvalueof|\marg{key} retrieves the value stored by a \meta{key}. Link type authors should be able to use this macro in their code; thus, it lacks any |@|s.\changes{v3.0}{2012/01/25}{\cs{@gtt@get} has been renamed to \cs{ganttvalueof} to provide a convenient access for link type authors.}
 %    \begin{macrocode}
-\def\@gtt@get#1{\csname gtt@#1\endcsname}
+\def\ganttvalueof#1{%
+  \pgfkeysvalueof{/pgfgantt/#1}%
+}
 %    \end{macrocode}
-% \end{intmacro}
+% \end{macro}
 % \begin{intmacro}{\@gtt@stylekeydef}
-% Thirdly, |\@gtt@stylekeydef|\marg{key} declares a \meta{key} which saves its value as the internal style key |/pgfgantt/|\meta{key}|@style|.
+% Thirdly, |\@gtt@stylekeydef|\marg{key}\marg{initial style} declares a style \meta{key} with an \meta{initial style}.
 %    \begin{macrocode}
-\def\@gtt@stylekeydef#1{%
-  \pgfkeysdef{/pgfgantt/#1}{%
-    \pgfkeys{/pgfgantt/#1@style/.style={##1}}%
-  }%
+\def\@gtt@stylekeydef#1#2{%
+  \pgfkeys{/pgfgantt/#1/.style={#2}}%
 }
 %    \end{macrocode}
 % \end{intmacro}
-% \begin{intmacro}{\@gtt@linkkeydef}\begin{intmacro}{\gtt@link@type}\begin{intmacro}{\gtt@link@startanchor}\begin{intmacro}{\gtt@link@endanchor}
-% Finally, |\@gtt@linkkeydef|\marg{link type}\marg{label}\marg{start anchor}\marg{end anchor} declares the subkey \meta{link type} of the choice key |/pgfgantt/link type|. Such keys store the \meta{label} in |\gtt@link@type|, the \meta{start anchor} in |\gtt@link@startanchor| and the \meta{end anchor} in |\gtt@link@endanchor|.
-%    \begin{macrocode}
-\def\@gtt@linkkeydef#1#2#3#4{%
-  \pgfkeysdef{/pgfgantt/link type/#1}{%
-    \def\gtt@link@type{#1}%
-    \def\gtt@link@startanchor{#3}%
-    \def\gtt@link@endanchor{#4}%
-  }%
-  \ganttset{link label={#1}{#2}}%
-}
-
-%    \end{macrocode}
-% \end{intmacro}\end{intmacro}\end{intmacro}\end{intmacro}
 %
 % \subsection{Option Declarations}
 %
 % \begin{option}{hgrid}\begin{option}{hgrid style}\begin{intmacro}{\ifgtt@hgrid}\begin{intmacro}{\gtt@hgridstyle}
 % |hgrid| checks whether its value is |false| and sets the boolean |\ifgtt@hgrid| accordingly. If the value is |true| or missing, horizontal grid lines appear |dotted|.
 %    \begin{macrocode}
-\@gtt@stylekeydef{hgrid style}
+\@gtt@stylekeydef{hgrid style}{dotted}
 \newif\ifgtt@hgrid
-\pgfkeysdef{/pgfgantt/hgrid}{%
-  \def\@tempa{#1}%
-  \def\@tempb{false}%
-  \ifx\@tempa\@tempb%
-    \gtt@hgridfalse%
-  \else%
-    \gtt@hgridtrue%
-    \def\@tempb{true}%
+\ganttset{%
+  hgrid/.code={%
+    \def\@tempa{#1}%
+    \def\@tempb{false}%
     \ifx\@tempa\@tempb%
-      \def\gtt@hgridstyle{dotted}%
+      \gtt@hgridfalse%
     \else%
-      \def\gtt@hgridstyle{#1}%
+      \gtt@hgridtrue%
+      \def\@tempb{true}%
+      \ifx\@tempa\@tempb%
+        \def\gtt@hgridstyle{dotted}%
+      \else%
+        \def\gtt@hgridstyle{#1}%
+      \fi%
     \fi%
-  \fi%
+  },%
+  hgrid/.default=dotted
 }
-\pgfkeys{/pgfgantt/hgrid/.default=dotted}
 
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}\end{option}\end{option}
@@ -2067,22 +2326,24 @@
 % Analogously, we declare |vgrid|.
 %    \begin{macrocode}
 \newif\ifgtt@vgrid
-\pgfkeysdef{/pgfgantt/vgrid}{%
-  \def\@tempa{#1}%
-  \def\@tempb{false}%
-  \ifx\@tempa\@tempb%
-    \gtt@vgridfalse%
-  \else%
-    \gtt@vgridtrue%
-    \def\@tempb{true}%
+\ganttset{%
+  vgrid/.code={%
+    \def\@tempa{#1}%
+    \def\@tempb{false}%
     \ifx\@tempa\@tempb%
-      \def\gtt@vgridstyle{dotted}%
+      \gtt@vgridfalse%
     \else%
-      \def\gtt@vgridstyle{#1}%
+      \gtt@vgridtrue%
+      \def\@tempb{true}%
+      \ifx\@tempa\@tempb%
+        \def\gtt@vgridstyle{dotted}%
+      \else%
+        \def\gtt@vgridstyle{#1}%
+      \fi%
     \fi%
-  \fi%
+  },%
+  vgrid/.default=dotted
 }
-\pgfkeys{/pgfgantt/vgrid/.default=dotted}
 
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}\end{option}
@@ -2090,35 +2351,38 @@
 % \begin{option}{x unit}\begin{option}{y unit title}\begin{option}{y unit chart}
 % The following three keys store the basis vectors for the chart.
 %    \begin{macrocode}
-\@gtt@keydef{x unit}
-\@gtt@keydef{y unit title}
-\@gtt@keydef{y unit chart}
+\@gtt@keydef{x unit}{.5cm}
+\@gtt@keydef{y unit title}{1cm}
+\@gtt@keydef{y unit chart}{1cm}
 
 %    \end{macrocode}
 % \end{option}\end{option}\end{option}
 % \begin{option}{canvas}\begin{option}{today}\begin{option}{today rule}\begin{option}{today label}
 % Here is a set of keys related to the canvas \dots
 %    \begin{macrocode}
-\@gtt@stylekeydef{canvas}
-\@gtt@keydef{today}
-\@gtt@stylekeydef{today rule}
-\@gtt@keydef{today label}
+\@gtt@stylekeydef{canvas}{fill=white}
+\@gtt@keydef{today}{none}
+\@gtt@stylekeydef{today rule}{dashed, line width=1pt}
+\@gtt@keydef{today label}{TODAY}
 
 %    \end{macrocode}
 % \end{option}\end{option}\end{option}\end{option}
 % \begin{option}{title}\begin{option}{title label font}\begin{option}{title label anchor}\begin{option}{title list options}\begin{option}{title left shift}\begin{option}{title right shift}\begin{option}{title top shift}\begin{option}{title height}\begin{intmacro}{\gtt@titlelistoptions}
-% \dots\ and of keys that influence the title. Note that |\@gtt@keydef| cannot define |title list options|, since |\@gtt@titlelistoptions| is expanded after a |\foreach| statement, where |\@gtt@get| will not work.
+% \dots\ and of keys that influence the title. Note that |\@gtt@keydef| cannot define |title list options|, since |\@gtt@titlelistoptions| is expanded after a |\foreach| statement, where |\ganttvalueof| will not work.
 %    \begin{macrocode}
-\@gtt@stylekeydef{title}
-\@gtt@keydef{title label font}
-\@gtt@stylekeydef{title label anchor}
-\pgfkeysdef{/pgfgantt/title list options}{%
-  \def\gtt@titlelistoptions{[#1]}%
+\@gtt@stylekeydef{title}{fill=white}
+\@gtt@keydef{title label font}{\small}
+\@gtt@stylekeydef{title label anchor}{anchor=mid}
+\ganttset{%
+  title list options/.code={%
+    \def\gtt@titlelistoptions{[#1]}%
+  },%
+  title list options={var=\x, evaluate=\x}%
 }
-\@gtt@keydef{title left shift}
-\@gtt@keydef{title right shift}
-\@gtt@keydef{title top shift}
-\@gtt@keydef{title height}
+\@gtt@keydef{title left shift}{0}
+\@gtt@keydef{title right shift}{0}
+\@gtt@keydef{title top shift}{0}
+\@gtt@keydef{title height}{.6}
 
 %    \end{macrocode}
 % \end{intmacro}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
@@ -2126,215 +2390,176 @@
 % |include title in canvas| is one of two boolean keys in the package.
 %    \begin{macrocode}
 \newif\ifgtt@includetitle
-\pgfkeys{/pgfgantt/include title in canvas/.is if=gtt@includetitle}
+\ganttset{%
+  include title in canvas/.is if=gtt@includetitle,%
+  include title in canvas
+}
 
 %    \end{macrocode}
 % \end{intmacro}\end{option}
 % \begin{option}{name}\begin{option}{time slot modifier}\begin{option}{inline}\begin{intmacro}{\ifgtt@inline}
 % The |name| key saves unique names for chart elements. The |time slot modifier| option controls the semi-intelligent behaviour of the package regarding the conversion of title slots to $x$-coordinates. A value of |0| essentially means ``interpret all end time slots as $x$-coordinates''. The |inline| key moves labels close to their respective chart elements.
 %    \begin{macrocode}
-\@gtt@keydef{name}
-\@gtt@keydef{time slot modifier}
+\@gtt@keydef{name}{}
+\@gtt@keydef{time slot modifier}{-1}
 \newif\ifgtt@inline
-\pgfkeys{/pgfgantt/inline/.is if=gtt@inline}
+\ganttset{%
+  inline/.is if=gtt@inline,%
+  inline=false%
+}
 
 %    \end{macrocode}
 % \end{intmacro}\end{option}\end{option}\end{option}
 % \begin{option}{bar}\begin{option}{bar label text}\begin{option}{bar label font}\begin{option}{bar label anchor}\begin{option}{bar label inline anchor}\begin{option}{bar left shift}\begin{option}{bar right shift}\begin{option}{bar top shift}\begin{option}{bar height}\begin{intmacro}{\gtt@barlabeltext}
 % Some standard key declarations for bars \dots
 %    \begin{macrocode}
-\@gtt@stylekeydef{bar}
-\pgfkeysdef{/pgfgantt/bar label text}{%
-  \def\gtt@barlabeltext##1{#1}%
+\@gtt@stylekeydef{bar}{fill=white}
+\ganttset{%
+  bar label text/.code={%
+    \def\gtt@barlabeltext##1{#1}%
+  },%
+  bar label text={\strut#1}%
 }
-\@gtt@keydef{bar label font}
-\@gtt@stylekeydef{bar label anchor}
-\@gtt@stylekeydef{bar label inline anchor}
-\@gtt@keydef{bar left shift}
-\@gtt@keydef{bar right shift}
-\@gtt@keydef{bar top shift}
-\@gtt@keydef{bar height}
+\@gtt@keydef{bar label font}{\normalsize}
+\@gtt@stylekeydef{bar label anchor}{anchor=east}
+\@gtt@stylekeydef{bar label inline anchor}{anchor=center}
+\@gtt@keydef{bar label shape anchor}{center}
+\@gtt@keydef{bar left shift}{0}
+\@gtt@keydef{bar right shift}{0}
+\@gtt@keydef{bar top shift}{.3}
+\@gtt@keydef{bar height}{.4}
 
 %    \end{macrocode}
 % \end{intmacro}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
 % \begin{option}{group}\begin{option}{group label text}\begin{option}{group label font}\begin{option}{group label anchor}\begin{option}{group label inline anchor}\begin{option}{group left shift}\begin{option}{group right shift}\begin{option}{group top shift}\begin{option}{group height}\begin{intmacro}{\gtt@grouplabeltext}
 % \dots\ and groups.
 %    \begin{macrocode}
-\@gtt@stylekeydef{group}
-\pgfkeysdef{/pgfgantt/group label text}{%
-  \def\gtt@grouplabeltext##1{#1}%
+\@gtt@stylekeydef{group}{fill=black}
+\ganttset{%
+  group label text/.code={%
+    \def\gtt@grouplabeltext##1{#1}%
+  },%
+  group label text={\strut#1}%
 }
-\@gtt@keydef{group label font}
-\@gtt@stylekeydef{group label anchor}
-\@gtt@stylekeydef{group label inline anchor}
-\@gtt@keydef{group left shift}
-\@gtt@keydef{group right shift}
-\@gtt@keydef{group top shift}
-\@gtt@keydef{group height}
+\@gtt@keydef{group label font}{\normalsize\bfseries}
+\@gtt@stylekeydef{group label anchor}{anchor=east}
+\@gtt@stylekeydef{group label inline anchor}{anchor=south}
+\@gtt@keydef{group label shape anchor}{center}
+\@gtt@keydef{group left shift}{-.1}
+\@gtt@keydef{group right shift}{.1}
+\@gtt@keydef{group top shift}{.4}
+\@gtt@keydef{group height}{.2}
 %    \end{macrocode}
 % \end{intmacro}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
 % \begin{option}{group left peak}\begin{intmacro}{\gtt@groupleftpeakmidx}\begin{intmacro}{\gtt@groupleftpeakinnerx}\begin{intmacro}{\gtt@groupleftpeaky}
 % |gantt left peak| checks for each of its three values whether it is non-empty and only then changes the corresponding length macro.
 %    \begin{macrocode}
-\pgfkeysdefnargs{/pgfgantt/group left peak}{3}{%
-  \def\@tempa{#1}%
-  \ifx\@tempa\@empty\else\def\gtt@groupleftpeakmidx{#1}\fi%
-  \def\@tempa{#2}%
-  \ifx\@tempa\@empty\else\def\gtt@groupleftpeakinnerx{#2}\fi%
-  \def\@tempa{#3}%
-  \ifx\@tempa\@empty\else\def\gtt@groupleftpeaky{#3}\fi%
-}
+\ganttset{%
+  group left peak/.code n args={3}{%
+    \def\@tempa{#1}%
+    \ifx\@tempa\@empty\else\def\gtt@groupleftpeakmidx{#1}\fi%
+    \def\@tempa{#2}%
+    \ifx\@tempa\@empty\else\def\gtt@groupleftpeakinnerx{#2}\fi%
+    \def\@tempa{#3}%
+    \ifx\@tempa\@empty\else\def\gtt@groupleftpeaky{#3}\fi%
+  },%
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}\end{intmacro}\end{option}
 % \begin{option}{group right peak}\begin{intmacro}{\gtt@grouprightpeakmidx}\begin{intmacro}{\gtt@grouprightpeakinnerx}\begin{intmacro}{\gtt@grouprightpeaky}
 % |group right peak| works similar, but a |-| also counts as an empty value (the reason for this will soon become apparent).
 %    \begin{macrocode}
-\pgfkeysdefnargs{/pgfgantt/group right peak}{3}{%
-  \def\@tempa{#1}%
-  \def\@tempb{-}%
-  \ifx\@tempa\@empty\else%
-    \ifx\@tempa\@tempb\else\def\gtt@grouprightpeakmidx{#1}\fi%
-  \fi%
-  \def\@tempa{#2}%
-  \ifx\@tempa\@empty\else%
-    \ifx\@tempa\@tempb\else\def\gtt@grouprightpeakinnerx{#2}\fi%
-  \fi%
-  \def\@tempa{#3}%
-  \ifx\@tempa\@empty\else\def\gtt@grouprightpeaky{#3}\fi%
-}
+  group right peak/.code n args={3}{%
+    \def\@tempa{#1}%
+    \def\@tempb{-}%
+    \ifx\@tempa\@empty\else%
+      \ifx\@tempa\@tempb\else\def\gtt@grouprightpeakmidx{#1}\fi%
+    \fi%
+    \def\@tempa{#2}%
+    \ifx\@tempa\@empty\else%
+      \ifx\@tempa\@tempb\else\def\gtt@grouprightpeakinnerx{#2}\fi%
+    \fi%
+    \def\@tempa{#3}%
+    \ifx\@tempa\@empty\else\def\gtt@grouprightpeaky{#3}\fi%
+  },%
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}\end{intmacro}\end{option}
 % \begin{option}{group peaks}
 % |group peaks| simultaneously sets |group left peak| and |group right peak|. In order to preserve the symmetry of the peaks, the key adds a negative sign (i.\,e., a hyphen in the source code) to \meta{groove x} and \meta{inner x} of |group right peak|. Therefore, the latter key must interpret its first and second value as ``empty'' even if they contain a single hyphen.
 %    \begin{macrocode}
-\pgfkeysdefnargs{/pgfgantt/group peaks}{3}{%
-  \ganttset{group left peak={#1}{#2}{#3}, group right peak={-#1}{-#2}{#3}}%
+  group peaks/.code n args={3}{%
+    \ganttset{%
+      group left peak={#1}{#2}{#3},%
+      group right peak={-#1}{-#2}{#3}%
+    }%
+  },%
+  group peaks={.2}{.4}{.1}
 }
 
 %    \end{macrocode}
 % \end{option}
-% \begin{option}{progress}\begin{option}{bar incomplete}\begin{option}{group incomplete}\begin{option}{incomplete}\begin{option}{progress label text}\begin{option}{progress label font}\begin{option}{progress label anchor}\begin{intmacro}{\gtt@progresslabeltext}
+% \begin{option}{progress}\begin{option}{bar incomplete}\begin{option}{group incomplete}\begin{option}{incomplete}\begin{option}{progress label text}\begin{option}{progress label font}\begin{option}{progress label anchor}\begin{intmacro}{\gtt@progress}\begin{intmacro}{\gtt@progresslabeltext}
 % The keys below manage the progress elements. Note the way in which we declare |progress label text|, so that a |#1| in its value is replaced by the argument of |\gtt@progresslabeltext|.
 %    \begin{macrocode}
-\@gtt@keydef{progress}
-\@gtt@stylekeydef{bar incomplete}
-\@gtt@stylekeydef{group incomplete}
-\pgfkeysdef{/pgfgantt/incomplete}{%
-  \ganttset{bar incomplete={#1}, group incomplete={#1}}%
+\ganttset{%
+  progress/.code={%
+    \def\gtt@progress{#1}%
+  },%
+  progress=none%
 }
-\pgfkeysdef{/pgfgantt/progress label text}{%
-  \def\gtt@progresslabeltext##1{#1}%
+\@gtt@stylekeydef{bar incomplete}{}
+\@gtt@stylekeydef{group incomplete}{}
+\ganttset{%
+  incomplete/.style/.code={%
+    \ganttset{bar incomplete/.style={#1}, group incomplete/.style={#1}}%
+  },%
+  incomplete/.style={fill=black!25}
 }
-\@gtt@keydef{progress label font}
-\@gtt@stylekeydef{progress label anchor}
+\ganttset{%
+  progress label text/.code={%
+    \def\gtt@progresslabeltext##1{#1}%
+  },%
+  progress label text={#1\% complete}
+}
+\@gtt@keydef{progress label font}{\scriptsize}
+\@gtt@stylekeydef{progress label anchor}{anchor=west}
 
 %    \end{macrocode}
-% \end{intmacro}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
+% \end{intmacro}\end{intmacro}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
 % \begin{option}{milestone}\begin{option}{milestone label text}\begin{option}{milestone label font}\begin{option}{milestone label anchor}\begin{option}{milestone label inline anchor}\begin{option}{milestone width}\begin{option}{milestone height}\begin{option}{milestone xshift}\begin{option}{milestone yshift}\begin{intmacro}{\gtt@milestonelabeltext}
 % Here are the declarations of the milestone-related keys.
 %    \begin{macrocode}
-\@gtt@stylekeydef{milestone}
-\pgfkeysdef{/pgfgantt/milestone label text}{%
-  \def\gtt@milestonelabeltext##1{#1}%
+\@gtt@stylekeydef{milestone}{fill=black}
+\ganttset{%
+  milestone label text/.code={%
+    \def\gtt@milestonelabeltext##1{#1}%
+  },%
+  milestone label text={\strut#1}%
 }
-\@gtt@keydef{milestone label font}
-\@gtt@stylekeydef{milestone label anchor}
-\@gtt@stylekeydef{milestone label inline anchor}
-\@gtt@keydef{milestone width}
-\@gtt@keydef{milestone height}
-\@gtt@keydef{milestone xshift}
-\@gtt@keydef{milestone yshift}
+\@gtt@keydef{milestone label font}{\normalsize\itshape}
+\@gtt@stylekeydef{milestone label anchor}{anchor=east}
+\@gtt@stylekeydef{milestone label inline anchor}{anchor=south}
+\@gtt@keydef{milestone label shape anchor}{center}
+\@gtt@keydef{milestone width}{.8}
+\@gtt@keydef{milestone height}{.4}
+\@gtt@keydef{milestone xshift}{0}
+\@gtt@keydef{milestone yshift}{.5}
 
 %    \end{macrocode}
 % \end{intmacro}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
-% \begin{option}{link}\begin{option}{link type}\begin{option}{link label}\begin{option}{link label font}\begin{option}{link label anchor}\begin{option}{link mid}\begin{option}{link bulge}\begin{option}{link tolerance}
-% Next, we declare the keys that modify links and the five link types.
+% \begin{option}{link}\begin{option}{link type}\begin{option}{link mid}\begin{option}{link bulge}\begin{option}{link tolerance}\begin{option}{link label}\begin{option}{link label font}\begin{option}{link label anchor}
+% Next, we declare the keys that modify links.
 %    \begin{macrocode}
-\@gtt@stylekeydef{link}
-\pgfkeysdefnargs{/pgfgantt/link label}{2}{%
-  \expandafter\def\csname gtt@link@#1@labeltext\endcsname{#2}%
-}
-\pgfkeys{/pgfgantt/link type/.is choice}
-\@gtt@linkkeydef{arrow}{\relax}{}{}
-\@gtt@linkkeydef{s-s}{start-to-start}{lower left}{upper left}
-\@gtt@linkkeydef{s-f}{start-to-finish}{lower left}{upper right}
-\@gtt@linkkeydef{f-s}{finish-to-start}{lower right}{upper left}
-\@gtt@linkkeydef{f-f}{finish-to-finish}{lower right}{upper right}
-
-\@gtt@keydef{link label font}
-\@gtt@stylekeydef{link label anchor}
-\@gtt@keydef{link mid}
-\@gtt@keydef{link bulge}
-\@gtt@keydef{link tolerance}
+\@gtt@stylekeydef{link}{-latex, rounded corners=1pt}
+\@gtt@keydef{link type}{auto}
+\@gtt@keydef{link mid}{.5}
+\@gtt@keydef{link bulge}{.4}
+\@gtt@keydef{link tolerance}{.6}
+\@gtt@keydef{link label}{}
+\@gtt@keydef{link label font}{\scriptsize\itshape\normalcolor}
+\@gtt@stylekeydef{link label anchor}{anchor=west}
 
 %    \end{macrocode}
 % \end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}\end{option}
-% Finally, we initialize all keys in order to define the commands that save their values.
-%    \begin{macrocode}
-\ganttset{
-  canvas={fill=white},
-  x unit=.5cm,
-  y unit title=1cm,
-  y unit chart=1cm,
-  hgrid style=dotted,
-  today=none,
-  today rule={dashed, line width=1pt},
-  today label=TODAY,
-  title={fill=white},
-  title label font=\small,
-  title label anchor={anchor=mid},
-  title left shift=0,
-  title right shift=0,
-  title top shift=0,
-  title height=.6,
-  title list options={var=\x, evaluate=\x},
-  include title in canvas,
-  name={},
-  time slot modifier=-1,
-  inline=false,
-  bar={fill=white},
-  bar label text={\strut#1},
-  bar label font=\normalsize,
-  bar label anchor={anchor=east},
-  bar label inline anchor={anchor=center},
-  bar left shift=0,
-  bar right shift=0,
-  bar top shift=.3,
-  bar height=.4,
-  group={fill=black},
-  group label text={\strut#1},
-  group label font=\normalsize\bfseries,
-  group label anchor={anchor=east},
-  group label inline anchor={anchor=south},
-  group left shift=-.1,
-  group right shift=.1,
-  group top shift=.4,
-  group height=.2,
-  group peaks={.2}{.4}{.1},
-  progress=none,
-  incomplete={fill=black!25},
-  progress label text={#1\% complete},
-  progress label font=\scriptsize,
-  progress label anchor={anchor=west},
-  milestone={fill=black},
-  milestone label text={\strut#1},
-  milestone label font=\normalsize\itshape,
-  milestone label anchor={anchor=east},
-  milestone label inline anchor={anchor=south},
-  milestone width=.8,
-  milestone height=.4,
-  milestone xshift=0,
-  milestone yshift=.5,
-  link={-latex, rounded corners=1pt},
-  link type=arrow,
-  link label font=\scriptsize\itshape\normalcolor,
-  link label anchor={anchor=west},
-  link mid=.5,
-  link bulge=.4,
-  link tolerance=0.6
-}
-
-%    \end{macrocode}
 %
 %
 % \subsection{The Horizontal and Vertical Grid}
@@ -2367,8 +2592,9 @@
 %    \begin{macrocode}
 \def\gtt@vgrid@draw#1#2\relax{%
   \foreach \i in {1,...,#1} {%
-    \draw[#2] (\value{gtt@currgrid} * \@gtt@get{x unit}, \y@upper pt) --%
-      (\value{gtt@currgrid} * \@gtt@get{x unit}, \y@lower pt);%
+    \draw [#2]
+      (\value{gtt@currgrid} * \ganttvalueof{x unit}, \y@upper pt) --%
+      (\value{gtt@currgrid} * \ganttvalueof{x unit}, \y@lower pt);%
     \stepcounter{gtt@currgrid}%
     \ifnum\value{gtt@currgrid}>\value{gtt@width}\breakforeach\fi%
   }%
@@ -2395,12 +2621,13 @@
 \def\gtt@hgrid@draw#1#2\relax{%
   \foreach \i in {1,...,#1} {%
     \pgfmathsetmacro\y@upper{%
-      \value{gtt@lasttitleline} * \@gtt@get{y unit title} +%
+      \value{gtt@lasttitleline} * \ganttvalueof{y unit title} +%
       (\value{gtt@currgrid} - \value{gtt@lasttitleline})%
-      * \@gtt@get{y unit chart}%
+      * \ganttvalueof{y unit chart}%
     }%
-    \draw[#2] (0pt, \y@upper pt) --
-      (\value{gtt@width} * \@gtt@get{x unit}, \y@upper pt);%
+    \draw [#2]
+      (0pt, \y@upper pt) --
+      (\value{gtt@width} * \ganttvalueof{x unit}, \y@upper pt);%
     \addtocounter{gtt@currgrid}{-1}%
     \ifnum\value{gtt@currgrid}<\value{gtt@currentline}\breakforeach\fi%
   }%
@@ -2441,19 +2668,19 @@
       \def\y@upper{0}%
     \else%
       \pgfmathsetmacro\y@upper{%
-        \value{gtt@lasttitleline} * \@gtt@get{y unit title}%
+        \value{gtt@lasttitleline} * \ganttvalueof{y unit title}%
       }%
     \fi%
     \pgfmathsetmacro\y@lower{%
-      \value{gtt@lasttitleline} * \@gtt@get{y unit title}%
+      \value{gtt@lasttitleline} * \ganttvalueof{y unit title}%
       + (\value{gtt@currentline} - \value{gtt@lasttitleline} - 1)%
-      * \@gtt@get{y unit chart}%
+      * \ganttvalueof{y unit chart}%
     }%
-    \draw[/pgfgantt/canvas@style]
+    \draw [/pgfgantt/canvas]
       (0pt, \y@upper pt) rectangle
-      (\value{gtt@width} * \@gtt@get{x unit}, \y@lower pt);%
+      (\value{gtt@width} * \ganttvalueof{x unit}, \y@lower pt);%
     \pgfmathsetmacro\y@upper{%
-      \value{gtt@lasttitleline} * \@gtt@get{y unit title}%
+      \value{gtt@lasttitleline} * \ganttvalueof{y unit title}%
     }%
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}\end{intmacro}\end{intmacro}
@@ -2468,8 +2695,8 @@
       \stepcounter{gtt@width}%
     \fi%
 %    \end{macrocode}
-% Now, we draw the horizontal grid. If we exclude the title from the canvas, we omit the uppermost horizontal grid line since it would coincide with the canvas border.
 % \begin{intmacro}{\hgrid@upper}
+% Now, we draw the horizontal grid. If we exclude the title from the canvas, we omit the uppermost horizontal grid line since it would coincide with the canvas border.
 %    \begin{macrocode}
     \ifgtt@hgrid%
       \ifgtt@includetitle%
@@ -2488,12 +2715,13 @@
 % The last task of |ganttchart| is to apply the |today| key if its value differs from |none|.
 %    \begin{macrocode}
     \def\@tempa{none}%
-    \ifx\gtt@today\@tempa\else%
-      \draw[/pgfgantt/today rule@style]
-        (\@gtt@get{today} * \@gtt@get{x unit}, \y@upper pt) --
-        (\@gtt@get{today} * \@gtt@get{x unit}, \y@lower pt);%
-      \node at (\@gtt@get{today} * \@gtt@get{x unit}, \y@lower pt)
-        [anchor=north] {\@gtt@get{today label}};%
+    \edef\@tempb{\ganttvalueof{today}}%
+    \ifx\@tempa\@tempb\else%
+      \draw [/pgfgantt/today rule]
+        (\ganttvalueof{today} * \ganttvalueof{x unit}, \y@upper pt) --
+        (\ganttvalueof{today} * \ganttvalueof{x unit}, \y@lower pt);%
+      \node at (\ganttvalueof{today} * \ganttvalueof{x unit}, \y@lower pt)
+        [anchor=north] {\ganttvalueof{today label}};%
     \fi%
   \end{scope}%
 %    \end{macrocode}
@@ -2509,23 +2737,23 @@
 % \subsection{Starting a New Line}
 %
 % \begin{macro}{\ganttnewline}
-% Unless the optional argument of |\ganttnewline| is empty, this macro adds a horizontal grid rule between the current and the new line. The style of this line is either |hgrid style| or the style specified in the optional argument. Anyway, |\ganttnewline| decreases |gtt@currentline| and, if we are still in the title, |gtt@lasttitleline|. Since the new line starts at time slot zero, |gtt@lasttitleslot| is reset.
+% Unless the optional argument of |\ganttnewline| is empty, this macro adds a horizontal grid rule between the current and the new line. The style of this line is either |hgrid style| or the style specified in the optional argument. Anyway, |\ganttnewline| decreases |gtt@currentline| and, if we are still in the title, |gtt@lasttitleline|. Since the new line starts at time slot zero, |gtt@lasttitleslot| is reset.\changes{v2.0}{2011/10/10}{The optional argument of \cs{ganttnewline} now also accepts a style.}
 %    \begin{macrocode}
 \newcommand\ganttnewline[1][]{%
   \def\@tempa{#1}%
   \def\@tempb{grid}%
   \ifx\@tempa\@empty\else
     \ifx\@tempa\@tempb%
-      \def\@tempa{/pgfgantt/hgrid style@style}%
+      \def\@tempa{/pgfgantt/hgrid style}%
     \fi%
     \pgfmathsetmacro\y@upper{%
-      \value{gtt@lasttitleline} * \@gtt@get{y unit title}%
+      \value{gtt@lasttitleline} * \ganttvalueof{y unit title}%
       + (\value{gtt@currentline} - \value{gtt@lasttitleline} - 1)%
-      * \@gtt@get{y unit chart}%
+      * \ganttvalueof{y unit chart}%
     }
     \expandafter\draw\expandafter[\@tempa]
       (0pt, \y@upper pt) --
-      (\value{gtt@width} * \@gtt@get{x unit}, \y@upper pt);%
+      (\value{gtt@width} * \ganttvalueof{x unit}, \y@upper pt);%
   \fi%
   \addtocounter{gtt@currentline}{-1}%
   \ifgtt@intitle\addtocounter{gtt@lasttitleline}{-1}\fi%
@@ -2547,27 +2775,27 @@
   \begingroup%
   \ganttset{#1}%
   \pgfmathsetmacro\x@left{%
-    (\value{gtt@lasttitleslot} + \@gtt@get{title left shift})%
-    * \@gtt@get{x unit}%
+    (\value{gtt@lasttitleslot} + \ganttvalueof{title left shift})%
+    * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\x@right{%
-    (\value{gtt@lasttitleslot} + #3 + \@gtt@get{title right shift})%
-    * \@gtt@get{x unit}%
+    (\value{gtt@lasttitleslot} + #3 + \ganttvalueof{title right shift})%
+    * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\y@upper{%
-    (\value{gtt@currentline} - \@gtt@get{title top shift})%
-    * \@gtt@get{y unit title}%
+    (\value{gtt@currentline} - \ganttvalueof{title top shift})%
+    * \ganttvalueof{y unit title}%
   }%
   \pgfmathsetmacro\y@lower{%
-    (\value{gtt@currentline} - \@gtt@get{title top shift}%
-    - \@gtt@get{title height}) * \@gtt@get{y unit title}%
+    (\value{gtt@currentline} - \ganttvalueof{title top shift}%
+    - \ganttvalueof{title height}) * \ganttvalueof{y unit title}%
   }%
-  \draw[/pgfgantt/title@style]
+  \draw [/pgfgantt/title]
     (\x@left pt, \y@upper pt) rectangle
     (\x@right pt, \y@lower pt);%
-  \@gtt@get{title label font}%
+  \ganttvalueof{title label font}%
   \node at ($(\x@left pt,\y@upper pt)!.5!(\x@right pt,\y@lower pt)$)
-    [/pgfgantt/title label anchor@style] {#2};%
+    [/pgfgantt/title label anchor] {#2};%
   \addtocounter{gtt@lasttitleslot}{#3}%
   \endgroup%
 }
@@ -2590,23 +2818,19 @@
 %
 % \subsection{Chart Elements}
 %
-% All chart elements that can be linked (i.\,e. bars, groups and milestones) add a node of shape |chart element|, whose name equals the value of the |name| key (or ``|elem|\meta{number}'' if |name| is empty). A |chart element| node has an anchor in the center of the chart element (|center|) and six anchors at the top, middle and bottom of the element's sides. The |\ganttlink| macro relies on these anchors for calculating the link coordinates.
+% All chart elements that can be linked (i.\,e. bars, groups and milestones) add a node of shape |chart element|, whose name equals the value of the |name| key (or ``|elem|\meta{number}'' if |name| is empty).\par
+% A |chart element| node is a rectangle with eleven anchors: One in the center of the chart element (|center|); six anchors at the top, middle and bottom of the element's sides (|lower left| etc.); and four special anchors (|on left| etc.) that indicate a fractional coordinate between two corners of the shape. This fraction is stored in |\@gtt@linkanchorfraction|. The |\ganttlink| macro relies on these anchors for calculating the link coordinates.\par
+% Whenever a chart element node is created, the four macros |\x@left|, |\x@right|, |\y@upper| and |\y@lower| must expand to a number which represents a dimension in points (e.\,g., see section~\ref{ssc:ImplBars}). Furthermore, if one calls the anchors |on left| etc., |\@gtt@linkanchorfraction| must contain a number between 0 and 1 (see section~\ref{ssc:ImplLinks}).\changes{v3.0}{2012/01/25}{The \texttt{chart element} shape supports four additional anchors (\texttt{on left}, \texttt{on top}, \texttt{on right} and \texttt{on bottom}).}
 %    \begin{macrocode}
 \pgfdeclareshape{chart element}{%
   \savedanchor\lowerleft{%
     \pgfpoint{\x@left pt}{\y@lower pt}%
-  }%
-  \savedanchor\leftcenter{%
-    \pgfpoint{\x@left pt}{\y@upper pt / 2 + \y@lower pt / 2}%
   }%
   \savedanchor\upperleft{%
     \pgfpoint{\x@left pt}{\y@upper pt}%
   }%
   \savedanchor\lowerright{%
     \pgfpoint{\x@right pt}{\y@lower pt}%
-  }%
-  \savedanchor\rightcenter{%
-    \pgfpoint{\x@right pt}{\y@upper pt / 2 + \y@lower pt / 2}%
   }%
   \savedanchor\upperright{%
     \pgfpoint{\x@right pt}{\y@upper pt}%
@@ -2615,19 +2839,72 @@
     \pgfpoint{\x@right pt / 2 + \x@left pt / 2}%
       {\y@upper pt / 2 + \y@lower pt / 2}%
   }%
+  \anchor{on bottom}{%
+    \lowerleft%
+    \pgf@xa\pgf@x%
+    \lowerright%
+    \pgf@xb\pgf@x%
+    \advance\pgf@xb-\pgf@xa%
+    \advance\pgf@xa\@gtt@linkanchorfraction\pgf@xb%
+    \pgf@x\pgf@xa%
+  }%
+  \anchor{on left}{%
+    \upperleft%
+    \pgf@ya\pgf@y%
+    \lowerleft%
+    \pgf@yb\pgf@y%
+    \advance\pgf@yb-\pgf@ya%
+    \advance\pgf@ya\@gtt@linkanchorfraction\pgf@yb%
+    \pgf@y\pgf@ya%
+  }%
+  \anchor{on top}{%
+    \upperleft%
+    \pgf@xa\pgf@x%
+    \upperright%
+    \pgf@xb\pgf@x%
+    \advance\pgf@xb-\pgf@xa%
+    \advance\pgf@xa\@gtt@linkanchorfraction\pgf@xb%
+    \pgf@x\pgf@xa%
+  }%
+  \anchor{on right}{%
+    \upperright%
+    \pgf@ya\pgf@y%
+    \lowerright%
+    \pgf@yb\pgf@y%
+    \advance\pgf@yb-\pgf@ya%
+    \advance\pgf@ya\@gtt@linkanchorfraction\pgf@yb%
+    \pgf@y\pgf@ya%
+  }%
+  \anchor{center}{\centerpoint}%
   \anchor{lower left}{\lowerleft}%
-  \anchor{left}{\leftcenter}%
+  \anchor{left}{%
+    \upperleft%
+    \pgf@ya\pgf@y%
+    \lowerleft%
+    \pgf@yb\pgf@y%
+    \advance\pgf@yb-\pgf@ya%
+    \advance\pgf@ya.5\pgf@yb%
+    \pgf@y\pgf@ya%
+  }%
   \anchor{upper left}{\upperleft}%
   \anchor{lower right}{\lowerright}%
-  \anchor{right}{\rightcenter}%
+  \anchor{right}{%
+    \upperright%
+    \pgf@ya\pgf@y%
+    \lowerright%
+    \pgf@yb\pgf@y%
+    \advance\pgf@yb-\pgf@ya%
+    \advance\pgf@ya.5\pgf@yb%
+    \pgf@y\pgf@ya%
+  }%
   \anchor{upper right}{\upperright}%
-  \anchor{center}{\centerpoint}%
 }
 
 %    \end{macrocode}
 % 
 %
 % \subsection{Bars}
+% \label{ssc:ImplBars}
 %
 % \begin{macro}{\ganttbar}\begin{intmacro}{\gtt@name}
 % |\ganttbar| first defines the usual coordinate macros and adds a |chart element| node. This node is called |elem|\meta{number} if the |name| key is empty.
@@ -2636,22 +2913,24 @@
   \begingroup%
   \ganttset{#1}%
   \pgfmathsetmacro\x@left{%
-    (#3 + \@gtt@get{time slot modifier} + \@gtt@get{bar left shift})%
-    * \@gtt@get{x unit}%
+    (#3 + \ganttvalueof{time slot modifier}%
+      + \ganttvalueof{bar left shift})%
+    * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\x@right{%
-    (#4 + \@gtt@get{bar right shift}) * \@gtt@get{x unit}%
+    (#4 + \ganttvalueof{bar right shift}) * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\y@upper{%
-    \value{gtt@lasttitleline} * \@gtt@get{y unit title}
+    \value{gtt@lasttitleline} * \ganttvalueof{y unit title}
     + (\value{gtt@currentline} - \value{gtt@lasttitleline}
-    - \@gtt@get{bar top shift}) * \@gtt@get{y unit chart}%
+    - \ganttvalueof{bar top shift}) * \ganttvalueof{y unit chart}%
   }%
   \pgfmathsetmacro\y@lower{%
-    \y@upper - \@gtt@get{bar height} * \@gtt@get{y unit chart}%
+    \y@upper - \ganttvalueof{bar height} * \ganttvalueof{y unit chart}%
   }%
+  \edef\gtt@name{\ganttvalueof{name}}%
   \ifx\gtt@name\@empty\edef\gtt@name{elem\thegtt@elementid}\fi%
-  \node[shape=chart element] (\@gtt@get{name})
+  \node [shape=chart element] (\gtt@name)
     at ($(\x@left pt, \y@upper pt)!.5!(\x@right pt, \y@lower pt)$) {};
 %    \end{macrocode}
 % \end{intmacro}
@@ -2669,9 +2948,9 @@
       \def\gtt@pl@draw{%
         \node at ($(\x@right pt, \y@upper pt)!.5!
           (\x@right pt, \y@lower pt)$)
-          [/pgfgantt/progress label anchor@style] {%
-            \@gtt@get{progress label font}{%
-              \@gtt@get{progresslabeltext}{\@gtt@get{progress}}%
+          [/pgfgantt/progress label anchor] {%
+            \ganttvalueof{progress label font}{%
+              \gtt@progresslabeltext{\gtt@progress}%
             }%
           };%
       }%
@@ -2685,39 +2964,39 @@
     \clip (\x@left pt, \y@upper pt) rectangle
       ($(\x@left pt, \y@lower pt)!\gtt@progress/100!
         (\x@right pt, \y@lower pt)$);%
-    \draw[/pgfgantt/bar@style, draw=none] (\x@left pt, \y@upper pt)
+    \draw [/pgfgantt/bar, draw=none] (\x@left pt, \y@upper pt)
       rectangle (\x@right pt, \y@lower pt);%
   \end{scope}%
   \begin{scope}%
     \clip ($(\x@left pt, \y@upper pt)!\gtt@progress/100!
       (\x@right pt, \y@upper pt)$)
       rectangle (\x@right pt, \y@lower pt);%
-    \draw[/pgfgantt/bar incomplete@style, draw=none]
+    \draw [/pgfgantt/bar incomplete, draw=none]
       (\x@left pt, \y@upper pt) rectangle (\x@right pt, \y@lower pt);%
   \end{scope}%
-  \draw[/pgfgantt/bar@style, fill=none]
+  \draw [/pgfgantt/bar, fill=none]
     (\x@left pt, \y@upper pt) rectangle (\x@right pt, \y@lower pt);%
   \gtt@pl@draw%
 %    \end{macrocode}
-% If the first mandatory argument of |\ganttbar| is not empty, we print a label. Its anchor is either at the center of the previously defined |chart element| node (|inline=true|) or at the left canvas border halfway between the upper and lower $y$-coordinate of the bar (|inline=false|).
+% If the first mandatory argument of |\ganttbar| is not empty, we print a label. Its anchor is either at the |bar label shape anchor| of the previously defined |chart element| node (|inline=true|) or at the left canvas border halfway between the upper and lower $y$-coordinate of the bar (|inline=false|).
 %    \begin{macrocode}
   \def\@tempa{#2}%
   \ifx\@tempa\@empty\else%
     \ifgtt@inline%
-      \node at (\@gtt@get{name}.center)
-        [/pgfgantt/bar label inline anchor@style]
-        {\@gtt@get{bar label font}{\gtt@barlabeltext{#2}}};%
+      \node at (\gtt@name.\ganttvalueof{bar label shape anchor})
+        [/pgfgantt/bar label inline anchor]
+        {\ganttvalueof{bar label font}{\gtt@barlabeltext{#2}}};%
     \else%
       \node at ($(0pt, \y@upper pt)!.5!(0pt, \y@lower pt)$)
-        [/pgfgantt/bar label anchor@style]
-        {\@gtt@get{bar label font}{\gtt@barlabeltext{#2}}};%
+        [/pgfgantt/bar label anchor]
+        {\ganttvalueof{bar label font}{\gtt@barlabeltext{#2}}};%
     \fi%
   \fi%
 %    \end{macrocode}
 % Since the first bar clearly appears after the last line containing a title element, we set the boolean |\ifgtt@intitle| to false.
 %    \begin{macrocode}
   \xdef\gtt@lastelement{\gtt@currentelement}%
-  \xdef\gtt@currentelement{\@gtt@get{name}}%
+  \xdef\gtt@currentelement{\gtt@name}%
   \stepcounter{gtt@elementid}%
   \global\gtt@intitlefalse%
   \endgroup%
@@ -2732,7 +3011,7 @@
   \begingroup%
   \ganttset{#1}%
   \ganttbar{#2}{#3}{#4}%
-  \ganttlink{\gtt@lastelement}{\gtt@currentelement}
+  \ganttlink{\gtt@lastelement}{\gtt@currentelement}%
   \endgroup%
 }
 
@@ -2740,77 +3019,271 @@
 % \end{macro}
 %
 % \subsection{Links}
+% \label{ssc:ImplLinks}
 %
-% \begin{macro}{\ganttlink}
-% |\ganttlink| takes two completely different approaches to drawing links, depending on the link type. First, we recall the coordinates of the chart elements to be linked.
+% \begin{macro}{\newganttlinktype}
+% |\newganttlinktype| stores the contents of its second argument in an internal macro of the form |\@gtt@linktype@|\meta{type}, which is later called by |\gtt@drawlink|.
+%    \begin{macrocode}
+\newcommand\newganttlinktype[2]{%
+  \expandafter\def\csname @gtt@linktype@#1\endcsname{#2}%
+}
+
+%    \end{macrocode}
+% \end{macro}\begin{macro}{\newganttlinktypealias}
+% |\newganttlinktypealias| copies both the link code and label of an existing link type (second argument) into the internal macros associated with a new link type (first argument).
+%    \begin{macrocode}
+\newcommand\newganttlinktypealias[2]{%
+  \expandafter\def\csname @gtt@linktype@#1\endcsname{%
+    \@nameuse{@gtt@linktype@#2}%
+  }%
+  \expandafter\def\csname @gtt@linktype@#1@label\endcsname{%
+    \@nameuse{@gtt@linktype@#2@label}%
+  }%
+}
+
+%    \end{macrocode}
+% \end{macro}\begin{macro}{\setganttlinklabel}
+% |\setganttlinklabel| stores a given label (second argument) in an internal macro of the form |\@gtt@linktype@|\meta{type}|@label|, which is later used by |\gtt@drawlink|.\changes{v3.0}{2012/01/25}{\cs{setganttlinklabel} specifies the label for all links of a certain type. The \texttt{link label} key locally overrides any label set by this command.}
+%    \begin{macrocode}
+\newcommand\setganttlinklabel[2]{%
+  \expandafter\def\csname @gtt@linktype@#1@label\endcsname{#2}%
+}
+
+%    \end{macrocode}
+% \end{macro}
+% We define three link types for the automatic mode (|link type=auto|; in former versions of \pack{pgfgantt}, these links were called arrow-like). Firstly, |r| (short for ``right'') draws a straight arrow. Note that |r| and |default| are alias types.
+%    \begin{macrocode}
+\newganttlinktype{r}{%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xRight, \yLower)
+    node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel};
+}
+\newganttlinktypealias{default}{r}
+
+%    \end{macrocode}
+% Secondly, |rdr| (``right-down-right'') is an unlabeled three-part arrow. The value of |link mid| sets the position of the middle segment.
+%    \begin{macrocode}
+\newganttlinktype{rdr}{%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    ($(\xLeft, \yUpper)!\ganttvalueof{link mid}!
+      (\xRight, \yUpper)$) --
+    ($(\xLeft, \yLower)!\ganttvalueof{link mid}!
+      (\xRight, \yLower)$) --
+    (\xRight, \yLower);%
+}
+
+%    \end{macrocode}
+% Thirdly, |rdldr| (``right-down-left-down-right'') is an unlabeled five-part arrow, which considers the values of |link bulge| and |link mid|.
+%    \begin{macrocode}
+\newganttlinktype{rdldr}{%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xLeft + \ganttvalueof{link bulge} * \ganttvalueof{x unit},
+      \yUpper) --
+    ($(\xLeft + \ganttvalueof{link bulge} * \ganttvalueof{x unit},
+      \yUpper)!%
+      \ganttvalueof{link mid}!%
+      (\xLeft + \ganttvalueof{link bulge} * \ganttvalueof{x unit},
+      \yLower)$) --
+    ($(\xRight - \ganttvalueof{link bulge} * \ganttvalueof{x unit},
+      \yUpper)!%
+      \ganttvalueof{link mid}!%
+      (\xRight - \ganttvalueof{link bulge} * \ganttvalueof{x unit},
+      \yLower)$) --
+    (\xRight - \ganttvalueof{link bulge} * \ganttvalueof{x unit},
+      \yLower) --
+    (\xRight, \yLower);%
+}
+
+%    \end{macrocode}
+% The |dr| type was explained in section~\ref{ssc:links}.
+%    \begin{macrocode}
+\newganttlinktype{dr}{%
+  \ganttsetstartanchor{on bottom=.6}%
+  \ganttsetendanchor{on left}%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xLeft, \yLower)
+    node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel} --
+    (\xRight, \yLower);%
+}
+
+%    \end{macrocode}
+% Here is the definition of the four straight link types and their labels.
+%    \begin{macrocode}
+\newganttlinktype{s-s}{%
+  \ganttsetstartanchor{on bottom=0}%
+  \ganttsetendanchor{on top=0}%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xRight, \yLower)
+    node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel};
+}
+\setganttlinklabel{s-s}{start-to-start}
+
+\newganttlinktype{s-f}{%
+  \ganttsetstartanchor{on bottom=0}%
+  \ganttsetendanchor{on top=1}%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xRight, \yLower)
+    node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel};
+}
+\setganttlinklabel{s-f}{start-to-finish}
+
+\newganttlinktype{f-s}{%
+  \ganttsetstartanchor{on bottom=1}%
+  \ganttsetendanchor{on top=0}%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xRight, \yLower)
+    node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel};
+}
+\setganttlinklabel{f-s}{finish-to-start}
+
+\newganttlinktype{f-f}{%
+  \ganttsetstartanchor{on bottom=1}%
+  \ganttsetendanchor{on top=1}%
+  \draw [/pgfgantt/link]
+    (\xLeft, \yUpper) --
+    (\xRight, \yLower)
+    node [pos=.5, /pgfgantt/link label anchor] {\ganttlinklabel};
+}
+\setganttlinklabel{f-f}{finish-to-finish}
+
+%    \end{macrocode}
+% \begin{intmacro}{\gtt@drawlink}\begin{intmacro}{\@gtt@currlinktype}
+% |\gtt@drawlink| first checks if the link type given as first argument is defined, falling back to the default type if it is unknown. |\@gtt@currlinktype| stores the link type for future reference.
+%    \begin{macrocode}
+\newcommand\gtt@drawlink[1]{%
+  \@ifundefined{@gtt@linktype@#1}{%
+    \PackageWarning{pgfgantt}{Link type `#1' unknown, using `default'.}%
+    \def\@gtt@currlinktype{default}%
+  }{%
+    \def\@gtt@currlinktype{#1}%
+  }%
+%    \end{macrocode}
+% \end{intmacro}\begin{intmacro}{\@gtt@currlabel}\begin{macro}{\ganttlinklabel}
+% If the |link label| key contains any value, it locally overrides the label set by |\setganttlinklabel|. |\ganttlinklabel| is defined accordingly, taking into account the |link label font|.
+%    \begin{macrocode}
+  \edef\@gtt@currlabel{\ganttvalueof{link label}}%
+  \ifx\@gtt@currlabel\@empty%
+    \def\ganttlinklabel{%
+      \ganttvalueof{link label font}{%
+        \csname @gtt@linktype@\@gtt@currlinktype @label\endcsname%
+      }%
+    }%
+  \else%
+    \def\ganttlinklabel{%
+      \ganttvalueof{link label font}{%
+        \@gtt@currlabel%
+      }%
+    }%
+  \fi%
+%    \end{macrocode}
+% \end{macro}\end{intmacro}
+% Finally, we call the internal macro that stores the code for the desired link type.
+%    \begin{macrocode}
+  \@nameuse{@gtt@linktype@\@gtt@currlinktype}%
+}
+
+%    \end{macrocode}
+% \end{intmacro}\begin{intmacro}{\@gtt@linkanchordef}\begin{intmacro}{\@gtt@linkanchor}\begin{intmacro}{\@gtt@linkanchorfraction}
+% The internal macro |\@gtt@linkanchordef{|\meta{anchor}|}| defines valid \meta{anchor}s for |\ganttsetstartanchor| and |\ganttsetendanchor| (see below). For each \meta{anchor}, a key |/pgfgantt/link anchor/|\meta{anchor} is created, which stores its own name in |\@gtt@linkanchor| and its value in |\@gtt@linkanchorfraction|.
+%    \begin{macrocode}
+\def\@gtt@linkanchordef#1{%
+  \ganttset{%
+    link anchor/#1/.code={%
+      \def\@gtt@linkanchor{#1}%
+      \def\@gtt@linkanchorfraction{##1}%
+    },%
+    link anchor/#1/.default=.5%
+  }
+}
+\@gtt@linkanchordef{on left}
+\@gtt@linkanchordef{on right}
+\@gtt@linkanchordef{on top}
+\@gtt@linkanchordef{on bottom}
+\@gtt@linkanchordef{lower left}
+\@gtt@linkanchordef{left}
+\@gtt@linkanchordef{upper left}
+\@gtt@linkanchordef{lower right}
+\@gtt@linkanchordef{right}
+\@gtt@linkanchordef{upper right}
+
+%    \end{macrocode}
+% \end{intmacro}\end{intmacro}\end{intmacro}\begin{intmacro}{\@gtt@setstartanchor}\begin{macro}{\xLeft}\begin{macro}{\yUpper}
+% |\@gtt@setstartanchor| recalls the coordinates of the anchor |\@gtt@linkanchor| from chart element |\@gtt@startelement|. It stores the coordinates in the auxiliary macros |\xLeft| and |\yUpper|.
+%    \begin{macrocode}
+\newcommand\@gtt@setstartanchor[1]{%
+  \pgfqkeys{/pgfgantt/link anchor}{#1}%
+  \pgfpointanchor{\@gtt@startelement}{\@gtt@linkanchor}%
+  \edef\xLeft{\the\pgf@x}%
+  \edef\yUpper{\the\pgf@y}%
+}
+
+%    \end{macrocode}
+% \end{macro}\end{macro}\end{intmacro}\begin{intmacro}{\@gtt@setendanchor}\begin{macro}{\xRight}\begin{macro}{\yLower}
+% |\@gtt@setendanchor| is similar to the command above. However, it stores the anchor coordinates in the auxiliary macros |\xRight| and |\yLower|.
+%    \begin{macrocode}
+\newcommand\@gtt@setendanchor[1]{%
+  \pgfqkeys{/pgfgantt/link anchor}{#1}%
+  \pgfpointanchor{\@gtt@endelement}{\@gtt@linkanchor}%
+  \edef\xRight{\the\pgf@x}%
+  \edef\yLower{\the\pgf@y}%
+}
+
+%    \end{macrocode}
+% \end{macro}\end{macro}\end{intmacro}\begin{macro}{\ganttlink}\changes{v2.0}{2011/10/10}{The syntax of \cs{ganttlink} was completely changed. The command now takes one optional and \textit{two} mandatory arguments. The latter specify the name of the chart elements to be linked. Consequently, the keys \texttt{b-b}, \texttt{b-m}, \texttt{m-b} and \texttt{m-m} were removed. The keys \texttt{s-s}, \texttt{s-f}, \texttt{f-s} and \texttt{f-f} are now values for the \texttt{link type} key.}\begin{intmacro}{\@gtt@startelement}\begin{intmacro}{\@gtt@endelement}
+% |\ganttlink| first stores the names of the connected elements in |\@gtt@startelement| and |\@gtt@endelement|.
 %    \begin{macrocode}
 \newcommand\ganttlink[3][]{%
   \begingroup%
   \ganttset{#1}%
-  \pgfpointanchor{#2}{right}
-  \edef\x@left{\the\pgf@x}
-  \edef\y@upper{\the\pgf@y}
-  \pgfpointanchor{#3}{left}
-  \edef\x@right{\the\pgf@x}
-  \edef\y@lower{\the\pgf@y}
+  \def\@gtt@startelement{#2}%
+  \def\@gtt@endelement{#3}%
 %    \end{macrocode}
-% \textit{Arrow-like links:} The first and last coordinate of the link should touch the preceding or following element at the center of its right or left border, respectively. We check if the connected elements lie in the same row or not (i.\,e., their $y$-coordinates differ at most 1~pt). In the latter case, |\pgfmathparse| yields |0|.
+% \end{intmacro}\end{intmacro}\begin{macro}{\ganttsetstartanchor}\begin{macro}{\ganttsetendanchor}
+% |\ganttsetstartanchor| and |\ganttsetendanchor| are only valid in the second argument of |\newganttlinktype|. Since you may wish to omit one of those commands, we set default anchors for the link.
 %    \begin{macrocode}
-  \def\@tempa{arrow}
-  \ifx\@tempa\gtt@link@type%
-    \pgfmathparse{abs(\y@upper - \y@lower) <= 1}
+  \let\ganttsetstartanchor\@gtt@setstartanchor%
+  \let\ganttsetendanchor\@gtt@setendanchor%
+  \ganttsetstartanchor{right}%
+  \ganttsetendanchor{left}%
+%    \end{macrocode}
+% \end{macro}\end{macro}
+% \textit{Automatic links:} The first and last coordinate of the link should touch the preceding or following element at the center of its right or left border, respectively. We check if the connected elements lie in the same row or not (i.\,e., their $y$-coordinates differ at most 1~pt). In the latter case, |\pgfmathparse| yields |0|.
+%    \begin{macrocode}
+  \def\@tempa{auto}%
+  \edef\@tempb{\ganttvalueof{link type}}%
+  \ifx\@tempa\@tempb%
+    \pgfmathparse{abs(\yUpper - \yLower) <= 1}%
     \ifcase\pgfmathresult%
 %    \end{macrocode}
-% Once again, two possibilities arise: Either the elements to be connected are at least separated by |link tolerance| time slots, in which case we draw a three-part arrow. Alternatively, the elements lie in adjacent time slots or even overlap, in which case we draw a five-part arrow.
+% Once again, two possibilities arise: Either the elements to be connected are at least separated by |link tolerance| time slots, in which case we draw a three-part arrow (i.\,e., link type |rdr|). Alternatively, the elements lie in adjacent time slots or even overlap, in which case we draw a five-part arrow (i.\,e., link type |rdldr|).
 %    \begin{macrocode}
-      \pgfmathparse{%
-        (\x@right - \x@left)
-        >= \@gtt@get{link tolerance} * \@gtt@get{x unit}%
+      \pgfmathparse{
+        (\xRight - \xLeft)
+        >= \ganttvalueof{link tolerance} * \ganttvalueof{x unit}
       }%
       \ifcase\pgfmathresult%
-        \draw[/pgfgantt/link@style]
-          (#2.right) --
-          (\x@left + \@gtt@get{link bulge} * \@gtt@get{x unit},
-            \y@upper) --
-          ($(\x@left + \@gtt@get{link bulge} * \@gtt@get{x unit},
-            \y@upper)!%
-            \@gtt@get{link mid}!%
-            (\x@left + \@gtt@get{link bulge} * \@gtt@get{x unit},
-            \y@lower)$) --
-          ($(\x@right - \@gtt@get{link bulge} * \@gtt@get{x unit},
-            \y@upper)!%
-            \@gtt@get{link mid}!%
-            (\x@right - \@gtt@get{link bulge} * \@gtt@get{x unit},
-            \y@lower)$) --
-          (\x@right - \@gtt@get{link bulge} * \@gtt@get{x unit},
-            \y@lower) --
-          (#3.left);%
+        \gtt@drawlink{rdldr}%
       \else%
-        \draw[/pgfgantt/link@style]
-          (#2.right) --
-          ($(\x@left, \y@upper)!\@gtt@get{link mid}!
-            (\x@right, \y@upper)$) --
-          ($(\x@left, \y@lower)!\@gtt@get{link mid}!
-            (\x@right, \y@lower)$) --
-          (#3.left);%
+        \gtt@drawlink{rdr}%
       \fi%
 %    \end{macrocode}
-% For elements that lie in the same row, we draw a simple arrow.
+% For elements that lie in the same row, we draw a simple arrow (i.\,e., link type |r|).
 %    \begin{macrocode}
-    \else
-      \draw[/pgfgantt/link@style] (#2.right) -- (#3.left);
-    \fi
+    \else%
+      \gtt@drawlink{r}%
+    \fi%
 %    \end{macrocode}
-% \textit{Straight links:} A simple arrow connects the two elements. The label is anchored halfway between the start and end coordinates.
+% \textit{Straight and custom links:} We simply call |\gtt@drawlink| with the value of |link type|.
 %    \begin{macrocode}
   \else%
-    \draw[/pgfgantt/link@style]
-      (#2.\gtt@link@startanchor) -- (#3.\gtt@link@endanchor)
-      node [pos=.5, /pgfgantt/link label anchor@style] {%
-        \@gtt@get{link label font}{%
-          \csname gtt@link@\gtt@link@type @labeltext\endcsname%
-        }%
-      };%
+    \gtt@drawlink{\ganttvalueof{link type}}%
   \fi%
   \endgroup%
 }
@@ -2828,22 +3301,24 @@
   \begingroup%
   \ganttset{#1}%
   \pgfmathsetmacro\x@left{%
-    (#3 + \@gtt@get{time slot modifier} + \@gtt@get{group left shift})%
-    * \@gtt@get{x unit}%
+    (#3 + \ganttvalueof{time slot modifier}%
+      + \ganttvalueof{group left shift})%
+    * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\x@right{%
-    (#4 + \@gtt@get{group right shift}) * \@gtt@get{x unit}%
+    (#4 + \ganttvalueof{group right shift}) * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\y@upper{%
-    \value{gtt@lasttitleline} * \@gtt@get{y unit title}
+    \value{gtt@lasttitleline} * \ganttvalueof{y unit title}
     + (\value{gtt@currentline} - \value{gtt@lasttitleline}
-    - \@gtt@get{group top shift}) * \@gtt@get{y unit chart}%
+    - \ganttvalueof{group top shift}) * \ganttvalueof{y unit chart}%
   }%
   \pgfmathsetmacro\y@lower{%
-    \y@upper - \@gtt@get{group height} * \@gtt@get{y unit chart}%
+    \y@upper - \ganttvalueof{group height} * \ganttvalueof{y unit chart}%
   }%
+  \edef\gtt@name{\ganttvalueof{name}}%
   \ifx\gtt@name\@empty\edef\gtt@name{elem\thegtt@elementid}\fi%
-  \node[shape=chart element] (\@gtt@get{name})
+  \node [shape=chart element] (\gtt@name)
     at ($(\x@left pt, \y@upper pt)!.5!(\x@right pt, \y@lower pt)$) {};
 %    \end{macrocode}
 % |\gtt@pl@draw| saves the commands that will produce the progress label. This macro does nothing unless (a) the |progress| key differs from none and (b) |progress label text| differs from |\relax|. Otherwise, it creates a vertically centered node to the right of the group.
@@ -2859,9 +3334,9 @@
       \def\gtt@pl@draw{%
         \node at ($(\x@right pt, \y@upper pt)!.5!
           (\x@right pt, \y@lower pt)$)
-          [/pgfgantt/progress label anchor@style] {%
-            \@gtt@get{progress label font}{%
-              \@gtt@get{progresslabeltext}{\@gtt@get{progress}}%
+          [/pgfgantt/progress label anchor] {%
+            \ganttvalueof{progress label font}{%
+              \gtt@progresslabeltext{\gtt@progress}%
             }%
           };%
       }%
@@ -2873,26 +3348,27 @@
 %    \begin{macrocode}
   \pgfmathsetmacro\@maxpeak{%
     \gtt@grouprightpeaky > \gtt@groupleftpeaky ?%
-    \gtt@grouprightpeaky * \@gtt@get{y unit chart} :%
-    \gtt@groupleftpeaky * \@gtt@get{y unit chart}%
+    \gtt@grouprightpeaky * \ganttvalueof{y unit chart} :%
+    \gtt@groupleftpeaky * \ganttvalueof{y unit chart}%
   }%
   \begin{scope}%
     \clip (\x@left pt, \y@upper pt) rectangle
       ($(\x@left pt, \y@lower pt - \@maxpeak pt)!%
         \gtt@progress/100!%
         (\x@right pt, \y@lower pt - \@maxpeak pt)$);%
-    \path[/pgfgantt/group@style,draw=none]
+    \path [/pgfgantt/group, draw=none]
       (\x@left pt, \y@upper pt) --
       (\x@right pt, \y@upper pt) --
       (\x@right pt, \y@lower pt) --
-      (\x@right pt + \gtt@grouprightpeakmidx * \@gtt@get{x unit},
-        \y@lower pt - \gtt@grouprightpeaky * \@gtt@get{y unit chart}) --
-      (\x@right pt + \gtt@grouprightpeakinnerx * \@gtt@get{x unit},
+      (\x@right pt + \gtt@grouprightpeakmidx * \ganttvalueof{x unit},
+        \y@lower pt - \gtt@grouprightpeaky
+          * \ganttvalueof{y unit chart}) --
+      (\x@right pt + \gtt@grouprightpeakinnerx * \ganttvalueof{x unit},
         \y@lower pt) --
-      (\x@left pt + \gtt@groupleftpeakinnerx * \@gtt@get{x unit},
+      (\x@left pt + \gtt@groupleftpeakinnerx * \ganttvalueof{x unit},
         \y@lower pt) --
-      (\x@left pt + \gtt@groupleftpeakmidx * \@gtt@get{x unit},
-        \y@lower pt - \gtt@groupleftpeaky * \@gtt@get{y unit chart}) --
+      (\x@left pt + \gtt@groupleftpeakmidx * \ganttvalueof{x unit},
+        \y@lower pt - \gtt@groupleftpeaky * \ganttvalueof{y unit chart}) --
       (\x@left pt, \y@lower pt) --
       cycle;%
   \end{scope}%
@@ -2901,56 +3377,57 @@
         \gtt@progress/100!%
         (\x@right pt, \y@upper pt)$)
       rectangle (\x@right pt, \y@lower pt - \@maxpeak pt);
-    \path[/pgfgantt/group incomplete@style]
+    \path [/pgfgantt/group incomplete]
       (\x@left pt, \y@upper pt) --
       (\x@right pt, \y@upper pt) --
       (\x@right pt, \y@lower pt) --
-      (\x@right pt + \gtt@grouprightpeakmidx * \@gtt@get{x unit},
-        \y@lower pt - \gtt@grouprightpeaky * \@gtt@get{y unit chart}) --
-      (\x@right pt + \gtt@grouprightpeakinnerx * \@gtt@get{x unit},
+      (\x@right pt + \gtt@grouprightpeakmidx * \ganttvalueof{x unit},
+        \y@lower pt - \gtt@grouprightpeaky
+          * \ganttvalueof{y unit chart}) --
+      (\x@right pt + \gtt@grouprightpeakinnerx * \ganttvalueof{x unit},
         \y@lower pt) --
-      (\x@left pt + \gtt@groupleftpeakinnerx * \@gtt@get{x unit},
+      (\x@left pt + \gtt@groupleftpeakinnerx * \ganttvalueof{x unit},
         \y@lower pt) --
-      (\x@left pt + \gtt@groupleftpeakmidx * \@gtt@get{x unit},
-        \y@lower pt - \gtt@groupleftpeaky * \@gtt@get{y unit chart}) --
+      (\x@left pt + \gtt@groupleftpeakmidx * \ganttvalueof{x unit},
+        \y@lower pt - \gtt@groupleftpeaky * \ganttvalueof{y unit chart}) --
       (\x@left pt, \y@lower pt) --
       cycle;%
   \end{scope}%
-  \path[/pgfgantt/group@style,fill=none]
+  \path [/pgfgantt/group, fill=none]
     (\x@left pt, \y@upper pt) --
     (\x@right pt, \y@upper pt) --
     (\x@right pt, \y@lower pt) --
-    (\x@right pt + \gtt@grouprightpeakmidx * \@gtt@get{x unit},
-      \y@lower pt - \gtt@grouprightpeaky * \@gtt@get{y unit chart}) --
-    (\x@right pt + \gtt@grouprightpeakinnerx * \@gtt@get{x unit},
+    (\x@right pt + \gtt@grouprightpeakmidx * \ganttvalueof{x unit},
+      \y@lower pt - \gtt@grouprightpeaky * \ganttvalueof{y unit chart}) --
+    (\x@right pt + \gtt@grouprightpeakinnerx * \ganttvalueof{x unit},
       \y@lower pt) --
-    (\x@left pt + \gtt@groupleftpeakinnerx * \@gtt@get{x unit},
+    (\x@left pt + \gtt@groupleftpeakinnerx * \ganttvalueof{x unit},
       \y@lower pt) --
-    (\x@left pt + \gtt@groupleftpeakmidx * \@gtt@get{x unit},
-      \y@lower pt - \gtt@groupleftpeaky * \@gtt@get{y unit chart}) --
+    (\x@left pt + \gtt@groupleftpeakmidx * \ganttvalueof{x unit},
+      \y@lower pt - \gtt@groupleftpeaky * \ganttvalueof{y unit chart}) --
     (\x@left pt, \y@lower pt) --
     cycle;%
   \gtt@pl@draw%
 %    \end{macrocode}
-% If the first mandatory argument of |\ganttgroup| is not empty, we print a label. Its anchor is either at the center of the previously defined |chart element| node (|inline=true|) or at the left canvas border halfway between the upper and lower $y$-coordinate of the group (|inline=false|).
+% If the first mandatory argument of |\ganttgroup| is not empty, we print a label. Its anchor is either at the |group label shape anchor| of the previously defined |chart element| node (|inline=true|) or at the left canvas border halfway between the upper and lower $y$-coordinate of the group (|inline=false|).
 %    \begin{macrocode}
   \def\@tempa{#2}%
   \ifx\@tempa\@empty\else%
     \ifgtt@inline%
-      \node at (\@gtt@get{name}.center)
-        [/pgfgantt/group label inline anchor@style]
-        {\@gtt@get{group label font}{\gtt@grouplabeltext{#2}}};%
+      \node at (\gtt@name.\ganttvalueof{group label shape anchor})
+        [/pgfgantt/group label inline anchor]
+        {\ganttvalueof{group label font}{\gtt@grouplabeltext{#2}}};%
     \else%
       \node at ($(0pt, \y@upper pt)!.5!(0pt, \y@lower pt)$)
-        [/pgfgantt/group label anchor@style]
-        {\@gtt@get{group label font}{\gtt@grouplabeltext{#2}}};%
+        [/pgfgantt/group label anchor]
+        {\ganttvalueof{group label font}{\gtt@grouplabeltext{#2}}};%
     \fi%
   \fi%
 %    \end{macrocode}
 % Since the first group clearly appears after the last line containing a title element, we set the boolean |\ifgtt@intitle| to false.
 %    \begin{macrocode}
   \xdef\gtt@lastelement{\gtt@currentelement}%
-  \xdef\gtt@currentelement{\@gtt@get{name}}%
+  \xdef\gtt@currentelement{\gtt@name}%
   \stepcounter{gtt@elementid}%
   \global\gtt@intitlefalse%
   \endgroup%
@@ -2966,7 +3443,7 @@
   \begingroup%
   \ganttset{#1}%
   \ganttgroup{#2}{#3}{#4}%
-  \ganttlink{\gtt@lastelement}{\gtt@currentelement}
+  \ganttlink{\gtt@lastelement}{\gtt@currentelement}%
   \endgroup%
 }
 
@@ -2983,58 +3460,65 @@
   \begingroup%
   \ganttset{#1}%
   \pgfmathsetmacro\x@mid{%
-    (#3 + \@gtt@get{milestone xshift}) * \@gtt@get{x unit}%
+    (#3 + \ganttvalueof{milestone xshift}) * \ganttvalueof{x unit}%
   }%
   \pgfmathsetmacro\x@left{%
-    \x@mid - \@gtt@get{milestone width} / 2 * \@gtt@get{x unit}%
+    \x@mid - \ganttvalueof{milestone width} / 2 * \ganttvalueof{x unit}%
   }
   \pgfmathsetmacro\x@right{%
-    \x@mid + \@gtt@get{milestone width} / 2 * \@gtt@get{x unit}%
+    \x@mid + \ganttvalueof{milestone width} / 2 * \ganttvalueof{x unit}%
   }
   \pgfmathsetmacro\y@mid{%
-    \value{gtt@lasttitleline} * \@gtt@get{y unit title}%
+    \value{gtt@lasttitleline} * \ganttvalueof{y unit title}%
     + (\value{gtt@currentline} - \value{gtt@lasttitleline}%
-    - \@gtt@get{milestone yshift}) * \@gtt@get{y unit chart}%
+    - \ganttvalueof{milestone yshift}) * \ganttvalueof{y unit chart}%
   }%
   \pgfmathsetmacro\y@upper{%
-    \y@mid + \@gtt@get{milestone height} / 2 * \@gtt@get{y unit chart}%
+    \y@mid + \ganttvalueof{milestone height} / 2
+      * \ganttvalueof{y unit chart}%
   }%
   \pgfmathsetmacro\y@lower{%
-    \y@mid - \@gtt@get{milestone height} / 2 * \@gtt@get{y unit chart}%
+    \y@mid - \ganttvalueof{milestone height} / 2
+      * \ganttvalueof{y unit chart}%
   }%
+  \edef\gtt@name{\ganttvalueof{name}}%
   \ifx\gtt@name\@empty\edef\gtt@name{elem\thegtt@elementid}\fi%
-  \node[shape=chart element] (\@gtt@get{name})
+  \node [shape=chart element] (\gtt@name)
     at ($(\x@left pt, \y@upper pt)!.5!(\x@right pt, \y@lower pt)$) {};
 %    \end{macrocode}
 % \end{intmacro}\end{intmacro}
 % Drawing the milestone itself is quite simple, since the |progress| key is irrelevant.
 %    \begin{macrocode}
-  \path[/pgfgantt/milestone@style]
+  \path [/pgfgantt/milestone]
     (\x@left pt, \y@mid pt) --
     (\x@mid pt, \y@lower pt) --
     (\x@right pt, \y@mid pt) --
     (\x@mid pt, \y@upper pt) --
     cycle;%
 %    \end{macrocode}
-% If the first mandatory argument of |\ganttmilestone| is not empty, we print a label. Its anchor is either at the center of the previously defined |chart element| node (|inline=true|) or at the left canvas border at the height of the milestone's center.
+% If the first mandatory argument of |\ganttmilestone| is not empty, we print a label. Its anchor is either at the |milestone label shape anchor| of the previously defined |chart element| node (|inline=true|) or at the left canvas border at the height of the milestone's center.
 %    \begin{macrocode}
   \def\@tempa{#2}%
   \ifx\@tempa\@empty\else%
     \ifgtt@inline%
-      \node at (\@gtt@get{name}.center)
-        [/pgfgantt/milestone label inline anchor@style]
-        {\@gtt@get{milestone label font}{\gtt@milestonelabeltext{#2}}};%
+      \node at (\gtt@name.\ganttvalueof{milestone label shape anchor})
+        [/pgfgantt/milestone label inline anchor]
+        {\ganttvalueof{milestone label font}{%
+          \gtt@milestonelabeltext{#2}%
+        }};%
     \else%
       \node at (0pt, \y@mid pt)
-        [/pgfgantt/milestone label anchor@style]
-        {\@gtt@get{milestone label font}{\gtt@milestonelabeltext{#2}}};%
+        [/pgfgantt/milestone label anchor]
+        {\ganttvalueof{milestone label font}{%
+          \gtt@milestonelabeltext{#2}%
+        }};%
     \fi%
   \fi%
 %    \end{macrocode}
 % Since the first milestone clearly appears after the last line containing a title element, we set the boolean |\ifgtt@intitle| to false.
 %    \begin{macrocode}
   \xdef\gtt@lastelement{\gtt@currentelement}%
-  \xdef\gtt@currentelement{\@gtt@get{name}}%
+  \xdef\gtt@currentelement{\gtt@name}%
   \stepcounter{gtt@elementid}%
   \global\gtt@intitlefalse%
   \endgroup%
@@ -3049,7 +3533,7 @@
   \begingroup%
   \ganttset{#1}%
   \ganttmilestone{#2}{#3}%
-  \ganttlink{\gtt@lastelement}{\gtt@currentelement}
+  \ganttlink{\gtt@lastelement}{\gtt@currentelement}%
   \endgroup%
 }
 %    \end{macrocode}

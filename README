@@ -1,4 +1,4 @@
-The pgfgantt package v2.1
+The pgfgantt package v3.0
 ------------------------------------------------------------------------------
 This package is released under the LaTeX Project Public License v1.3c or later
 (see http://www.latex-project.org/lppl.txt).
@@ -16,4 +16,4 @@ Installation: Run pgfgantt.ins through LaTeX and follow the instructions.
 
 --
 Wolfgang Skala
-November 10th, 2011
+January 25th, 2012
