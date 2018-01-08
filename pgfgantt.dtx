@@ -270,7 +270,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{2007}
+% \CheckSum{2011}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -305,6 +305,7 @@
 % \end{abstract}
 %
 % \tableofcontents
+% \changes{v5.0}{2018/01/08}{The key \texttt{title label text} was added to allow fine-tuning of title label formatting.}
 % \changes{v5.0}{2018/01/08}{Made \pack{pgfgantt} robust to \pack{amsgen}'s redefinition of \cs{@ifstar}.}
 % \changes{v4.0}{2013/06/01}{The key \texttt{link label anchor} was renamed to \texttt{link label node}.}
 % \changes{v4.0}{2013/06/01}{\cs{newganttchartelement} defines completely new chart elements.}
@@ -1126,14 +1127,16 @@
 %
 % \begin{key}{title label font}{\meta{font commands}}{\string\small}
 % \keyline[/.style=]{title label node}{\meta{options}}{anchor=center, font=\string\ganttvalueof\{title label font\}}
-% The \meta{font commands} and \meta{options} are applied to the title label node, which is positioned at the center of each title element.
+% \keyline{title label text}{\meta{text}}{\string\strut\#1}
+% The \meta{font commands} and \meta{options} are applied to the title label node, which is positioned at the center of each title element. \meta{text} should contain a single parameter token (|#1|), which is replaced by the first mandatory argument of |\gantttitle|. The |\strut| in the standard value ensures equal vertical spacing of the labels.
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[
 % 		vgrid,
 % 		hgrid,
 % 		title label font=\LARGE\color{violet},
-% 		title label node/.append style={anchor=west}
+% 		title label node/.append style={anchor=west},
+% 		title label text=<#1>
 % 	]{1}{6}
 % 	\gantttitle{2011}{6} \\
 % 	\ganttbar{}{1}{2}
@@ -1145,7 +1148,8 @@
 % 		vgrid,
 % 		hgrid,
 % 		title label font=\LARGE\color{violet},
-% 		title label node/.append style={anchor=west}
+% 		title label node/.append style={anchor=west},
+% 		title label text=<#1>
 % 	]{1}{6}
 % 	\gantttitle{2011}{6} \\
 % 	\ganttbar{}{1}{2}
@@ -3513,6 +3517,8 @@
 % \begin{option}{title}
 % \begin{option}{title label font}
 % \begin{option}{title label node}
+% \begin{option}{title label text}
+% \begin{intmacro}{\gtt@titlelabeltext}
 % \begin{option}{title list options}
 % \begin{intmacro}{\gtt@titlelistoptions}
 % \begin{option}{title left shift}
@@ -3521,7 +3527,7 @@
 % \begin{option}{title height}
 % \begin{option}{include title in canvas}
 % \begin{intmacro}{\ifgtt@includetitle}
-% Keys that influence title elements. Note that |\@gtt@keydef| cannot define \opt{title list options}, since |\@gtt@titlelistoptions| is expanded after a |\foreach| statement, where |\ganttvalueof| will not work.
+% Keys that influence title elements. The parameter token |#1| in the value of \opt{title label text} is replaced by the argument of |\gtt@titlelabeltext|. Note that |\@gtt@keydef| cannot define \opt{title list options}, since |\@gtt@titlelistoptions| is expanded after a |\foreach| statement, where |\ganttvalueof| will not work.
 %    \begin{macrocode}
 \@gtt@stylekeydef{title}{shape=rectangle, inner sep=0pt, draw, fill=white}
 \@gtt@keydef{title label font}{\small}
@@ -3529,6 +3535,10 @@
   anchor=center, font=\ganttvalueof{title label font}%
 }
 \ganttset{%
+  title label text/.code={%
+    \def\gtt@titlelabeltext##1{#1}%
+  },%
+  title label text=\strut#1,%
   title list options/.code={%
     \def\gtt@titlelistoptions{[#1]}%
   },%
@@ -3549,6 +3559,8 @@
 % \end{option}
 % \end{option}
 % \end{option}
+% \end{option}
+% \end{intmacro}
 % \end{option}
 % \end{intmacro}
 % \end{option}
@@ -3610,7 +3622,7 @@
   \path (\x@mid pt, \y@mid pt)
     node [/pgfgantt/title, minimum width=\x@size pt,
           minimum height=\y@size pt] {}
-    node [/pgfgantt/title label node] {#2};%
+    node [/pgfgantt/title label node] {\gtt@titlelabeltext{#2}};%
   \global\advance\gtt@lasttitleslot by#3\relax%
   \endgroup%
 }
