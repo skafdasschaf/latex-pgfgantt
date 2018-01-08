@@ -1,19 +1,19 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2012 by Wolfgang Skala
+% Copyright (C) 2018 by Wolfgang Skala
 %
 % This work may be distributed and/or modified under the
-% conditions of the LaTeX Project Public License, either version 1.3
+% conditions of the LaTeX Project Public License, either version 1.3c
 % of this license or (at your option) any later version.
 % The latest version of this license is in
 %   http://www.latex-project.org/lppl.txt
-% and version 1.3 or later is part of all distributions of LaTeX
-% version 2005/12/01 or later.
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2008/05/04 or later.
 %
 % \fi
 %
 % \iffalse
-%<pgfgantt>\ProvidesPackage{pgfgantt}[2013/06/01 v4.0 Draw Gantt diagrams with TikZ]
+%<pgfgantt>\ProvidesPackage{pgfgantt}[2018/01/08 v5.0 Draw Gantt diagrams with TikZ]
 %<pgfgantt>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %
 %<*driver>
@@ -270,7 +270,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{2003}
+% \CheckSum{2007}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -291,7 +291,7 @@
 %
 % \GetFileInfo{pgfgantt.sty}
 %
-% \DoNotIndex{\@empty,\@ifstar,\@ifundefined,\@tempa,\@tempb,\@tempc,\@tempcnta,\@tempcntb,\advance,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\divide,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\i,\ifcase,\ifdate,\ifdim,\ifnum,\ifx,\itshape,\let,\multiply,\newcommand,\newcount,\newenvironment,\newif,\node,\normalcolor,\normalfont,\normalsize,\PackageError,\PackageWarning,\path,\pgf@process,\pgf@x,\pgf@y,\pgf@xa,\pgf@xb,\pgf@xc,\pgf@ya,\pgf@yb,\pgf@yc,\pgfcalendar,\pgfcalendarcurrentday,\pgfcalendarcurrentjulian,\pgfcalendarcurrentmonth,\pgfcalendarcurrentweekday,\pgfcalendarcurrentyear,\pgfcalendardatetojulian,\pgfcalendarendiso,\pgfcalendarjuliantodate,\pgfdeclareshape,\pgfkeys,\pgfkeyscurrentname,\pgfkeyssetvalue,\pgfkeysvalueof,\pgfmathparse,\pgfmathprintnumber,\pgfmathresult,\pgfmathsetlength,\pgfmathsetmacro,\pgfpathclose,\pgfpathlineto,\pgfpathmoveto,\pgfpoint,\pgfpointadd,\pgfpointanchor,\pgfpointscale,\pgfqkeys,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\stepcounter,\strut,\t,\the,\usetikzlibrary,\value,\x,\xdef}
+% \DoNotIndex{\@empty,\@firstoftwo,\@ifundefined,\@tempa,\@tempb,\@tempc,\@tempcnta,\@tempcntb,\advance,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\divide,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\i,\ifcase,\ifdate,\ifdim,\ifnum,\ifx,\itshape,\let,\multiply,\newcommand,\newcount,\newenvironment,\newif,\node,\normalcolor,\normalfont,\normalsize,\PackageError,\PackageWarning,\path,\pgf@process,\pgf@x,\pgf@y,\pgf@xa,\pgf@xb,\pgf@xc,\pgf@ya,\pgf@yb,\pgf@yc,\pgfcalendar,\pgfcalendarcurrentday,\pgfcalendarcurrentjulian,\pgfcalendarcurrentmonth,\pgfcalendarcurrentweekday,\pgfcalendarcurrentyear,\pgfcalendardatetojulian,\pgfcalendarendiso,\pgfcalendarjuliantodate,\pgfdeclareshape,\pgfkeys,\pgfkeyscurrentname,\pgfkeyssetvalue,\pgfkeysvalueof,\pgfmathparse,\pgfmathprintnumber,\pgfmathresult,\pgfmathsetlength,\pgfmathsetmacro,\pgfpathclose,\pgfpathlineto,\pgfpathmoveto,\pgfpoint,\pgfpointadd,\pgfpointanchor,\pgfpointscale,\pgfqkeys,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\stepcounter,\strut,\t,\the,\usetikzlibrary,\value,\x,\xdef}
 %
 % 
 % \title{Drawing Gantt Charts in \LaTeX\\with \TikZ}
@@ -305,6 +305,7 @@
 % \end{abstract}
 %
 % \tableofcontents
+% \changes{v5.0}{2018/01/08}{Made \pack{pgfgantt} robust to \pack{amsgen}'s redefinition of \cs{@ifstar}.}
 % \changes{v4.0}{2013/06/01}{The key \texttt{link label anchor} was renamed to \texttt{link label node}.}
 % \changes{v4.0}{2013/06/01}{\cs{newganttchartelement} defines completely new chart elements.}
 % \changes{v4.0}{2013/06/01}{The key \texttt{progress label anchor} was replaced by \texttt{bar}/\texttt{group}/\texttt{milestone progress label node}.}
@@ -2867,6 +2868,15 @@
 %
 % \subsection{Macros for Key and Error Management}
 %
+% \begin{intmacro}{\@gtt@ifstar}
+% |\@gtt@ifstar| reimplements the \LaTeXe\ kernel's |\@ifstar| macro.
+% This makes it robust to \pack{amsgen}'s reimplementation of
+% |\@ifstar|.
+%    \begin{macrocode}
+\def\@gtt@ifstar#1{\kernel@ifnextchar*{\@firstoftwo{#1}}}
+%    \end{macrocode}
+% \end{intmacro}
+%
 % \begin{macro}{\ganttset}
 % |\ganttset| changes the current key path to |/pgfgantt/| and then executes the keys in its mandatory argument.
 %    \begin{macrocode}
@@ -2980,7 +2990,7 @@
 % In the absence of a star as the first token in a style list item, |\gtt@hgrid@analyze| adds the multiplier |1| to the input stream.
 %    \begin{macrocode}
 \def\gtt@hgrid@analyze{%
-  \@ifstar{\gtt@hgrid@draw}{\gtt@hgrid@draw1}%
+  \@gtt@ifstar{\gtt@hgrid@draw}{\gtt@hgrid@draw1}%
 }
 
 %    \end{macrocode}
@@ -3043,7 +3053,7 @@
 }
 
 \def\gtt@vgrid@analyze{%
-  \@ifstar{\gtt@vgrid@draw}{\gtt@vgrid@draw1}%
+  \@gtt@ifstar{\gtt@vgrid@draw}{\gtt@vgrid@draw1}%
 }
 
 \def\gtt@vgrid@draw#1#2\relax{%
@@ -3628,7 +3638,7 @@
 %    \begin{macrocode}
 \newif\ifgtt@titlecalendarstar
 \newcommand\gantttitlecalendar{%
-  \@ifstar%
+  \@gtt@ifstar%
     {\gtt@titlecalendarstartrue\@gantttitlecalendar}%
     {\gtt@titlecalendarstarfalse\@gantttitlecalendar}%
 }
@@ -4110,7 +4120,7 @@
 % |\newganttchartelement| checks whether it was invoked in the starred or nonstarred form and executes |\@newganttchartelement@one| or |\@newganttchartelement@two|, respectively.
 %    \begin{macrocode}
 \def\newganttchartelement{%
-  \@ifstar\@newganttchartelement@one\@newganttchartelement@two%
+  \@gtt@ifstar\@newganttchartelement@one\@newganttchartelement@two%
 }
 
 %    \end{macrocode}
