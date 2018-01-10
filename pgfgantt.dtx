@@ -57,7 +57,7 @@
 			ganttlinklabel,ganttvalueof,pgfcalendarweekdayname,pgfcalendarweekdayletter,
 			pgfcalendarmonthshortname,currentweek,startyear,startmonth,startday,x,y,
 			pgfcalendarweekday,pgfcalendarmonth,newgantttimeslotformat,pgfcalendardatetojulian,
-			newganttchartelement,newganttchartelement*,gantt,ganttlinked,ganttfoobar,ganttlinkedfoobar
+			newganttchartelement,newganttchartelement*,gantt,ganttlinked,ganttfoobar,ganttlinkedfoobar,ganttvrule
 		},
 		escapeinside=`',
 		escapebegin=\begin{rmfamily},
@@ -270,7 +270,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{2063}
+% \CheckSum{2102}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -305,6 +305,7 @@
 % \end{abstract}
 %
 % \tableofcontents
+% \changes{v5.0}{2018/01/08}{The command \cs{ganttvrule} allows to draw general vertical rules (similar to the today rule). The keys \texttt{vrule}, \texttt{vrule offset}, \texttt{vrule label font} and \texttt{vrule label text} configure those rules.}
 % \changes{v5.0}{2018/01/08}{The key \texttt{expand chart} was added, which specifies that a chart should expand horizontally to a given dimension.}
 % \changes{v5.0}{2018/01/08}{The key \texttt{title label text} was added to allow fine-tuning of title label formatting.}
 % \changes{v5.0}{2018/01/08}{Made \pack{pgfgantt} robust to \pack{amsgen}'s redefinition of \cs{@ifstar}.}
@@ -1300,6 +1301,59 @@
 % 	\gantttitlelist{1,...,7}{1} \\
 % 	\ganttbar{}{1}{3} \\
 % 	\ganttbar{}{4}{7}
+% \end{ganttchart}
+% \end{center}
+% \end{key}
+%
+%
+% \subsection{Vertical rules}
+%
+% A \textit{vertical rule} indicates an important date like a deadline. Such rules represent a generalization of the today rule and are drawn by the \DescribeMacro{\ganttvrule}|\ganttvrule| macro:
+% \begin{texcode}
+% \ganttvrule`\oarg{options}\marg{label}\marg{tss}'
+% \end{texcode}
+% This macro draws a \meta{label}ed vertical rule at the given \meta{tss}.
+%
+% \begin{key}{vrule offset}{\meta{number}}{1}
+% \keyline[/.style=]{vrule}{\meta{style}}{dashed, line width=1pt}
+% \keyline{vrule label font}{\meta{font commands}}{\string\normalfont}
+% \keyline[/.style=]{vrule label node}{\meta{style}}{anchor=north, font=\string\ganttvalueof\{vrule label font\}}
+% \opt{vrule offset} determines the exact $y$-coordinate in the time slot and should lie between 0.0 (left border) and 1.0 (right border). The vertical rule appears in the \meta{style} denoted by \opt{vrule}. The label is formatted by \opt{vrule label font} and \opt{vrule label node}.
+% \par\bigskip\noindent
+% \begin{texcode}
+% \begin{ganttchart}[
+% 		vgrid,
+% 		hgrid,
+% 		vrule/.style={very thick, blue},
+% 		vrule label font=\bfseries
+% 	]{1}{8}
+% 	\gantttitle{2018}{8} \\
+% 	\ganttbar{}{1}{2} \\
+% 	\ganttbar{}{4}{8}
+% 	\ganttvrule{day x}{2}
+% 	\ganttvrule[
+% 		vrule/.append style={red, thin},
+% 		vrule offset=.2,
+% 		vrule label node/.append style={anchor=north west}
+% 	]{day z}{6}
+% \end{ganttchart}
+% \end{texcode}
+% \begin{center}
+% \begin{ganttchart}[
+% 		vgrid,
+% 		hgrid,
+% 		vrule/.style={very thick, blue},
+% 		vrule label font=\bfseries
+% 	]{1}{8}
+% 	\gantttitle{2018}{8} \\
+% 	\ganttbar{}{1}{2} \\
+% 	\ganttbar{}{4}{8}
+% 	\ganttvrule{day x}{2}
+% 	\ganttvrule[
+% 		vrule/.append style={red, thin},
+% 		vrule offset=.2,
+% 		vrule label node/.append style={anchor=north west}
+% 	]{day z}{6}
 % \end{ganttchart}
 % \end{center}
 % \end{key}
@@ -3593,8 +3647,65 @@
 % \end{macro}
 %
 %
+% \subsection{Vertical rules}
+%
+% \begin{option}{vrule offset}
+% \begin{option}{vrule}
+% \begin{option}{vrule label font}
+% \begin{option}{vrule label node}
+% Keys related to the vertical rules.
+%    \begin{macrocode}
+\@gtt@keydef{vrule offset}{1}
+\@gtt@stylekeydef{vrule}{dashed, line width=1pt}
+\@gtt@keydef{vrule label font}{\normalfont}
+\@gtt@stylekeydef{vrule label node}{%
+  anchor=north, font=\ganttvalueof{vrule label font}%
+}
+
+%    \end{macrocode}
+% \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
+% \begin{intmacro}{\gtt@vrule@slot}
+% A count for storing the vrule time slot.
+%    \begin{macrocode}
+\newcount\gtt@vrule@slot
+
+%    \end{macrocode}
+% \end{intmacro}
+% \begin{macro}{\ganttvrule}
+% Calculate the coordinates for the vertical rule and draw it.
+%    \begin{macrocode}
+\newcommand\ganttvrule[3][]{%
+  \begingroup
+  \ganttset{#1}
+  \gtt@tsstojulian{#3}{\gtt@vrule@slot}%
+  \gtt@juliantotimeslot{\gtt@vrule@slot}{\gtt@vrule@slot}%
+  \pgfmathsetmacro\y@upper{%
+    \gtt@lasttitleline * \ganttvalueof{y unit title}%
+  }%
+  \pgfmathsetmacro\y@lower{%
+    \gtt@lasttitleline * \ganttvalueof{y unit title}%
+    + (\gtt@currentline - \gtt@lasttitleline - 1)%
+    * \ganttvalueof{y unit chart}%
+  }%
+  \pgfmathsetmacro\x@mid{%
+    (\gtt@vrule@slot - 1 + \ganttvalueof{vrule offset})%
+    * \ganttvalueof{x unit}%
+  }%
+  \draw [/pgfgantt/vrule]
+    (\x@mid pt, \y@upper pt) -- (\x@mid pt, \y@lower pt)
+    node [/pgfgantt/vrule label node] {#2};%
+  \endgroup
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \subsection{Titles}
-% 
+%
 % \begin{option}{title}
 % \begin{option}{title label font}
 % \begin{option}{title label node}
