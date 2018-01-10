@@ -13,7 +13,7 @@
 % \fi
 %
 % \iffalse
-%<pgfgantt>\ProvidesPackage{pgfgantt}[2018/01/08 v5.0 Draw Gantt diagrams with TikZ]
+%<pgfgantt>\ProvidesPackage{pgfgantt}[2018/01/10 v5.0 Draw Gantt diagrams with TikZ]
 %<pgfgantt>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %
 %<*driver>
@@ -291,7 +291,7 @@
 %
 % \GetFileInfo{pgfgantt.sty}
 %
-% \DoNotIndex{\@empty,\@firstoftwo,\@ifundefined,\@tempa,\@tempb,\@tempc,\@tempcnta,\@tempcntb,\advance,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\divide,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\i,\ifcase,\ifdate,\ifdim,\ifnum,\ifx,\itshape,\let,\multiply,\newcommand,\newcount,\newenvironment,\newif,\node,\normalcolor,\normalfont,\normalsize,\PackageError,\PackageWarning,\path,\pgf@process,\pgf@x,\pgf@y,\pgf@xa,\pgf@xb,\pgf@xc,\pgf@ya,\pgf@yb,\pgf@yc,\pgfcalendar,\pgfcalendarcurrentday,\pgfcalendarcurrentjulian,\pgfcalendarcurrentmonth,\pgfcalendarcurrentweekday,\pgfcalendarcurrentyear,\pgfcalendardatetojulian,\pgfcalendarendiso,\pgfcalendarjuliantodate,\pgfdeclareshape,\pgfkeys,\pgfkeyscurrentname,\pgfkeyssetvalue,\pgfkeysvalueof,\pgfmathparse,\pgfmathprintnumber,\pgfmathresult,\pgfmathsetlength,\pgfmathsetmacro,\pgfpathclose,\pgfpathlineto,\pgfpathmoveto,\pgfpoint,\pgfpointadd,\pgfpointanchor,\pgfpointscale,\pgfqkeys,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\stepcounter,\strut,\t,\the,\usetikzlibrary,\value,\x,\xdef}
+% \DoNotIndex{\@auxout,\@empty,\@firstoftwo,\@ifundefined,\@namedef,\@nameuse,\@tempa,\@tempb,\@tempc,\@tempcnta,\@tempcntb,\@tempdima,\advance,\anchor,\backgroundpath,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\divide,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\i,\ifcase,\ifdate,\ifdim,\ifnum,\ifx,\inheritanchor,\inheritanchorborder,\inheritbackgroundpath,\inheritsavedanchors,\itshape,\kernel@ifnextchar,\let,\multiply,\newcommand,\newcount,\newenvironment,\newif,\node,\normalcolor,\normalfont,\normalsize,\northeast,\outernortheast,\PackageError,\PackageWarning,\path,\pgf@process,\pgf@x,\pgf@y,\pgf@xa,\pgf@xb,\pgf@xc,\pgf@ya,\pgf@yb,\pgf@yc,\pgfcalendar,\pgfcalendarbeginjulian,\pgfcalendarcurrentday,\pgfcalendarcurrentjulian,\pgfcalendarcurrentmonth,\pgfcalendarcurrentweekday,\pgfcalendarcurrentyear,\pgfcalendardatetojulian,\pgfcalendarendiso,\pgfcalendarifdateday,\pgfcalendarifdatemonth,\pgfcalendarifdateyear,\pgfcalendarjuliantodate,\pgfcalendarmatchestrue,\pgfdeclareshape,\pgfextractx,\pgfkeys,\pgfkeyscurrentname,\pgfkeyssetvalue,\pgfkeysvalueof,\pgfmathparse,\pgfmathprintnumber,\pgfmathresult,\pgfmathsetlength,\pgfmathsetmacro,\pgfpathclose,\pgfpathlineto,\pgfpathmoveto,\pgfpoint,\pgfpointadd,\pgfpointanchor,\pgfpointdiff,\pgfpointscale,\pgfqkeys,\protected@write,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\southwest,\stepcounter,\string,\strut,\t,\the,\tikz@align@newline,\usetikzlibrary,\value,\x,\xdef}
 %
 % 
 % \title{Drawing Gantt Charts in \LaTeX\\with \TikZ}
@@ -305,12 +305,12 @@
 % \end{abstract}
 %
 % \clearpage\tableofcontents
-% \changes{v5.0}{2018/01/08}{\cs{gantttitlecalendar} now recognizes the \texttt{decade} key.}
-% \changes{v5.0}{2018/01/08}{Key \texttt{compress calendar} has been replaced by \texttt{time slot unit} to allow an additional level of compression (year).}
-% \changes{v5.0}{2018/01/08}{The command \cs{ganttvrule} allows to draw general vertical rules (similar to the today rule). The keys \texttt{vrule}, \texttt{vrule offset}, \texttt{vrule label font} and \texttt{vrule label text} configure those rules.}
-% \changes{v5.0}{2018/01/08}{The key \texttt{expand chart} was added, which specifies that a chart should expand horizontally to a given dimension.}
-% \changes{v5.0}{2018/01/08}{The key \texttt{title label text} was added to allow fine-tuning of title label formatting.}
-% \changes{v5.0}{2018/01/08}{Made \pack{pgfgantt} robust to \pack{amsgen}'s redefinition of \cs{@ifstar}.}
+% \changes{v5.0}{2018/01/10}{\cs{gantttitlecalendar} now recognizes the \texttt{decade} key.}
+% \changes{v5.0}{2018/01/10}{Key \texttt{compress calendar} has been replaced by \texttt{time slot unit} to allow an additional level of compression (year).}
+% \changes{v5.0}{2018/01/10}{The command \cs{ganttvrule} allows to draw general vertical rules (similar to the today rule). The keys \texttt{vrule}, \texttt{vrule offset}, \texttt{vrule label font} and \texttt{vrule label text} configure those rules.}
+% \changes{v5.0}{2018/01/10}{The key \texttt{expand chart} was added, which specifies that a chart should expand horizontally to a given dimension.}
+% \changes{v5.0}{2018/01/10}{The key \texttt{title label text} was added to allow fine-tuning of title label formatting.}
+% \changes{v5.0}{2018/01/10}{Made \pack{pgfgantt} robust to \pack{amsgen}'s redefinition of \cs{@ifstar}.}
 % \changes{v4.0}{2013/06/01}{The key \texttt{link label anchor} was renamed to \texttt{link label node}.}
 % \changes{v4.0}{2013/06/01}{\cs{newganttchartelement} defines completely new chart elements.}
 % \changes{v4.0}{2013/06/01}{The key \texttt{progress label anchor} was replaced by \texttt{bar}/\texttt{group}/\texttt{milestone progress label node}.}
