@@ -255,8 +255,8 @@
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
-\IndexPrologue{\section{Index}\markboth{Index}{Index}Numbers written in bold refer to the page where the corresponding entry is described; numbers in italic refer to the code line of the definition; numbers in roman refer to the code lines where the entry is used.}
-\GlossaryPrologue{\section{Change History}\markboth{Change history}{Change history}}
+\IndexPrologue{\clearpage\section{Index}\markboth{Index}{Index}Bold numbers refer to the page where the corresponding entry is described; italic numbers refer to the code line of the definition; upright numbers refer to the code lines where the entry is used.}
+\GlossaryPrologue{\clearpage\section{Change History}\markboth{Change history}{Change history}}
 
 
 \setkomafont{title}{\rmfamily\bfseries}
@@ -270,7 +270,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{2102}
+% \CheckSum{2245}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -304,7 +304,9 @@
 % The \pack{pgfgantt} package provides the |ganttchart| environment, which draws a Gantt chart within a \TikZ\ picture. The user may add various elements to the chart, for example, titles, bars, groups, milestones and different links between these elements. The appearance of the chart elements is highly customizable, and even new chart elements may be defined.
 % \end{abstract}
 %
-% \tableofcontents
+% \clearpage\tableofcontents
+% \changes{v5.0}{2018/01/08}{\cs{gantttitlecalendar} now recognizes the \texttt{decade} key.}
+% \changes{v5.0}{2018/01/08}{Key \texttt{compress calendar} has been replaced by \texttt{time slot unit} to allow an additional level of compression (year).}
 % \changes{v5.0}{2018/01/08}{The command \cs{ganttvrule} allows to draw general vertical rules (similar to the today rule). The keys \texttt{vrule}, \texttt{vrule offset}, \texttt{vrule label font} and \texttt{vrule label text} configure those rules.}
 % \changes{v5.0}{2018/01/08}{The key \texttt{expand chart} was added, which specifies that a chart should expand horizontally to a given dimension.}
 % \changes{v5.0}{2018/01/08}{The key \texttt{title label text} was added to allow fine-tuning of title label formatting.}
@@ -363,7 +365,7 @@
 % \changes{v1.0}{2011/03/01}{Initial release}
 %
 %
-% \section{Introduction}
+% \clearpage\section{Introduction}
 %
 % The \pack{pgfgantt} package allows you to draw Gantt charts in \LaTeX. Thus, you can describe simple project schedules without having to include images produced by external programs. Similar to Martin Kumm's \pack{gantt} package\footnote{\url{http://www.martin-kumm.de/tex_gantt_package.php}} (which inspired \pack{pgfgantt}'s fundamental aspects), \pack{pgfgantt} bases upon \textsc{pgf} and its \TikZ\ frontend\footnote{\url{http://ctan.org/tex-archive/graphics/pgf/}}. Besides, it provides a comprehensive (and portable) alternative to \pack{pst-gantt}\footnote{\url{http://ctan.org/tex-archive/graphics/pstricks/contrib/pst-gantt/}}.
 %
@@ -379,6 +381,7 @@
 % Tristan Miller (Technische Universität Darmstadt),
 % Scott Pakin (Los Alamos National Laboratory),
 % Petr Po\v s\'ik (Czech Technical University in Prague),
+% Una Smith,
 % Sascha Yousefi (Universität Freiburg),
 % and Callum Webb.
 %
@@ -456,6 +459,8 @@
 % 		\textit{Examples:} \texttt{2013-03-14}, \texttt{2013-5-1}
 % 	\item \texttt{isodate-yearmonth} -- ISO-standard dates without days (\texttt{yyyy-mm}). Such dates are automatically converted to the first day of the respective month.\\
 % 		\textit{Examples:} \texttt{2013-03}, \texttt{2013-5}
+% 	\item \texttt{isodate-year} -- year only (\texttt{yyyy}). Such dates are automatically converted to the first day of January.\\
+% 		\textit{Examples:} \texttt{2013}, \texttt{2014}
 % 	\item \texttt{little-endian} -- Gregorian little-endian, i.\,e. day--month--year (the common German date format). Valid day/month and month/year separators are the hyphen (\texttt{-}), slash (\texttt{/}) and period (\texttt{.}). If you enter a two-digit year (for example, \texttt{13} instead of \texttt{2013}), it will be completed according to the value of \opt{time slot format/base century} (see below).\\
 % 		\textit{Examples:} \texttt{14-03-2013}, \texttt{14/03/13}, \texttt{14.3.2013}
 % 	\item \texttt{middle-endian} -- middle-endian, i.\,e. month--day--year (the common US date format). For valid separators and automatic year completion, see \textit{little-endian}.\\
@@ -981,6 +986,7 @@
 % 		\toprule
 % 		\itshape Line type & \meta{output format} & \itshape Example output \\
 % 		\midrule
+% 		\texttt{decade} & n/a & 2000s, 2010s, \dots \\[1ex]
 % 		\texttt{year} & n/a & 2012, 2013, \dots \\[1ex]
 % 		\texttt{month [=}\meta{output format}\texttt{]} & (none) & 01, 02, \dots, 12 \\
 % 			& \texttt{name} & January, February, \dots \\
@@ -1095,16 +1101,16 @@
 % \end{center}
 % \end{key}
 % 
-% \begin{key}{compress calendar}{\meta{boolean}}{false}
-% By default, one \textit{calendar day} is one time slot wide. With \opt{compress calendar}\texttt{=true}, one \textit{month} corresponds to one time slot. Consequently, in compressed calendars only |year| and |month| are sensible line types for |\gantttitlecalendar|. The time slot format \texttt{isodate-yearmonth} is especially suited for compressed calendars.
+% \begin{key}{time slot unit}{\texttt{day}\space\textbar\space\texttt{month}\space\textbar\space\texttt{year}}{day}
+% By default, one \textit{calendar day} is one time slot wide. With \opt{time slot unit}\texttt{=month}, one \textit{month} corresponds to one time slot. Consequently, in such calendars only |year| and |month| are sensible line types for |\gantttitlecalendar|, and the time slot format \texttt{isodate-yearmonth} is especially suited.
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[
 % 		hgrid,
 % 		vgrid,
 % 		time slot format=isodate-yearmonth,
-% 		compress calendar
-% 	]{2012-01}{2013-5}
+% 		time slot unit=month
+% 	]{2012-03}{2014-1}
 % 	\gantttitlecalendar{year, month} \\
 % 	\ganttbar{}{2012-05}{2013-01}
 % \end{ganttchart}
@@ -1114,14 +1120,42 @@
 % 		hgrid,
 % 		vgrid,
 % 		time slot format=isodate-yearmonth,
-% 		compress calendar
-% 	]{2012-01}{2013-5}
+% 		time slot unit=month
+% 	]{2012-03}{2014-1}
 % 	\gantttitlecalendar{year, month} \\
 % 	\ganttbar{}{2012-05}{2013-01}
 % \end{ganttchart}
 % \end{center}
+%
+% With \opt{time slot unit}\texttt{=year}, one \textit{year} corresponds to one time slot. Consequently, in such calendars only |decade| and |year| are sensible line types for |\gantttitlecalendar|, and the time slot format \texttt{isodate-year} is especially suited.
+% \par\bigskip\noindent
+% \begin{texcode}
+% \begin{ganttchart}[
+% 		hgrid,
+% 		vgrid,
+% 		x unit=7.5mm,
+% 		time slot format=isodate-year,
+% 		time slot unit=year
+% 	]{2007}{2020}
+% 	\gantttitlecalendar{decade, year} \\
+% 	\ganttbar{}{2008}{2018}
+% \end{ganttchart}
+% \end{texcode}
+% \begin{center}
+% \begin{ganttchart}[
+% 		hgrid,
+% 		vgrid,
+% 		x unit=7.5mm,
+% 		time slot format=isodate-year,
+% 		time slot unit=year
+% 	]{2007}{2020}
+% 	\gantttitlecalendar{decade, year} \\
+% 	\ganttbar{}{2008}{2018}
+% \end{ganttchart}
+% \end{center}
 % \end{key}
-% 
+%
+%
 % \begin{key}[/.style=]{title}{\meta{style}}{shape=rectangle, inner sep=0pt, draw, fill=white}
 % Sets the appearance of a title element.
 % \par\bigskip\noindent
@@ -2696,7 +2730,7 @@
 % 		y unit chart=0.5cm,
 % 		vgrid,
 % 		time slot format=isodate-yearmonth,
-% 		compress calendar,
+% 		time slot unit=month,
 % 		title/.append style={draw=none, fill=RoyalBlue!50!black},
 % 		title label font=\sffamily\bfseries\color{white},
 % 		title label node/.append style={below=-1.6ex},
@@ -2740,7 +2774,7 @@
 % 		y unit chart=0.5cm,
 % 		vgrid,
 % 		time slot format=isodate-yearmonth,
-% 		compress calendar,
+% 		time slot unit=month,
 % 		title/.append style={draw=none, fill=RoyalBlue!50!black},
 % 		title label font=\sffamily\bfseries\color{white},
 % 		title label node/.append style={below=-1.6ex},
@@ -3180,12 +3214,16 @@
 %    \end{macrocode}
 % \end{intmacro}
 % \begin{intmacro}{\gtt@juliantotimeslot}
-% |\gtt@juliantotimeslot|\marg{count 1}\marg{count 2} converts the Julian date stored in \meta{count 1} to a time slot and stores the latter in \meta{count 2}. This macro is called after the start of Gantt chart. Thus, |\gtt@startyear|, |\gtt@startmonth| and |\gtt@startjulian| (see section~\ref{ssc:ImplMain}) have already been initialized. If the chart is compressed, one time slot corresponds to one month; otherwise, it corresponds to one day.
+% |\gtt@juliantotimeslot|\marg{count 1}\marg{count 2} converts the Julian date stored in \meta{count 1} to a time slot and stores the latter in \meta{count 2}. This macro is called after the start of Gantt chart. Thus, |\gtt@startyear|, |\gtt@startmonth| and |\gtt@startjulian| (see section~\ref{ssc:ImplMain}) have already been initialized. Depending on the value of \opt{time slot unit}, one time slot corresponds to one |day|, one |month| or one |year|.
 %    \begin{macrocode}
 \newcommand\gtt@juliantotimeslot[2]{%
   \begingroup%
   \@tempcnta=#1\relax%
-  \ifgtt@compresscalendar%
+  \ifgtt@timeslotunit@day%
+    \advance\@tempcnta by-\gtt@startjulian\relax%
+    \advance\@tempcnta by1\relax%
+  \fi%
+  \ifgtt@timeslotunit@month%
     \pgfcalendarjuliantodate{\@tempcnta}{\@tempa}{\@tempb}{\@tempc}%
     \@tempcnta=\@tempa\relax%
     \advance\@tempcnta by-\gtt@startyear\relax%
@@ -3193,8 +3231,11 @@
     \advance\@tempcnta by\@tempb\relax%
     \advance\@tempcnta by-\gtt@startmonth\relax%
     \advance\@tempcnta by1\relax%
-  \else%
-    \advance\@tempcnta by-\gtt@startjulian\relax%
+  \fi%
+  \ifgtt@timeslotunit@year%
+    \pgfcalendarjuliantodate{\@tempcnta}{\@tempa}{\@tempb}{\@tempc}%
+    \@tempcnta=\@tempa\relax%
+    \advance\@tempcnta by-\gtt@startyear\relax%
     \advance\@tempcnta by1\relax%
   \fi%
   #2=\@tempcnta\relax%
@@ -3215,7 +3256,7 @@
 
 %    \end{macrocode}
 % \end{macro}
-% The predefined time slot formats |simple|, |isodate| and |isodate-yearmonth| are straight forward.
+% The predefined time slot formats |simple|, |isodate|, |isodate-yearmonth| and |isodate-year| are straight forward.
 %    \begin{macrocode}
 \newgantttimeslotformat{simple}{%
   #2=#1\relax%
@@ -3229,6 +3270,10 @@
 
 \newgantttimeslotformat{isodate-yearmonth}{%
   \pgfcalendardatetojulian{#1-01}{#2}%
+}
+
+\newgantttimeslotformat{isodate-year}{%
+  \pgfcalendardatetojulian{#1-01-01}{#2}%
 }
 
 %    \end{macrocode}
@@ -3760,18 +3805,39 @@
 % \end{option}
 % \end{option}
 % \begin{option}{calendar week text}
-% \begin{option}{compress calendar}
-% \begin{intmacro}{\ifgtt@compresscalendar}
+% \begin{option}{time slot unit}
+% \begin{intmacro}{\ifgtt@timeslotunit@day}
+% \begin{intmacro}{\ifgtt@timeslotunit@month}
+% \begin{intmacro}{\ifgtt@timeslotunit@year}
 % Keys for title calendars.
 %    \begin{macrocode}
 \@gtt@keydef{calendar week text}{Week~\currentweek}
-\newif\ifgtt@compresscalendar
+\newif\ifgtt@timeslotunit@day
+\newif\ifgtt@timeslotunit@month
+\newif\ifgtt@timeslotunit@year
 \ganttset{%
-  compress calendar/.is if=gtt@compresscalendar,%
-  compress calendar=false%
+  time slot unit/.is choice,
+  time slot unit/day/.code={%
+    \gtt@timeslotunit@daytrue%
+    \gtt@timeslotunit@monthfalse%
+    \gtt@timeslotunit@yearfalse%
+  },%
+  time slot unit/month/.code={%
+    \gtt@timeslotunit@dayfalse%
+    \gtt@timeslotunit@monthtrue%
+    \gtt@timeslotunit@yearfalse%
+  },%
+  time slot unit/year/.code={%
+    \gtt@timeslotunit@dayfalse%
+    \gtt@timeslotunit@monthfalse%
+    \gtt@timeslotunit@yeartrue%
+  },%
+  time slot unit=day
 }
 
 %    \end{macrocode}
+% \end{intmacro}
+% \end{intmacro}
 % \end{intmacro}
 % \end{option}
 % \end{option}
@@ -3912,14 +3978,94 @@
 % \end{intmacro}
 % \end{intmacro}
 % \end{intmacro}
-% For each \meta{line type}, we define a corresponding key |/pgfgantt/calendar/|\meta{line type}. This key performs the necessary calculations and draws one or several |\gantttitle|s. Line type |year| draws years.
+% \begin{intmacro}{\@gtt@getfourthdigit}
+% \begin{intmacro}{\@gtt@getdecade}
+% |\@gtt@getfourthdigit| returns the fourth digit of a year, while |\@gtt@getdecade| returns the first three digits of a year.
+%    \begin{macrocode}
+\def\@gtt@getfourthdigit#1#2#3#4{#4}
+\def\@gtt@getdecade#1#2#3#4{#1#2#3}
+%    \end{macrocode}
+% \end{intmacro}
+% \end{intmacro}
+% We define a new check for |\pgfcalendarifdate| as described in the |pgfcalendar| manual: |end of decade=|\meta{date} returns true if a date marks the end of a decade as defined by \meta{date}. For instance, if \meta{date} is |2009-12-31|, then the conditional will be true for the dates |1999-12-31|, |2009-12-31|, |2019-12-31| and so on.
+%    \begin{macrocode}
+\pgfkeys{%
+  /pgf/calendar/end of decade/.code={
+    \begingroup
+    \pgfcalendardatetojulian{#1}{\@tempcnta}
+    \pgfcalendarjuliantodate{\@tempcnta}{\@tempa}{\@tempb}{\@tempc}
+    \edef\endofdecade{\expandafter\@gtt@getfourthdigit\@tempa}
+    \edef\querydecade{\expandafter\@gtt@getfourthdigit\pgfcalendarifdateyear}
+    \ifnum\endofdecade=\querydecade\relax%
+      \ifnum\pgfcalendarifdatemonth=\@tempb\relax%
+        \ifnum\pgfcalendarifdateday=\@tempc\relax%
+          \global\pgfcalendarmatchestrue%
+        \fi%
+      \fi%
+    \fi%
+    \endgroup
+  }%
+}
+%    \end{macrocode}
+
+% For each \meta{line type}, we define a corresponding key |/pgfgantt/calendar/|\meta{line type}. This key performs the necessary calculations and draws one or several |\gantttitle|s. Line type |decade| draws decades.
 %    \begin{macrocode}
 \ganttset{%
+  calendar/decade/.code={%
+    \ifgtt@calendar@eol\ganttnewline\fi%
+    \begingroup%
+    \gtt@calendar@slots=1\relax%
+    \ifgtt@timeslotunit@year%
+      \pgfcalendar{}{\gtt@calendar@startdate}{\gtt@calendar@enddate}{%
+        \ifdate{end of decade=2009-12-31}{%
+          \gantttitle{%
+            \expandafter\@gtt@getdecade\pgfcalendarcurrentyear%
+            0s%
+          }{\the\gtt@calendar@slots}%
+          \gtt@calendar@slots=0\relax%
+        }{
+          \ifdate{equals=01-01}{%
+            \ifnum\pgfcalendarcurrentjulian>\pgfcalendarbeginjulian\relax%
+              \advance\gtt@calendar@slots by1\relax%
+            \fi
+          }{}%
+        }%
+        \ifdate{equals=\pgfcalendarendiso}{%
+          \ifnum\gtt@calendar@slots=0\relax\else%
+            \gantttitle{%
+              \expandafter\@gtt@getdecade\pgfcalendarcurrentyear%
+              0s%
+            }{\the\gtt@calendar@slots}%
+          \fi%
+        }{}%
+      }%
+    \fi%
+    \endgroup%
+    \gtt@calendar@eoltrue%
+  },%
+%    \end{macrocode}
+% Line type |year| draws years.
+%    \begin{macrocode}
   calendar/year/.code={%
     \ifgtt@calendar@eol\ganttnewline\fi%
     \begingroup%
     \gtt@calendar@slots=1\relax%
-    \ifgtt@compresscalendar%
+    \ifgtt@timeslotunit@year%
+      \pgfcalendar{}{\gtt@calendar@startdate}{\gtt@calendar@enddate}{%
+        \ifdate{equals=12-31}{%
+          \gantttitle{\pgfcalendarcurrentyear}{1}%
+          \gtt@calendar@slots=1\relax%
+        }{
+          \advance\gtt@calendar@slots by1\relax%
+        }%
+        \ifdate{equals=\pgfcalendarendiso}{%
+          \ifnum\gtt@calendar@slots=1\relax\else%
+            \gantttitle{\pgfcalendarcurrentyear}{1}%
+          \fi%
+        }{}%
+      }%
+    \fi%
+    \ifgtt@timeslotunit@month%
       \pgfcalendar{}{\gtt@calendar@startdate}{\gtt@calendar@enddate}{%
         \ifdate{equals=12-31}{%
           \gantttitle{\pgfcalendarcurrentyear}{\the\gtt@calendar@slots}%
@@ -3938,7 +4084,8 @@
           }%
         }{}%
       }%
-    \else%
+    \fi%
+    \ifgtt@timeslotunit@day%
       \pgfcalendar{}{\gtt@calendar@startdate}{\gtt@calendar@enddate}{%
         \ifdate{equals=12-31}{%
           \gantttitle{\pgfcalendarcurrentyear}{\the\gtt@calendar@slots}%
@@ -3969,7 +4116,8 @@
         \gantttitle{%
           \csname pgfcalendarmonth#1\endcsname{\pgfcalendarcurrentmonth}%
         }{%
-          \ifgtt@compresscalendar1\else\the\gtt@calendar@slots\fi%
+          \ifgtt@timeslotunit@month1\fi%
+          \ifgtt@timeslotunit@day\the\gtt@calendar@slots\fi%
         }%
         \gtt@calendar@slots=1\relax%
       }{%
@@ -3981,7 +4129,8 @@
           \gantttitle{%
             \csname pgfcalendarmonth#1\endcsname{\pgfcalendarcurrentmonth}%
           }{%
-            \ifgtt@compresscalendar1\else\the\gtt@calendar@slots\fi%
+            \ifgtt@timeslotunit@month1\fi%
+            \ifgtt@timeslotunit@day\the\gtt@calendar@slots\fi%
           }%
         \fi%
       }{}%
