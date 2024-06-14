@@ -2,7 +2,11 @@
 
 ## :exclamation: Call for new project ownership :exclamation:
 
-See [this issue](https://github.com/skafdasschaf/latex-pgfgantt/issues/13).
+This package is unmaintained. If you want to volunteer to take over
+the maintenance, contact me at https://wolfgang.esser-skala.at/contact/ .
+
+Also see [this issue](https://github.com/skafdasschaf/latex-pgfgantt/issues/13).
+
 
 ## Description
 
