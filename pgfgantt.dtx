@@ -181,7 +181,6 @@
   \ignorespaces}
 \let\endoption\endmacro
 \let\endintmacro\endmacro
-\renewenvironment{theglossary}{\glossary@prologue\GlossaryParms\let\item\@idxitem\ignorespaces}{}
 \makeatother
 
 \AtBeginDocument{\lstMakeShortInline|}
@@ -218,27 +217,13 @@
 \def\TikZ{Ti\textit{k}Z}
 \DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 
-\def\GlossaryParms{%
-	\def\pfill##1{}
-	\parindent 0pt
-	\parskip 0pt plus 1pt
-	\small\raggedright
-	\def\@idxitem{\par\hangindent 30pt}%
-	\def\subitem{\@idxitem\hspace*{15pt}}%
-	\def\subsubitem{\@idxitem\hspace*{25pt}}%
-	\def\indexspace{\par\vspace{10pt plus 2pt minus 3pt}}%
-}
-
 \usepackage{pgfgantt}
 
 \usetikzlibrary{shadows,shadings,decorations.pathmorphing,shapes.misc}
 
 \EnableCrossrefs
 \CodelineIndex
-\RecordChanges
 \IndexPrologue{\clearpage\section{Index}\markboth{Index}{Index}Bold numbers refer to the page where the corresponding entry is described; italic numbers refer to the code line of the definition; upright numbers refer to the code lines where the entry is used.}
-\GlossaryPrologue{\clearpage\section{Change History}\markboth{Change history}{Change history}}
-
 
 \setkomafont{title}{\rmfamily\bfseries}
 \addtokomafont{sectioning}{\rmfamily}
@@ -250,25 +235,6 @@
 \end{document}
 %</driver>
 % \fi
-%
-% \CheckSum{2245}
-%
-% \CharacterTable
-%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%   Digits        \0\1\2\3\4\5\6\7\8\9
-%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%   Dollar        \$     Percent       \%     Ampersand     \&
-%   Acute accent  \'     Left paren    \(     Right paren   \)
-%   Asterisk      \*     Plus          \+     Comma         \,
-%   Minus         \-     Point         \.     Solidus       \/
-%   Colon         \:     Semicolon     \;     Less than     \<
-%   Equals        \=     Greater than  \>     Question mark \?
-%   Commercial at \@     Left bracket  \[     Backslash     \\
-%   Right bracket \]     Circumflex    \^     Underscore    \_
-%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%   Right brace   \}     Tilde         \~}
-%
 %
 % \GetFileInfo{pgfgantt.sty}
 %
@@ -286,66 +252,6 @@
 % \end{abstract}
 %
 % \clearpage\tableofcontents
-% \changes{v5.0a}{2024/06/19}{The package status is changed to 'unmaintained'.}
-% \changes{v5.0}{2018/01/10}{\cs{gantttitlecalendar} now recognizes the \texttt{decade} key.}
-% \changes{v5.0}{2018/01/10}{Key \texttt{compress calendar} has been replaced by \texttt{time slot unit} to allow an additional level of compression (year).}
-% \changes{v5.0}{2018/01/10}{The command \cs{ganttvrule} allows to draw general vertical rules (similar to the today rule). The keys \texttt{vrule}, \texttt{vrule offset}, \texttt{vrule label font} and \texttt{vrule label text} configure those rules.}
-% \changes{v5.0}{2018/01/10}{The key \texttt{expand chart} was added, which specifies that a chart should expand horizontally to a given dimension.}
-% \changes{v5.0}{2018/01/10}{The key \texttt{title label text} was added to allow fine-tuning of title label formatting.}
-% \changes{v5.0}{2018/01/10}{Made \pack{pgfgantt} robust to \pack{amsgen}'s redefinition of \cs{@ifstar}.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{link label anchor} was renamed to \texttt{link label node}.}
-% \changes{v4.0}{2013/06/01}{\cs{newganttchartelement} defines completely new chart elements.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{progress label anchor} was replaced by \texttt{bar}/\texttt{group}/\texttt{milestone progress label node}.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{bar}/\texttt{group}/\texttt{milestone progress label anchor} were added.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{progress label font} was replaced by the keys \texttt{bar}/\texttt{group}/\texttt{milestone progress label font}.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{incomplete} was removed.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{group right}/\texttt{left peak} and \texttt{group peaks} were replaced by \texttt{group right}/\texttt{left peak tip position}, \texttt{group peaks tip position}, \texttt{group right}/\texttt{left peak width}, \texttt{group peaks width}, \texttt{group right}/\texttt{left peak height} and \texttt{group peaks height}.}
-% \changes{v4.0}{2013/06/01}{Chart elements are now nodes, so the corresponding styles must specify a node shape.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{time slot modifier} was renamed to \texttt{chart element start border}.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{bar}/\texttt{group}/\texttt{milestone label inline anchor} were renamed to \texttt{bar}/\texttt{group}/\texttt{milestone inline label node}.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{bar}/\texttt{group}/\texttt{milestone label shape anchor} were renamed to \texttt{bar}/\texttt{group}/\texttt{milestone inline label anchor}.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{bar}/\texttt{group}/\texttt{milestone label anchor} were renamed to \texttt{bar}/\texttt{group}/\texttt{milestone label node}.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{title label anchor} was renamed to \texttt{title label node}.}
-% \changes{v4.0}{2013/06/01}{\cs{gantttitlecalendar} prints a title calendar.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{calendar week text} and \texttt{compress calendar} were added.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{newline shortcut} determines whether the shortcut for line breaks is defined in the chart. In this case, \cs{ganttalignnewline} allows line breaks in the node text.}
-% \changes{v4.0}{2013/06/01}{The keys \texttt{today offset}, \texttt{today label font} and \texttt{today label node} were added.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{today} accepts a time slot specifier.}
-% \changes{v4.0}{2013/06/01}{The canvas is now a node with shape \texttt{rectangle} by default.}
-% \changes{v4.0}{2013/06/01}{\cs{newgantttimeslotformat} allows the user to define custom time slot formats.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{time slot format/start date} specifies the internal date representation of digit 1 in the \texttt{simple} time slot format.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{time slot format/base century} provides the century for autocompletion of two-digit years.}
-% \changes{v4.0}{2013/06/01}{The key \texttt{time slot format} changes the format of time slot specifiers.}
-% \changes{v4.0}{2013/06/01}{The \texttt{ganttchart} environment now requires two mandatory arguments.}
-%
-% \changes{v3.0}{2012/01/25}{\cs{setganttlinklabel} specifies the label for all links of a certain type. The \texttt{link label} key locally overrides any label set by this command.}
-% \changes{v3.0}{2012/01/25}{The \texttt{chart element} shape supports four additional anchors (\texttt{on left}, \texttt{on top}, \texttt{on right} and \texttt{on bottom}).}
-% \changes{v3.0}{2012/01/25}{\cs{@gtt@get} has been renamed to \cs{ganttvalueof} to provide a convenient access for link type authors.}
-% \changes{v3.0}{2012/01/25}{\cs{@gtt@keydef} and \cs{@gtt@stylekeydef} have been rewritten to support \texttt{pgfkey}'s abilities to store key values.}
-% \changes{v3.0}{2012/01/25}{New auxiliary macros for \cs{newganttlinkstyle}: \cs{xLeft}, \cs{xRight}, \cs{yUpper}, \cs{yLower}, \cs{ganttsetstartanchor}, \cs{ganttsetendanchor} and \cs{ganttlinklabel}.}
-% \changes{v3.0}{2012/01/25}{Completely rewrote the code for links (again). Definition of new link types is now possible (via \cs{newganttlinktype} and \cs{newganttlinktypealias}).}
-% \changes{v3.0}{2012/01/25}{The \texttt{bar/group/milestone label shape anchor} keys allow for a fine-tuned placement of chart element labels.}
-% \changes{v3.0}{2012/01/25}{All style keys (\texttt{canvas}, \texttt{bar} etc.) only support the common \TikZ\ style key syntax.}
-% \changes{v2.1}{2011/11/10}{The \texttt{inline} key moves labels close to their respective chart elements.}
-% \changes{v2.1}{2011/11/10}{Added three keys (\texttt{bar/group/milestone label inline anchor}) for placing inline labels.}
-% \changes{v2.1}{2011/11/10}{The \texttt{ganttchart} environment may be used outside a \texttt{tikzpicture}.}
-% \changes{v2.0}{2011/10/10}{The syntax of \cs{ganttlink} was completely changed. The command now takes one optional and \textit{two} mandatory arguments. The latter specify the name of the chart elements to be linked. Consequently, the keys \texttt{b-b}, \texttt{b-m}, \texttt{m-b} and \texttt{m-m} were removed. The keys \texttt{s-s}, \texttt{s-f}, \texttt{f-s} and \texttt{f-f} are now values for the \texttt{link type} key.}
-% \changes{v2.0}{2011/10/10}{The optional argument of \cs{ganttnewline} now also accepts a style.}
-% \changes{v2.0}{2011/10/10}{Removed the \texttt{hgrid shift} and \texttt{last line height} keys.}
-% \changes{v2.0}{2011/10/10}{Removed the \texttt{vgrid lines list} key, as its behaviour can be simulated by an appropriate \meta{style list} for \texttt{vgrid}.}
-% \changes{v2.0}{2011/10/10}{Added style lists for the horizontal and vertical grid.}
-% \changes{v2.0}{2011/10/10}{Removed the \texttt{vgrid style} key.}
-% \changes{v2.0}{2011/10/10}{Completely rewrote the calculation of coordinates.}
-% \changes{v2.0}{2011/10/10}{The \texttt{x unit}, \texttt{y unit title} and \texttt{y unit chart} keys specify the width of time slots and the height of title or chart lines, respectively. Thus, one can draw titles whose height differs from the rest of the chart. Furthermore, the $x$- and $y$-dimensions of the chart are independent of the dimensions of the surrounding \texttt{tikzpicture}.}
-% \changes{v1.1}{2011/04/18}{\texttt{link tolerance} decides whether a five- or a three-part link is drawn.}
-% \changes{v1.1}{2011/04/18}{\texttt{milestone label text} configures the text of a milestone label.}
-% \changes{v1.1}{2011/04/18}{\texttt{bar label text} configures the text of a bar label.}
-% \changes{v1.1}{2011/04/18}{The \texttt{time slot modifier} key has been added. If set to zero, all $x$-coordinates are interpreted as given, without regarding them as time slots.}
-% \changes{v1.1}{2011/04/18}{The \texttt{vgrid lines list} key determines the number of vertical grid lines drawn.}
-% \changes{v1.1}{2011/04/18}{The introduction clarifies what I mean by ``a current \textsc{pgf} installation''.}
-% \changes{v1.1}{2011/04/18}{\texttt{group label text} configures the text of a group label.}
-% \changes{v1.0}{2011/03/01}{Initial release}
-%
 %
 % \clearpage\section{Introduction}
 %
@@ -2950,7 +2856,7 @@
 % \end{center}
 %
 %
-% \StopEventually{\PrintIndex\PrintChanges}
+% \StopEventually{\PrintIndex}
 % \lstDeleteShortInline|
 % \MakeShortVerb{\|}
 % \clearpage\section{Implementation}
