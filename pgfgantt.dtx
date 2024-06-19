@@ -1,19 +1,19 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2018 by Wolfgang Skala
+% Copyright (C) 2024 by Wolfgang Esser-Skala
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3c
 % of this license or (at your option) any later version.
 % The latest version of this license is in
-%   http://www.latex-project.org/lppl.txt
+%   https://www.latex-project.org/lppl.txt
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2008/05/04 or later.
 %
 % \fi
 %
 % \iffalse
-%<pgfgantt>\ProvidesPackage{pgfgantt}[2018/01/10 v5.0 Draw Gantt diagrams with TikZ]
+%<pgfgantt>\ProvidesPackage{pgfgantt}[2024/06/19 v5.0a Draw Gantt diagrams with TikZ]
 %<pgfgantt>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %
 %<*driver>
@@ -186,25 +186,6 @@
 
 \AtBeginDocument{\lstMakeShortInline|}
 
-\begingroup
-  \makeatletter
-  \def\x\begingroup#1\@nil{%
-    \endgroup
-    \def\DoNotIndex{%
-      \begingroup
-      \@makeother\#%
-      \@makeother\$%
-      \@makeother\%%
-      \@makeother\^%
-      \@makeother\_%
-      \@makeother\~%
-      \@makeother\ %
-      \@makeother\&%
-      #1%
-    }%
-  }%
-\expandafter\x\DoNotIndex\@nil
-
 \usepackage[
 	hyperfootnotes=false,
 	bookmarksnumbered,%
@@ -293,11 +274,11 @@
 %
 % \DoNotIndex{\@auxout,\@empty,\@firstoftwo,\@ifundefined,\@namedef,\@nameuse,\@tempa,\@tempb,\@tempc,\@tempcnta,\@tempcntb,\@tempdima,\advance,\anchor,\backgroundpath,\begin,\begingroup,\bfseries,\breakforeach,\clip,\csname,\def,\divide,\draw,\edef,\else,\end,\endcsname,\endgroup,\expandafter,\fi,\foreach,\global,\i,\ifcase,\ifdate,\ifdim,\ifnum,\ifx,\inheritanchor,\inheritanchorborder,\inheritbackgroundpath,\inheritsavedanchors,\itshape,\kernel@ifnextchar,\let,\multiply,\newcommand,\newcount,\newenvironment,\newif,\node,\normalcolor,\normalfont,\normalsize,\northeast,\outernortheast,\PackageError,\PackageWarning,\path,\pgf@process,\pgf@x,\pgf@y,\pgf@xa,\pgf@xb,\pgf@xc,\pgf@ya,\pgf@yb,\pgf@yc,\pgfcalendar,\pgfcalendarbeginjulian,\pgfcalendarcurrentday,\pgfcalendarcurrentjulian,\pgfcalendarcurrentmonth,\pgfcalendarcurrentweekday,\pgfcalendarcurrentyear,\pgfcalendardatetojulian,\pgfcalendarendiso,\pgfcalendarifdateday,\pgfcalendarifdatemonth,\pgfcalendarifdateyear,\pgfcalendarjuliantodate,\pgfcalendarmatchestrue,\pgfdeclareshape,\pgfextractx,\pgfkeys,\pgfkeyscurrentname,\pgfkeyssetvalue,\pgfkeysvalueof,\pgfmathparse,\pgfmathprintnumber,\pgfmathresult,\pgfmathsetlength,\pgfmathsetmacro,\pgfpathclose,\pgfpathlineto,\pgfpathmoveto,\pgfpoint,\pgfpointadd,\pgfpointanchor,\pgfpointdiff,\pgfpointscale,\pgfqkeys,\protected@write,\relax,\RequirePackage,\savedanchor,\scriptsize,\setcounter,\small,\southwest,\stepcounter,\string,\strut,\t,\the,\tikz@align@newline,\usetikzlibrary,\value,\x,\xdef}
 %
-% 
+%
 % \title{Drawing Gantt Charts in \LaTeX\\with \TikZ}
 % \subtitle{The \texttt{pgfgantt} Package}
-% \author{Wolfgang Skala\thanks{Department of Biosciences, University of Salzburg, Austria; \texttt{Wolfgang.Skala@sbg.ac.at}}}
-% \date{\fileversion\\\filedate}
+% \author{\texorpdfstring{Wolfgang Esser-Skala\thanks{Computational Systems Biology Group, Department of Biosciences and Medical Biology, University of Salzburg, Austria; \texttt{Wolfgang.Esser-Skala@plus.ac.at}}}{Wolfgang Esser-Skala}}
+%  \date{\fileversion\\\filedate}
 % \maketitle
 %
 % \begin{abstract}
@@ -305,6 +286,7 @@
 % \end{abstract}
 %
 % \clearpage\tableofcontents
+% \changes{v5.0a}{2024/06/19}{The package status is changed to 'unmaintained'.}
 % \changes{v5.0}{2018/01/10}{\cs{gantttitlecalendar} now recognizes the \texttt{decade} key.}
 % \changes{v5.0}{2018/01/10}{Key \texttt{compress calendar} has been replaced by \texttt{time slot unit} to allow an additional level of compression (year).}
 % \changes{v5.0}{2018/01/10}{The command \cs{ganttvrule} allows to draw general vertical rules (similar to the today rule). The keys \texttt{vrule}, \texttt{vrule offset}, \texttt{vrule label font} and \texttt{vrule label text} configure those rules.}
@@ -335,7 +317,7 @@
 % \changes{v4.0}{2013/06/01}{The key \texttt{time slot format/base century} provides the century for autocompletion of two-digit years.}
 % \changes{v4.0}{2013/06/01}{The key \texttt{time slot format} changes the format of time slot specifiers.}
 % \changes{v4.0}{2013/06/01}{The \texttt{ganttchart} environment now requires two mandatory arguments.}
-% 
+%
 % \changes{v3.0}{2012/01/25}{\cs{setganttlinklabel} specifies the label for all links of a certain type. The \texttt{link label} key locally overrides any label set by this command.}
 % \changes{v3.0}{2012/01/25}{The \texttt{chart element} shape supports four additional anchors (\texttt{on left}, \texttt{on top}, \texttt{on right} and \texttt{on bottom}).}
 % \changes{v3.0}{2012/01/25}{\cs{@gtt@get} has been renamed to \cs{ganttvalueof} to provide a convenient access for link type authors.}
@@ -367,10 +349,10 @@
 %
 % \clearpage\section{Introduction}
 %
-% The \pack{pgfgantt} package allows you to draw Gantt charts in \LaTeX. Thus, you can describe simple project schedules without having to include images produced by external programs. Similar to Martin Kumm's \pack{gantt} package\footnote{\url{http://www.martin-kumm.de/tex_gantt_package.php}} (which inspired \pack{pgfgantt}'s fundamental aspects), \pack{pgfgantt} bases upon \textsc{pgf} and its \TikZ\ frontend\footnote{\url{http://ctan.org/tex-archive/graphics/pgf/}}. Besides, it provides a comprehensive (and portable) alternative to \pack{pst-gantt}\footnote{\url{http://ctan.org/tex-archive/graphics/pstricks/contrib/pst-gantt/}}.
+% The \pack{pgfgantt} package allows you to draw Gantt charts in \LaTeX. Thus, you can describe simple project schedules without having to include images produced by external programs. Similar to Martin Kumm's \pack{gantt} package\footnote{\url{https://www.martin-kumm.de/tex_gantt_package.php}} (which inspired \pack{pgfgantt}'s fundamental aspects), \pack{pgfgantt} bases upon \textsc{pgf} and its \TikZ\ frontend\footnote{\url{https://ctan.org/pkg/pgf/}}. Besides, it provides a comprehensive (and portable) alternative to \pack{pst-gantt}\footnote{\url{https://ctan.org/pkg/pst-gantt/}}.
 %
 % \paragraph{Requirements} \pack{pgfgantt} requires a \textit{current} \textsc{pgf} installation. Note that the version number must at least be 2.10, dated October 25th, 2010. Furthermore, \pack{pgfgantt}~\fileversion\ and above is not fully downwards compatible.
-% 
+%
 % \paragraph{Suggestions} Please report any suggestions and improvements at the project's GitHub page (\url{https://github.com/skafdasschaf/latex-pgfgantt}).
 %
 % \paragraph{Acknowledgements} I would like to thank the following people for their ideas concerning new features:
@@ -425,7 +407,7 @@
 % \end{ganttchart}
 % \end{center}
 %
-% 
+%
 % \subsection{Specifying Keys}
 %
 % \textit{Keys} (sometimes called \textit{options}) modify the output from \pack{pgfgantt}'s commands. You may specify a key in two ways: (1) Pass it to the optional argument present in each command, e.\,g.
@@ -439,7 +421,7 @@
 % Since \pack{pgfgantt} uses the \pack{pgfkeys} package for key management, all its keys reside in the |/pgfgantt/| path. However, if you set your keys by one of the methods explained above, this path is automatically prepended to each key.
 %
 % \subsection{The Canvas}
-% 
+%
 % Let us have a look at the basic anatomy of a Gantt chart and define some common terms. Each \textit{chart} consists of several \textit{lines}, which may contain one or more \textit{title elements} (at the top) or \textit{chart elements} (such as bars, groups and milestones). From left to right, the chart is divided into an integer number of \textit{time slots} that represent the basic $x$-unit.
 %
 % The \DescribeEnv{ganttchart}|ganttchart| environment draws a single Gantt chart:
@@ -449,7 +431,7 @@
 % \end{ganttchart}
 % \end{texcode}
 % The environment has one optional argument, which specifies the \meta{options} for the chart, and two mandatory arguments, which indicate the start and end time slot specifier. Although you will often put a |ganttchart| into a |tikzpicture| environment, you may actually use this environment on its own. \pack{pgfgantt} checks whether a chart is surrounded by a |tikzpicture| and adds this environment if necessary.
-% 
+%
 % \begin{key}{time slot format}{\meta{format}}{simple}
 % Sets the \meta{format} of time slot specifiers. A \textbf{time slot specifier} (abbreviated ``tss'') denotes a certain time slot along the horizontal axis. \pack{pgfgantt} defines a range of formats:
 % \begin{itemize}
@@ -469,23 +451,23 @@
 % 		\textit{Examples:} \texttt{2013-03-14}, \texttt{13/03/14}, \texttt{2013.3.14}
 % \end{itemize}
 % \end{key}
-% 
+%
 % \noindent Two subkeys of \opt{time slot format} let you configure \pack{pgfgantt}'s behavior regarding automatic completion of abbreviated dates:
-% 
+%
 % \begin{key}{time slot format/base century}{\meta{year}}{2000}
 % Sets the century for auto-completion of two-digit years (used by the time slot formats \texttt{little-endian}, \texttt{middle-endian} and \texttt{big-endian}). Consequently, default settings convert a year like \texttt{13} to \texttt{2013}.
 % \end{key}
-% 
+%
 % \begin{key}{time slot format/start date}{\meta{ISO-standard date}}{2000-01-01}
 % Numbers denoting time slots in the \texttt{simple} format are internally converted to a date, where \texttt{1} is converted to \meta{ISO-standard date}, \texttt{2} to $\meta{ISO-standard date} + 1$ etc.
 % \end{key}
-% 
+%
 % \bigskip\noindent Advanced users may add their own time slot \DescribeMacro{\newgantttimeslotformat}formats:
 % \begin{texcode}
 % \newgantttimeslotformat`\marg{name}\marg{converter code}'
 % \end{texcode}
 % Defines a new time slot format called \meta{name}. The \meta{converter code} must convert the time slot specifier stored in |#1| to its corresponding Julian day number (see section~57 of the \TikZ\ manual) and assign this number to the count register |#2|. The \meta{converter code} is executed within a \TeX\ group, so you may use temporary macros like |\@tempa|, counts like |\@tempcnta| etc.
-% 
+%
 % For example, we would like to create a format called \texttt{stardate}, where dates are given as ``\meta{year}\texttt{.}\meta{day of year}''. Thus, we will enter 24th February 2259 as ``\texttt{2259.55}''. To this end, we write the following code:
 % \par\bigskip\noindent
 % \begin{texcode}[numbers=left]
@@ -498,10 +480,10 @@
 %   \advance#2 by-1\relax%
 %   \advance#2 by\stardateday\relax%
 % }
-% 
+%
 % \begin{ganttchart}[
 % 		hgrid,
-% 		vgrid, 
+% 		vgrid,
 % 		time slot format=stardate
 % 	]{2259.55}{2259.67}
 %   \gantttitlecalendar{year, month=name, day} \\
@@ -517,18 +499,18 @@
 %   \advance#2 by-1\relax%
 %   \advance#2 by\stardateday\relax%
 % }
-% 
+%
 % \begin{ganttchart}[
 % 		hgrid,
-% 		vgrid, 
+% 		vgrid,
 % 		time slot format=stardate
 % 	]{2259.55}{2259.67}
 %   \gantttitlecalendar{year, month=name, day} \\
 % \end{ganttchart}
 % \end{center}
-% 
+%
 % \noindent The macro |\decomposestardate| (lines 2--4) has two delimited arguments: The first one is delimited by a period and the second one by |\relax|. The call in line 5 decomposes the tss stored in |#1| and saves the day in |\stardateday| and the year in |\stardateyear|. |\pgfcalendardatetojulian| (section~57.1.1 of the \TikZ\ manual) calculates the Julian date of the first day of |\stardateyear| and stores it in |#2| (line 6). We then subtract 1 from |#2| (line 7) and add the |\stardateday| (line 8).
-% 
+%
 % \begin{key}[./style=]{canvas}{\meta{style}}{shape=rectangle, draw, fill=white}
 % The \opt{canvas} key changes the appearance of the canvas. \meta{style} is a list of \TikZ\ keys suitable for the \meta{options} of a \TikZ\ node (such as |shape=rectangle|, |fill| or |draw|; see chapter~16 of the \TikZ\ manual). By default, the canvas is a white rectangle with a black frame.
 % \par\bigskip\noindent
@@ -617,9 +599,9 @@
 % \opt{hgrid} draws a horizontal grid which starts immediately below the last title element. The key can be specified in four different ways: Firstly, \opt{hgrid}|=false| eliminates the horizontal grid. You may omit this declaration, since it is the default. Secondly, both \opt{hgrid} and \opt{hgrid}|=true| activate the horizontal grid, which is then drawn in the default style |dotted|. Finally, \opt{hgrid}|=|\meta{style list} draws the horizontal grid in the given \meta{style list} (see below).
 %
 % \opt{hgrid style} changes the style of single horizontal grid lines that are drawn with |\ganttnewline[grid]| (see section~\ref{ssc:LineBreaks}).
-% 
+%
 % The \opt{vgrid} key governs the vertical grid; otherwise, use it exactly like \opt{hgrid}.
-% 
+%
 % \textit{Style lists} allow you to draw the grid lines in different styles. Each style list consists of several \textit{style list items} separated by a comma. A style list item has the general syntax |*{|\meta{n}|}{|\meta{style}|}| and orders the package to repeat the \meta{style} \meta{n}-times. (This syntax is reminiscent of column specifications in a |tabular| environment.) Thus, the list |*2{red}, *1{green}, *{10}{blue, dashed}| instructs \pack{pgfgantt} to draw first two red vertical grid lines, then a green one and finally ten dashed blue lines. If any grid lines remain to be drawn at the end of the list, the package starts again at the beginning of the list.
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -642,7 +624,7 @@
 % 	\ganttbar{}{9}{20}
 % \end{ganttchart}
 % \end{center}
-% 
+%
 % In most situations, you can omit the multiplier |*1|. Hence, the following style lists are equal:\\
 % |{*1{red}, *1{blue, dashed}}|\\
 % |{{red}, {blue, dashed}}|\\
@@ -653,7 +635,7 @@
 % \begin{minipage}[t]{.45\textwidth}
 % \begin{texcode}
 % % wrong code
-% 
+%
 % \begin{ganttchart}[
 % 		hgrid=true,
 % 		vgrid={{red, dotted}}
@@ -667,7 +649,7 @@
 % \begin{minipage}[t]{.45\textwidth}
 % \begin{texcode}
 % % correct code
-% 
+%
 % \begin{ganttchart}[
 % 		hgrid=true,
 % 		vgrid={*1{red, dotted}}
@@ -717,7 +699,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}{today}{\meta{tss}}{none}
 % \keyline{today offset}{\meta{number}}{1}
 % \keyline[/.style=]{today rule}{\meta{style}}{dashed, line width=1pt}
@@ -787,13 +769,13 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
-% 
+%
+%
 % \subsection{Line Breaks between Chart Elements}
 % \label{ssc:LineBreaks}
 %
 % \pack{pgfgantt} does not automatically begin a new line after finishing a \DescribeMacro{\ganttnewline}chart element. Instead, you must insert an explicit line break with |\ganttnewline|.
-% 
+%
 % \begin{key}{newline shortcut}{\meta{boolean}}{true}
 % If true, \DescribeMacro{\\}|\\| is defined as a shortcut for |\ganttnewline| within a |ganttchart| environment, so that the syntax is reminiscent of \LaTeX's |tabular| enviroment.
 % \par\bigskip\noindent
@@ -868,7 +850,7 @@
 % 	}{1}{3}
 % \end{ganttchart}
 % \end{center}
-% 
+%
 % Even if you prefer a canvas without a horizontal grid, you may nevertheless want to separate certain lines by a grid rule. For this purpose, specify the optional argument |[grid]| for |\ganttnewline| (or |\\|), which draws a grid rule in \opt{hgrid style} between the current and the new line. Alternatively, directly give the desired style as optional argument.
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -921,7 +903,7 @@
 % \gantttitlelist`\oarg{options}\marg{pgffor list}\marg{length of each element}'
 % \end{texcode}
 % This macro generates one title element for each element of the \meta{pgffor list}. The second mandatory argument specifies the \meta{length of each element}. Refer to section~56 of the \TikZ\ manual for the detailed syntax for the \meta{pgffor list}.
-% 
+%
 % A simple application is to draw twelve title elements that contain the numbers from 1 to 12. The \meta{pgffor list} is |1,...,12|.
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -942,9 +924,9 @@
 % \begin{texcode}
 % \gantttitle{1}{1} \gantttitle{2}{1} `\dots' \gantttitle{12}{1} \\
 % \end{texcode}
-% 
+%
 % As an advanced example, we will draw seven title elements containing the names of the weekdays (``Mon'' to ``Sun''). To this end, we introduce an additional key:
-% 
+%
 % \begin{key}{title list options}{\meta{pgffor options}}{var=\string\x, evaluate=\string\x}
 % Changes the \meta{pgffor options} of the |\foreach| command called by |\gantttitlelist| (see section~56 of the \TikZ\ manual). The macro that yields the labels to be printed by |\gantttitlelist| must be called |\x|.
 % \par\bigskip\noindent\shorthandoff{"}
@@ -971,7 +953,7 @@
 % \end{ganttchart}
 % \end{center}\shorthandon{"}
 % \end{key}
-% 
+%
 % \bigskip While you actually may build any chart title with the two commands described previously, \DescribeMacro{\gantttitlecalendar}|\gantttitlecalendar| saves a lot of time when you wish to create elaborate calendars:
 % \begin{texcode}
 % \gantttitlecalendar`\oarg{options}\marg{calendar lines}'
@@ -999,7 +981,7 @@
 % 		\bottomrule
 % 	\end{tabular}
 % \end{center}
-% 
+%
 % The \meta{number} for the \texttt{week} line type is the number of the first week in the calendar.
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -1024,16 +1006,16 @@
 % 	\ganttbar{}{2013-01-14}{2013-01-17}
 % \end{ganttchart}\hspace*{-51.4pt}
 % \end{center}
-% 
+%
 % You can easily add new output formats for \texttt{month} and \texttt{weekday}. The predefined ones use the macros described in section~57.1.3 of the \TikZ\ manual. For example, |weekday=name| calls |\pgfcalendarweekdayname|. Thus, new macros called |\pgfcalendarmonth|\textcolor{RoyalBlue}{\meta{output format}} or |\pgfcalendarweekday|\textcolor{RoyalBlue}{\meta{output format}} will provide additional \meta{output format}s for |month| and |weekday|, respectively.
-% 
+%
 % A weekday output format called |letter|, which displays a weekday as single letter, might be implemented as follows:
 % \par\bigskip\noindent
 % \begin{texcode}
 % \def\pgfcalendarweekdayletter#1{%
 % 	\ifcase#1M\or T\or W\or T\or F\or S\or S\fi%
 % }
-% 
+%
 % \begin{ganttchart}[
 % 		hgrid,
 % 		vgrid,
@@ -1050,7 +1032,7 @@
 % \def\pgfcalendarweekdayletter#1{%
 % 	\ifcase#1M\or T\or W\or T\or F\or S\or S\fi%
 % }
-% 
+%
 % \begin{ganttchart}[
 % 		hgrid,
 % 		vgrid,
@@ -1063,7 +1045,7 @@
 % 	}
 % \end{ganttchart}
 % \end{center}
-% 
+%
 % \begin{key}{calendar week text}{\meta{format}}{Week\string~\string\currentweek}
 % Changes the text displayed in a week title element. In \meta{format}, four additional macros are available: \DescribeMacro{\currentweek}|\currentweek| is the current week number; \DescribeMacro{\startyear}|\startyear|, \DescribeMacro{\startmonth}|\startmonth| and \DescribeMacro{\startday}|\startday| expand to the year, month and day of the current week's Monday.
 % \par\bigskip\noindent
@@ -1100,7 +1082,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}{time slot unit}{\texttt{day}\space\textbar\space\texttt{month}\space\textbar\space\texttt{year}}{day}
 % By default, one \textit{calendar day} is one time slot wide. With \opt{time slot unit}\texttt{=month}, one \textit{month} corresponds to one time slot. Consequently, in such calendars only |year| and |month| are sensible line types for |\gantttitlecalendar|, and the time slot format \texttt{isodate-yearmonth} is especially suited.
 % \par\bigskip\noindent
@@ -1226,7 +1208,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}{title left shift}{\meta{factor}}{0}
 % \keyline{title right shift}{\meta{factor}}{0}
 % \keyline{title top shift}{\meta{factor}}{0}
@@ -1394,7 +1376,7 @@
 %
 %
 % \subsection{Predefined Chart Elements}
-% 
+%
 % \pack{pgfgantt} predefines three chart elements:
 % \begin{enumerate}
 % 	\item \DescribeMacro{\ganttbar}\textit{Bars} indicate the duration of a task or one of its parts.
@@ -1411,7 +1393,7 @@
 % \end{texcode}
 % \end{enumerate}
 % Each of these macros draws a \meta{label}ed chart element from the \meta{start tss} to the \meta{end tss} (or at the given \meta{tss} in case of |\ganttmilestone|).
-% 
+%
 % \par\bigskip\noindent
 % \begin{texcode}
 % \begin{ganttchart}[vgrid, hgrid]{1}{12}
@@ -1443,7 +1425,7 @@
 % \begin{minipage}[t]{.49\textwidth}
 % \begin{texcode}
 % % Short version
-% 
+%
 % \begin{ganttchart}[
 % 		vgrid,
 % 		hgrid
@@ -1459,7 +1441,7 @@
 % \begin{minipage}[t]{.47\textwidth}
 % \begin{texcode}
 % % Long version
-% 
+%
 % \begin{ganttchart}[
 % 		vgrid,
 % 		hgrid
@@ -1475,7 +1457,7 @@
 % \end{ganttchart}
 % \end{texcode}
 % \end{minipage}
-% 
+%
 % \begin{center}
 % \begin{ganttchart}[
 % 		vgrid,
@@ -1488,7 +1470,7 @@
 % 	\ganttlinkedbar{Task 3}{7}{11}
 % \end{ganttchart}
 % \end{center}
-% 
+%
 % \begin{key}{chart element start border}{\texttt{left}\space\textbar\space\texttt{right}}{left}
 % Determines which border of the start time slot a chart element touches. \texttt{left} is the behavior usually expected, while \texttt{right} strictly interprets the start time slot as an $x$-coordinate.
 % \par\bigskip\noindent
@@ -1511,10 +1493,10 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
-% 
+%
+%
 % \subsubsection{Options: Chart Element Appearance}
-% 
+%
 % The following options are similar for all predefined (and user-defined) chart elements:
 %
 % \begin{key}[/.style=]{bar}{\meta{style}}{shape=ganttbar, inner sep=0pt, draw, fill=white}
@@ -1558,9 +1540,9 @@
 % \end{center}
 % \end{key}
 %
-% 
+%
 % \subsubsection{Options: Label Formatting}
-% 
+%
 % \begin{key}{bar label text}{\meta{text}}{\string\strut\#1}
 % \keyline{group label text}{\meta{text}}{\string\strut\#1}
 % \keyline{milestone label text}{\meta{text}}{\string\strut\#1}
@@ -1611,7 +1593,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}{inline}{\meta{boolean}}{false}
 % \keyline{bar inline label anchor}{\meta{anchor}}{center}
 % \keyline{group inline label anchor}{\meta{anchor}}{center}
@@ -1650,10 +1632,10 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
-% 
+%
+%
 % \subsubsection{Options: Chart Element Positioning}
-% 
+%
 % \begin{key}{bar left shift}{\meta{factor}}{0}
 % \keyline{bar right shift}{\meta{factor}}{0}
 % \keyline{bar top shift}{\meta{factor}}{.3}
@@ -1667,7 +1649,7 @@
 % \keyline{milestone top shift}{\meta{factor}}{.3}
 % \keyline{milestone height}{\meta{factor}}{.4}
 % Shift the coordinates of a chart element's borders (\opt{\dots\ shift}) and change its height (\opt{\dots\ height}).
-% 
+%
 % \begin{center}
 % \begin{tikzpicture}[x=.5cm, y=1cm]
 % 	\begin{ganttchart}[vgrid, hgrid]{1}{8}
@@ -1701,7 +1683,7 @@
 % 	\draw[-latex,teal] (8,-4.2) node[right] {End time slot (6)} -- (6,-3.8);
 % \end{tikzpicture}
 % \end{center}
-% 
+%
 % The three following figures illustrate the distances modified by these keys. The first figure shows a Gantt chart with a bar, two lines and one time slot.
 % \begin{center}
 % \begin{tikzpicture}[x=8cm, y=2cm]
@@ -1809,7 +1791,7 @@
 % 		-- (.4,-.85);
 % \end{tikzpicture}
 % \end{center}
-% 
+%
 % \begin{key}{group right peak tip position}{\meta{fraction}}{0.5}
 % \keyline{group right peak width}{\meta{factor}}{0.4}
 % \keyline{group right peak height}{\meta{factor}}{0.1}
@@ -1820,7 +1802,7 @@
 % \keyline{group peaks width}{\meta{factor}}{\textrm{(none)}}
 % \keyline{group peaks height}{\meta{factor}}{\textrm{(none)}}
 % Change the appearance of the peaks at both ends of a group. By default, both the left and right peak are 0.4~units wide and 0.1~units high, their tips lie between the peak sides. The \opt{group peaks \dots} keys set the dimensions for both peaks simultaneously. The figure below exemplifies the keys that apply to the left peak.
-% 
+%
 % \begin{center}
 % \begin{tikzpicture}[x=8cm, y=2cm]
 % 	\small
@@ -1845,7 +1827,7 @@
 % \end{tikzpicture}
 % \end{center}
 % \end{key}
-% 
+%
 % For example, you might devise the following layout: Bars are small and rounded; they do not touch the borders of their start and end time slots. Groups stay within the start and end time slot, and the peaks are more acute.
 % \par\bigskip\noindent
 % \begin{texcode}
@@ -1887,12 +1869,12 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
-% 
+%
+%
 % \subsubsection{Options: Progress}
-% 
+%
 % The \textit{progress} of a chart element illustrates the extent to which this element has been completed.
-% 
+%
 % \begin{key}{progress}{\texttt{none}\space\textbar\space\texttt{today}\space\textbar\space\meta{number}}{none}
 % Indicates that a chart element is \meta{number} percent complete. The value \texttt{none} turns progress calculations off.
 % \par\bigskip\noindent
@@ -1950,7 +1932,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}[/.style=]{bar incomplete}{\meta{style}}{/pgfgantt/bar, fill=black!25}
 % \keyline[/.style=]{group incomplete}{\meta{style}}{/pgfgantt/group, fill=black!25}
 % \keyline[/.style=]{milestone incomplete}{\meta{style}}{/pgfgantt/milestone, fill=black!25}
@@ -1993,7 +1975,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}{progress label text}{\meta{text}}{\string\pgfmathprintnumber[precision=0, verbatim]\{\#1\}\string\% complete}
 % \keyline{bar progress label anchor}{\meta{anchor}}{east}
 % \keyline{bar progress label font}{\meta{font commands}}{\string\scriptsize}
@@ -2047,16 +2029,16 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
-% 
+%
+%
 % \subsubsection{New Node Shapes}
 % \label{sss:NewNodeShapes}
-% 
+%
 % \pack{pgfgantt} defines three new node shapes:
-% 
+%
 % \bigskip\noindent
 % (1) The \texttt{ganttbar} node shape derives from shape \texttt{rectangle} (section~48.2 of the \TikZ\ manual). It provides four additional anchors: \texttt{on top}, \texttt{on bottom}, \texttt{on left} and \texttt{on right}. The \meta{fraction} set by the following keys indicates a position between the left and right (for \texttt{on top} and \texttt{on bottom}) or upper and lower border (for \texttt{on left} and \texttt{on right}), similarly to the \opt{/tikz/pos} key.
-% 
+%
 % \begin{key}{on top fraction}{\meta{fraction}}{0.5}
 % \keyline{on bottom fraction}{\meta{fraction}}{0.5}
 % \keyline{on left fraction}{\meta{fraction}}{0.5}
@@ -2097,7 +2079,7 @@
 % \end{tikzpicture}
 % \end{center}
 % \end{key}
-% 
+%
 % \bigskip\noindent
 % (2) The \texttt{ganttgroup} node shape also derives from shape \texttt{rectangle}. It provides the additional anchors \texttt{on top}, \texttt{on bottom}, \texttt{on left}, \texttt{on right} (same as above), \texttt{left peak} and \texttt{right peak}.
 % \begin{center}
@@ -2138,7 +2120,7 @@
 % 			node [\placement] {\scriptsize\texttt{(s.\anchor)}};
 % \end{tikzpicture}
 % \end{center}
-% 
+%
 % \bigskip\noindent
 % (3) The \texttt{ganttmilestone} node shape derives from shape \texttt{diamond} (section~48.3 of the \TikZ\ manual), but does not consider any aspect ratio. It provides the additional anchors \texttt{on top}, \texttt{on bottom}, \texttt{on left} and \texttt{on right} (same as above).
 % \begin{center}
@@ -2172,19 +2154,19 @@
 % 			node [\placement] {\scriptsize\texttt{(s.\anchor)}};
 % \end{tikzpicture}
 % \end{center}
-% 
-% 
+%
+%
 % \subsection{Defining Custom Chart Elements}
-% 
+%
 % You may define completely new chart elements with
 % \begin{texcode}
 % \newganttchartelement`\marg{name}\marg{new default key values}'
 % \newganttchartelement*`\marg{name}\marg{new default key values}'
 % \end{texcode}
 % \DescribeMacro{\newganttchartelement}|\newganttchartelement| (unstarred) defines a new chart element |\gantt|\textcolor{RoyalBlue}{\meta{name}} and the corresponding |\ganttlinked|\textcolor{RoyalBlue}{\meta{name}}. These chart element macros take one optional argument \meta{options} and \textit{three} mandatory arguments \meta{label}, \meta{start tss} and \meta{end tss} (like |\ganttbar|).
-% 
+%
 % Chart element macros defined by the starred form, \DescribeMacro{\newganttchartelement*}|\newganttchartelement*|, take the same single optional argument, but \textit{two} mandatory arguments \meta{label} and \meta{tss} (like |\ganttmilestone|).
-% 
+%
 % For each new chart element, |\newganttchartelement| also introduces a set of nine value-storing keys and five style keys and assigns default values to them:
 % \begin{center}
 % 	\begin{tabular}{l >{\ttfamily}l}
@@ -2212,13 +2194,13 @@
 % 	\end{tabular}\hspace*{-120pt}
 % \end{center}
 % Consequently, a new chart element will look like the standard |\ganttbar| unless you introduce some \meta{new default key values}.
-% 
+%
 % Let us define a new chart element called ``foobar'', which is basically a fancy-colored and -shaped bar:
 % \par\bigskip\noindent
 % \begin{texcode}
 % \definecolor{foobarblue}{RGB}{0,153,255}
 % \definecolor{foobaryellow}{RGB}{234,187,0}
-% 
+%
 % \newganttchartelement{foobar}{
 % 	foobar/.style={
 % 		shape=rounded rectangle,
@@ -2237,7 +2219,7 @@
 % 	foobar left shift=-.1,
 % 	foobar right shift=.1
 % }
-% 
+%
 % \begin{ganttchart}[
 % 		vgrid,
 % 		progress=today,
@@ -2253,7 +2235,7 @@
 % \begin{center}
 % \definecolor{foobarblue}{RGB}{0,153,255}
 % \definecolor{foobaryellow}{RGB}{234,187,0}
-% 
+%
 % \newganttchartelement{foobar}{
 % 	foobar/.style={
 % 		shape=rounded rectangle,
@@ -2272,7 +2254,7 @@
 % 	foobar left shift=-.1,
 % 	foobar right shift=.1
 % }
-% 
+%
 % \begin{ganttchart}[
 % 		vgrid,
 % 		progress=today,
@@ -2285,7 +2267,7 @@
 % 	\ganttlinkedfoobar{Foobar 3}{9}{12}
 % \end{ganttchart}
 % \end{center}
-% 
+%
 %
 % \subsection{Links}
 % \label{ssc:Links}
@@ -2294,7 +2276,7 @@
 % \begin{texcode}
 % \ganttlink`\oarg{options}\marg{start element name}\marg{end element name}'
 % \end{texcode}
-% 
+%
 % \begin{key}{name}{\meta{name}}{\textrm{(empty)}}
 % The \DescribeMacro{\ganttlink}|\ganttlink| macro connects two elements, which are specified by their \meta{name}s. By default, chart elements are named automatically: The first one receives the name \texttt{elem0}, the second one is called \texttt{elem1} and so on. However, the \opt{name} key allows you to assign a name to each chart element.
 % \par\bigskip\noindent
@@ -2348,7 +2330,7 @@
 % \end{ganttchart}
 % \end{center}
 % \end{key}
-% 
+%
 % \begin{key}[/.style=]{link}{\meta{style}}{-latex, rounded corners=1pt}
 % Sets the appearance of the link.
 % \par\bigskip\noindent
@@ -2490,7 +2472,7 @@
 % \DescribeMacro{\newganttlinktype}It defines a new link \meta{type} which is drawn by the given \meta{TikZ code}. When you write this code, you do not have to know the final absolute coordinates of each link type instance. On the contrary, several commands that are only available in the second argument of |\newganttlinktype| help you to design generic link types:
 % \begin{itemize}
 % 	\item First, you have to choose the border points of the chart elements the link will connect. For this purpose, \DescribeMacro{\ganttsetstartanchor}|\ganttsetstartanchor{|\meta{anchor}|}| and \DescribeMacro{\ganttsetendanchor}|\ganttsetendanchor{|\meta{anchor}|}| select an \meta{anchor} of the start and end element, respectively. See the figures in section~\ref{sss:NewNodeShapes} for possible \meta{anchor}s of the default chart element shapes. You may specify a certain \meta{fraction} for anchors like \texttt{on top} by |\ganttsetstartanchor{on top=|\meta{fraction}|}|.
-% 
+%
 % \pack{pgfgantt} sets the default anchors to |\ganttsetstartanchor{east}| and |\ganttsetendanchor{west}|, so you even may omit these two commands.
 % 	\item The two macro pairs \DescribeMacro{\xLeft}|\xLeft|/\DescribeMacro{\yUpper}|\yUpper| and \DescribeMacro{\xRight}|\xRight|/\DescribeMacro{\yLower}|\yLower| provide the $x$- and $y$-coordinates of the link start and end points, respectively.
 % \begin{center}\makeatletter
@@ -2509,7 +2491,7 @@
 % \end{itemize}
 % \end{enumerate}
 % \end{key}
-% 
+%
 % \begin{texcode}
 % \newganttlinktypealias`\marg{new type}\marg{existing type}'
 % \end{texcode}
@@ -2524,7 +2506,7 @@
 % \newganttlinktypealias{sta-to-sta}{s-s}
 % \newganttlinktypealias{fin-to-fin}{f-f}
 % \setganttlinklabel{fin-to-fin}{f2f}
-% 
+%
 % \begin{ganttchart}[vgrid, hgrid]{1}{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
@@ -2538,7 +2520,7 @@
 % \newganttlinktypealias{sta-to-sta}{s-s}
 % \newganttlinktypealias{fin-to-fin}{f-f}
 % \setganttlinklabel{fin-to-fin}{f2f}
-% 
+%
 % \begin{ganttchart}[vgrid, hgrid]{1}{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
@@ -2552,7 +2534,7 @@
 % \par\bigskip\noindent
 % \begin{texcode}
 % \usetikzlibrary{decorations.pathmorphing}
-% 
+%
 % \newganttlinktype{zigzag}{
 % 	\ganttsetstartanchor{on right=1}
 % 	\ganttsetendanchor{on left=0}
@@ -2560,7 +2542,7 @@
 % 		(\xLeft, \yUpper) --
 % 		(\xRight, \yLower);
 % }
-% 
+%
 % \begin{ganttchart}[vgrid, hgrid]{1}{12}
 % 	\gantttitle{Title}{12} \\
 % 	\ganttbar{Task 1}{2}{3} \\
@@ -2612,7 +2594,7 @@
 % 		(\xRight, \yLower);
 % }
 % \setganttlinklabel{drur}{a fancy link}
-% 
+%
 % \begin{ganttchart}[
 % 		vgrid,
 % 		hgrid,
@@ -2648,7 +2630,7 @@
 % 		(\xRight, \yLower);
 % }
 % \setganttlinklabel{drur}{a fancy link}
-% 
+%
 % \begin{ganttchart}[
 % 		vgrid,
 % 		hgrid,
@@ -2663,7 +2645,7 @@
 % \end{ganttchart}
 % \end{center}
 % (Please remove the comments if you copy the code above -- they will confuse \TikZ\ and generate tons of errors.)
-% 
+%
 % \begin{key}{link label}{\meta{label}}{\textrm{(empty)}}
 % \keyline{link label font}{\meta{font commands}}{\string\scriptsize\string\itshape}
 % \keyline[/.style=]{link label node}{\meta{options}}{anchor=west, font=\string\ganttvalueof\{link label font\}}
@@ -2812,9 +2794,9 @@
 % 	\ganttlink[link mid=.159]{pp}{T2A}
 % \end{ganttchart}
 % \end{center}
-% 
+%
 % \bigskip
-% The second example demonstrates that \pack{pgfgantt} is really flexible: Even an appearance quite different from the standard layout is possible. (More precisely, the code below tries to reproduce the Gantt chart from the English Wikipedia site, see \url{http://en.wikipedia.org/wiki/Gantt_chart}.)
+% The second example demonstrates that \pack{pgfgantt} is really flexible: Even an appearance quite different from the standard layout is possible. (More precisely, the code below tries to reproduce the Gantt chart from the English Wikipedia site, see \url{https://en.wikipedia.org/wiki/Gantt_chart}.)
 % \par\bigskip\noindent
 % \begin{texcode}
 % \definecolor{barblue}{RGB}{153,204,254}
@@ -2967,7 +2949,7 @@
 % \end{ganttchart}
 % \end{center}
 %
-% 
+%
 % \StopEventually{\PrintIndex\PrintChanges}
 % \lstDeleteShortInline|
 % \MakeShortVerb{\|}
@@ -3050,7 +3032,7 @@
 %
 %
 % \subsection{The Horizontal and Vertical Grid}
-% 
+%
 % \begin{intmacro}{\gtt@currentline}
 % \begin{intmacro}{\gtt@lasttitleline}
 % \begin{intmacro}{\gtt@currgrid}
@@ -3202,7 +3184,7 @@
 %
 %
 % \subsection{Time Slot Formats}
-% 
+%
 % \begin{intmacro}{\gtt@smugglecount}
 % |\gtt@smugglecount|\marg{count} smuggles the local value of a count register over the end of a \TeX\ group.
 %    \begin{macrocode}
@@ -3390,11 +3372,11 @@
 %    \end{macrocode}
 % \end{intmacro}
 % \end{option}
-% 
-% 
+%
+%
 % \subsection{The Main Environment}
 % \label{ssc:ImplMain}
-% 
+%
 % \begin{option}{x unit}
 % \begin{option}{y unit title}
 % \begin{option}{y unit chart}
@@ -4222,10 +4204,10 @@
 }
 
 %    \end{macrocode}
-% 
-% 
+%
+%
 % \subsection{Chart Elements}
-% 
+%
 % \begin{option}{progress}
 % \begin{intmacro}{\gtt@progress}
 % \begin{option}{progress label text}
@@ -4606,7 +4588,7 @@
 % \end{option}
 % \end{macro}
 % \end{macro}
-% \clearpage 
+% \clearpage
 % \begin{macro}{\ganttgroup}
 % \begin{macro}{\ganttlinkedgroup}
 % \begin{option}{group}
@@ -4772,10 +4754,10 @@
 % \end{option}
 % \end{macro}
 % \end{macro}
-% 
-% 
+%
+%
 % \subsection{Node Shapes}
-% 
+%
 % \begin{option}{on top fraction}
 % \begin{option}{on bottom fraction}
 % \begin{option}{on left fraction}
@@ -5067,11 +5049,11 @@
 }
 
 %    \end{macrocode}
-% 
+%
 %
 % \subsection{Links}
 % \label{ssc:ImplLinks}
-% 
+%
 % \begin{option}{link}
 % \begin{option}{link type}
 % \begin{option}{link label}
@@ -5302,7 +5284,7 @@
 %    \end{macrocode}
 % \end{intmacro}
 % \begin{intmacro}{\@gtt@link@anchor}
-% We need the following keys for setting the start and end anchor of a link: Whenever a key |/pgfgantt/link anchor/|\meta{anchor} is undefined, \pack{pgfgantt} stores \meta{anchor} in |\@gtt@link@anchor|. 
+% We need the following keys for setting the start and end anchor of a link: Whenever a key |/pgfgantt/link anchor/|\meta{anchor} is undefined, \pack{pgfgantt} stores \meta{anchor} in |\@gtt@link@anchor|.
 %    \begin{macrocode}
 \ganttset{%
   link anchor/.unknown/.code={%
